@@ -21,6 +21,8 @@
 #ifndef APPCORE_HPP
 #define APPCORE_HPP
 
+#include <QtConcurrent>
+
 #include <QSqlDatabase>
 #include <QStringList>
 #include <QTextCodec>
@@ -59,7 +61,7 @@ class AppCore : public QObject
 		QSqlDatabase Database;
 		QMutex Locker;
 
-		volatile bool Terminate = false;
+		volatile bool isTerminated = false;
 
 	public:
 
@@ -72,10 +74,6 @@ class AppCore : public QObject
 		Entry getItem(int ID);
 		QMap<int, Entry> getItems(void);
 
-		int getMaxIndex(void);
-
-		void terminate(void);
-
 		static AppCore* getInstance(void);
 
 	public slots:
@@ -87,7 +85,8 @@ class AppCore : public QObject
 		void SaveData(const QString& Path,
 				    const QStringList& Header,
 				    const QList<QStringList>& Data,
-				    const QString& CoderName);
+				    const QString& CoderName,
+				    const QString& Newline);
 		void ConvertData(const QList<QStringList>& Data);
 		void ReplaceData(const QList<QStringList>& Data,
 					  const QString& Source,
@@ -98,17 +97,24 @@ class AppCore : public QObject
 					   const QString &Replace,
 					   bool Case, bool RegExp);
 
+		void Terminate(void);
+
 	signals:
 
 		void onHeaderLoad(const QStringList&);
 		void onItemsLoad(const QMap<int, Entry>&);
 		void onObjectsLoad(const QList<QStringList>&);
+
 		void onObjectsConvert(const QList<QStringList>&);
-		void onOutputSave(bool);
 		void onDataReplace(const QList<QStringList>, int);
 		void onValuesUpdate(const QList<QStringList>, int);
 
-		void onProgressUpdate(double);
+		void onOutputSave(bool);
+
+		void onProgressInit(int, int);
+		void onProgressUpdate(int);
+
+		void onTerminateRequest(void);
 
 };
 

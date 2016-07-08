@@ -18,7 +18,7 @@
 #*                                                                         *
 #* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-QT		+=	core gui widgets sql
+QT		+=	core gui widgets sql concurrent
 
 TARGET	=	kconverter
 TEMPLATE	=	app
@@ -29,16 +29,19 @@ SOURCES	+=	main.cpp \
 			mainwindow.cpp \
 			changesdialog.cpp \
 			appcore.cpp \
-			replacedialog.cpp
+			replacedialog.cpp \
+			aboutdialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
 			appcore.hpp \
-			replacedialog.hpp
+			replacedialog.hpp \
+			aboutdialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
-			replacedialog.ui
+			replacedialog.ui \
+			aboutdialog.ui
 
 RESOURCES	+=	resources.qrc
 

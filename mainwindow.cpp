@@ -26,19 +26,28 @@ MainWindow::MainWindow(QWidget* Parent)
 {
 	ui->setupUi(this);
 
+	About = new AboutDialog(this);
 	Replace = new ReplaceDialog(this);
 	Setvalue = new ReplaceDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
+	Newline = new QComboBox(this);
 
 	Progress->setRange(0, 100);
 	Progress->setVisible(false);
 
 	Codecs->addItems(QStringList() << "Windows-1250" << "UTF-8");
+	Codecs->setLayoutDirection(Qt::LeftToRight);
+
+	Newline->setLayoutDirection(Qt::LeftToRight);
+	Newline->addItem("CRLF", "\r\n");
+	Newline->addItem("LF", "\n");
+	Newline->addItem("CR", "\r");
 
 	ui->Tree->setContextMenuPolicy(Qt::CustomContextMenu);
 	ui->statusBar->addPermanentWidget(Progress);
 	ui->actionStop->setEnabled(false);
+	ui->optionTools->addWidget(Newline);
 	ui->optionTools->addWidget(Codecs);
 
 	connect(this, &MainWindow::onOpenRequest, AppCore::getInstance(), &AppCore::LoadData);
@@ -54,6 +63,8 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataReplace, this, &MainWindow::FinishReplace);
 	connect(AppCore::getInstance(), &AppCore::onValuesUpdate, this, &MainWindow::FinishSetting);
 
+	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::open);
+
 	connect(ui->actionReplace, &QAction::triggered, Replace, &ReplaceDialog::open);
 	connect(Replace, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitReplace);
 	connect(this, &MainWindow::onReplaceFinish, Replace, &ReplaceDialog::ShowProgress);
@@ -66,12 +77,10 @@ MainWindow::MainWindow(QWidget* Parent)
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
-	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, this, &MainWindow::UpdateProgress);
+	connect(AppCore::getInstance(), &AppCore::onProgressInit, Progress, &QProgressBar::setRange);
+	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, Progress, &QProgressBar::setValue);
 
-	connect(ui->actionStop, &QAction::triggered, [] (void) -> void
-	{
-		AppCore::getInstance()->terminate();
-	});
+	connect(ui->actionStop, &QAction::triggered, AppCore::getInstance(), &AppCore::Terminate, Qt::DirectConnection);
 }
 
 MainWindow::~MainWindow(void)
@@ -139,7 +148,7 @@ void MainWindow::SaveActionClicked(void)
 	if (!Path.isEmpty())
 	{
 		LockUI(true, tr("Saving data..."));
-		emit onSaveRequest(Path, loadedHeader, loadedData, Codecs->currentText());
+		emit onSaveRequest(Path, loadedHeader, loadedData, Codecs->currentText(), Newline->currentData().toString());
 	}
 }
 
@@ -181,15 +190,18 @@ void MainWindow::TreeMenuRequest(const QPoint& Pos)
 
 void MainWindow::LoadTree(const QList<QStringList>& Data)
 {
-	const double Size = Data.size();
-	int ID = 0; loadedData = Data;
-
 	QList<QTreeWidgetItem*> Items;
+	int Step = 0;
+	int ID = 0;
+
+	loadedData = Data;
 
 	ui->statusBar->showMessage(tr("Clearing tree..."));
 	ui->Tree->clear();
 	ui->statusBar->showMessage(tr("Populating tree..."));
 	ui->actionStop->setEnabled(false);
+
+	Progress->setRange(0, loadedData.size());
 
 	for (const auto& Item : loadedData)
 	{
@@ -219,7 +231,7 @@ void MainWindow::LoadTree(const QList<QStringList>& Data)
 		Entry->addChildren(Values);
 		Items.append(Entry);
 
-		if (!(ID % 100)) UpdateProgress(ID / Size);
+		Progress->setValue(++Step);
 
 		thread()->eventDispatcher()->processEvents(QEventLoop::AllEvents);
 	}
@@ -269,11 +281,6 @@ void MainWindow::FinishSetting(const QList<QStringList>& Data, int Count)
 	loadedData = Data;
 
 	emit onSettingFinish(Count);
-}
-
-void MainWindow::UpdateProgress(double Value)
-{
-	Progress->setValue(100.0 * Value);
 }
 
 void MainWindow::UpdateTree(void)

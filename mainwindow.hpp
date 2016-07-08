@@ -31,10 +31,12 @@
 #include <QComboBox>
 #include <QThread>
 #include <QAction>
+#include <QLabel>
 #include <QMenu>
 
 #include "changesdialog.hpp"
 #include "replacedialog.hpp"
+#include "aboutdialog.hpp"
 #include "appcore.hpp"
 
 namespace Ui
@@ -51,11 +53,13 @@ class MainWindow : public QMainWindow
 
 		Ui::MainWindow* ui;
 
+		AboutDialog* About;
 		ReplaceDialog* Replace;
 		ReplaceDialog* Setvalue;
 
 		QProgressBar* Progress;
 		QComboBox* Codecs;
+		QComboBox* Newline;
 
 		QList<QStringList> loadedData;
 		QStringList loadedHeader;
@@ -88,7 +92,6 @@ class MainWindow : public QMainWindow
 		void InitSetting(const QString& From, const QString& To, bool Case, bool RegExp);
 		void FinishSetting(const QList<QStringList>& Data, int Count);
 
-		void UpdateProgress(double Value);
 		void UpdateTree(void);
 
 	signals:
@@ -99,6 +102,7 @@ class MainWindow : public QMainWindow
 		void onSaveRequest(const QString&,
 					    const QStringList&,
 					    const QList<QStringList>&,
+					    const QString&,
 					    const QString&);
 		void onReplaceRequest(const QList<QStringList>&,
 						  const QString&,

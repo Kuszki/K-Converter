@@ -149,28 +149,13 @@ QMap<int, AppCore::Entry> AppCore::getItems(void)
 	return Items;
 }
 
-int AppCore::getMaxIndex(void)
-{
-	QSqlQuery Query(Database);
-
-	Query.prepare(
-			"SELECT "
-				"MAX(ID) "
-			"FROM "
-				"sources");
-
-	if (Query.exec() && Query.next())
-	{
-		return Query.value(0).toInt();
-	}
-	else return -1;
-}
-
-void AppCore::terminate(void)
+void AppCore::Terminate(void)
 {
 	Locker.lock();
-	Terminate = true;
+	isTerminated = true;
 	Locker.unlock();
+
+	emit onTerminateRequest();
 }
 
 AppCore* AppCore::getInstance(void)
@@ -185,9 +170,14 @@ void AppCore::LoadItems(void)
 
 void AppCore::LoadData(const QString& Path, const QString& CoderName)
 {
-	QRegExp headerExpr("\\[OPCJE\\](.*)\\[OBIEKTY\\]");
-	QRegExp objectExpr("(A,.*)\\n{2}");
+	Locker.lock();
+	isTerminated = false;
+	Locker.unlock();
 
+	QRegExp headerExpr("\\[OPCJE\\](.*)\\[OBIEKTY\\]");
+	QRegExp objectExpr("(A,.*)(\\n|\\r|\\r\\n)\\2");
+
+	QList<QStringList> Items;
 	QFile dataFile(Path);
 
 	objectExpr.setMinimal(true);
@@ -195,88 +185,77 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 
 	dataFile.open(QFile::ReadOnly);
 
-	Terminate = false;
-
-	if (dataFile.isOpen())
+	if (dataFile.isOpen() && !isTerminated)
 	{
-		emit onProgressUpdate(0.0);
-
 		QTextDecoder* Coder = QTextCodec::codecForName(CoderName.toUtf8())->makeDecoder();
-		QString fileText = Coder->toUnicode(dataFile.readAll());
+		QString fileText = Coder->toUnicode(dataFile.readAll()).append("\n\n");
+		int lastPos = 0;
+
+		emit onProgressInit(0, fileText.size());
 
 		headerExpr.indexIn(fileText);
 
-		emit onHeaderLoad(headerExpr.capturedTexts().last().remove('\r').split('\n', QString::SkipEmptyParts));
+		emit onHeaderLoad(headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts));
 
-		QList<QStringList> Items;
-		const double Size = fileText.size();
-		int lastPos = 0;
-		int Step = 0;
-
-		fileText.remove('\r').append("\n\n");
-
-		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !Terminate)
+		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !isTerminated)
 		{
-			Items.append(objectExpr.capturedTexts().last().split('\n', QString::SkipEmptyParts));
+			Items.append(objectExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts));
 			lastPos += objectExpr.matchedLength();
 
-			if (!(++Step % 100)) emit onProgressUpdate(lastPos / Size);
+			emit onProgressUpdate(lastPos);
 		}
-
-		emit onProgressUpdate(1.0);
-
-		emit onObjectsLoad(Items);
 	}
+
+	emit onObjectsLoad(Items);
 }
 
-void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName)
+void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName, const QString& Newline)
 {
-	Terminate = false;
+	Locker.lock();
+	isTerminated = false;
+	Locker.unlock();
 
-	const QString NL = QSettings("K-Converter").value("new_line", "\r\n").toString();
-	const double Size = Data.size();
-	int Step = 0;
 	QFile dataFile(Path);
-
+	int Step = 0;
 
 	if (dataFile.open(QFile::WriteOnly | QFile::Text))
 	{
 		QTextStream streamOut(&dataFile);
 		streamOut.setCodec(QTextCodec::codecForName(CoderName.toUtf8()));
 
-		emit onProgressUpdate(0);
+		emit onProgressInit(0, Data.size());
 
-		streamOut << "[OPCJE]" << NL << NL
-				<< Header.join(NL) << NL << NL
-				<< "[OBIEKTY]" << NL << NL;
+		streamOut << "[OPCJE]" << Newline << Newline
+				<< Header.join(Newline) << Newline << Newline
+				<< "[OBIEKTY]" << Newline << Newline;
 
-		for (const auto& Item : Data) if (!Terminate)
+		for (const auto& Item : Data) if (!isTerminated)
 		{
-			streamOut << Item.join(NL) << NL << NL;
+			streamOut << Item.join(Newline) << Newline << Newline;
 
-			if (!(++Step % 100)) emit onProgressUpdate(Step / Size);
+			emit onProgressUpdate(++Step);
 		}
-
-		emit onProgressUpdate(1);
-
-		emit onOutputSave(Step == Size);
 	}
-	else emit onOutputSave(false);
+
+	emit onOutputSave(Step == Data.size());
 }
 
 void AppCore::ConvertData(const QList<QStringList>& Data)
 {
-	Terminate = false;
-
 	const QMap<int, AppCore::Entry> Tasks = getItems();
+
 	QList<QStringList> Output = Data;
-	const double Size = Output.size();
-	const QString Empty;
-	int Step = 0;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
 
-	emit onProgressUpdate(0);
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
 
-	for (auto& Item : Output) if (!Terminate)
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&Tasks] (auto& Item) -> void
 	{
 		for (auto& String : Item) for (const auto& Task : Tasks) if (Task.isEnabled)
 		{
@@ -284,110 +263,125 @@ void AppCore::ConvertData(const QList<QStringList>& Data)
 			else String.replace(QRegExp(Task.Source), Task.Replace);
 		}
 
-		Item.removeAll(Empty);
+		Item.removeAll("");
+	}));
 
-		if (!(++Step % 100)) emit onProgressUpdate(Step / Size);
-	}
-
-	emit onProgressUpdate(1);
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
 
 	emit onObjectsConvert(Output);
 }
 
 void AppCore::ReplaceData(const QList<QStringList>& Data, const QString &Source, const QString &Replace, bool Case, bool RegExp)
 {
-	Terminate = false;
-
 	QList<QStringList> Output = Data;
-	const double Size = Data.size();
-	const QString Empty;
-	int Step = 0;
-	int Count = 0;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
 
-	emit onProgressUpdate(0);
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
 
-	for (auto& Item : Output) if (!Terminate)
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Source, &Replace, Case, RegExp] (auto& Item) -> void
 	{
 		for (auto& String : Item)
 		{
 			const QString Old = String;
 
-			if (RegExp)
-			{
-				QRegExp Exp(Source);
-
-				Exp.setCaseSensitivity(Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
-				String.replace(Exp, Replace);
-			}
+			if (RegExp) String.replace(QRegExp(Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive), Replace);
 			else String.replace(Source, Replace, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
-			Count += String != Old;
+			const bool Changed = String != Old;
+
+			CountLocker.lock();
+			Count += Changed;
+			CountLocker.unlock();
 		}
 
-		Item.removeAll(Empty);
+		Item.removeAll("");
+	}));
 
-		if (!(++Step % 100)) emit onProgressUpdate(Step / Size);
-	}
-
-	emit onProgressUpdate(1);
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
 
 	emit onDataReplace(Output, Count);
 }
 
 void AppCore::UpdateValues(const QList<QStringList>& Data, const QString &Source, const QString &Replace, bool Case, bool RegExp)
 {
-	Terminate = false;
-
-	QRegExp objectExpr("(C,.*)=(.*)");
 	QList<QStringList> Output = Data;
-	const double Size = Data.size();
-	int Step = 0;
-	int Count = 0;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
 
-	emit onProgressUpdate(0);
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
 
-	for (auto& Item : Output) if (!Terminate)
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Source, &Replace, Case, RegExp] (auto& Item) -> void
 	{
+		QRegExp objectExpr("(C,.*)=(.*)");
 		QMap<QString, QString> Values;
-		QList<int> foundList;
+		QMap<int, QString> foundList;
+		int ID = 0;
 
 		for (auto& String : Item)
 		{
-			bool isFound;
-
 			if (objectExpr.indexIn(String) != -1)
 			{
+				const QString LastKey = objectExpr.capturedTexts()[1];
+				bool isFound = false;
+
 				Values.insert(QString("$%1").arg(objectExpr.capturedTexts()[1]),
-										   objectExpr.capturedTexts().last().trimmed());
+										   objectExpr.capturedTexts()[2]);
+
+				if (RegExp)
+				{
+					QRegExp nameExpr(Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
+
+					isFound = nameExpr.indexIn(LastKey) != -1;
+				}
+				else isFound = !QString::compare(LastKey, Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
+
+				if (isFound) foundList.insert(ID, LastKey);
 			}
-			if (RegExp)
-			{
-				QRegExp nameExpr(Source);
 
-				nameExpr.setCaseSensitivity(Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
-				nameExpr.indexIn(Values.lastKey());
-
-				isFound = nameExpr.capturedTexts().first() == Values.lastKey();
-			}
-			else isFound = Values.lastKey().compare(Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
-
-			if (isFound) foundList.append(Values.size() - 1);
+			++ID;
 		}
-qDebug() << "item ========\n" << Values;
-		for (const auto& Index : foundList)
+
+		for (const auto& Index : foundList.keys())
 		{
+			Item[Index] = foundList[Index] + "=" + Replace;
+
 			for (const auto& Value : Values.keys())
 			{
 				Item[Index].replace(Value, Values[Value]);
 			}
+
+			Item[Index] = Item[Index].trimmed();
 		}
 
+		CountLocker.lock();
 		Count += foundList.size();
+		CountLocker.unlock();
+	}));
 
-		if (!(++Step % 100)) emit onProgressUpdate(Step / Size);
-	}
-
-	emit onProgressUpdate(1);
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
 
 	emit onValuesUpdate(Output, Count);
 }

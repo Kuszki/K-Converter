@@ -18,47 +18,16 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef REPLACEDIALOG_HPP
-#define REPLACEDIALOG_HPP
+#include "aboutdialog.hpp"
+#include "ui_aboutdialog.h"
 
-#include <QMessageBox>
-#include <QDialog>
-
-#include "appcore.hpp"
-
-namespace Ui
+AboutDialog::AboutDialog(QWidget* Parent)
+: QDialog(Parent), ui(new Ui::AboutDialog)
 {
-	class ReplaceDialog;
+	ui->setupUi(this);
 }
 
-class ReplaceDialog : public QDialog
+AboutDialog::~AboutDialog(void)
 {
-
-		Q_OBJECT
-
-	private:
-
-		Ui::ReplaceDialog* ui;
-
-		int Replaces = 0;
-
-	public:
-
-		explicit ReplaceDialog(QWidget* Parent = nullptr);
-		virtual ~ReplaceDialog(void) override;
-
-	public slots:
-
-		virtual void accept(void) override;
-		virtual void reject(void) override;
-
-		void ShowProgress(int Count);
-
-	signals:
-
-		void onReplaceRequest(const QString&, const QString&, bool, bool);
-		void onRefreshRequest(void);
-
-};
-
-#endif // REPLACEDIALOG_HPP
+	delete ui;
+}

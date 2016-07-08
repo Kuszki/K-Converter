@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	a.installTranslator(&baseTranslator);
 
 	QTranslator appTranslator;
-	appTranslator.load("k-converter_" + QLocale::system().name());
+	appTranslator.load("k_converter_" + QLocale::system().name());
 	a.installTranslator(&appTranslator);
 
 	QThread t;
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	a.connect(&w, &MainWindow::destroyed, [&t, &c] (void) -> void
 	{
 		t.exit();
-		c.terminate();
+		c.Terminate();
 		t.wait();
 	});
 

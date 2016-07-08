@@ -28,7 +28,8 @@ ReplaceDialog::ReplaceDialog(QWidget* Parent)
 
 	ui->progressBar->setVisible(false);
 
-	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, this, &ReplaceDialog::UpdateProgress);
+	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 }
 
 ReplaceDialog::~ReplaceDialog(void)
@@ -75,9 +76,4 @@ void ReplaceDialog::ShowProgress(int Count)
 	ui->progressBar->setVisible(false);
 
 	Replaces += Count;
-}
-
-void ReplaceDialog::UpdateProgress(double Value)
-{
-	ui->progressBar->setValue(100 * Value);
 }
