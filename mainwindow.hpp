@@ -36,6 +36,7 @@
 
 #include "changesdialog.hpp"
 #include "replacedialog.hpp"
+#include "deletedialog.hpp"
 #include "aboutdialog.hpp"
 #include "appcore.hpp"
 
@@ -56,6 +57,7 @@ class MainWindow : public QMainWindow
 		AboutDialog* About;
 		ReplaceDialog* Replace;
 		ReplaceDialog* Setvalue;
+		DeleteDialog* Delete;
 
 		QProgressBar* Progress;
 		QComboBox* Codecs;
@@ -91,6 +93,8 @@ class MainWindow : public QMainWindow
 		void FinishReplace(const QList<QStringList>& Data, int Count);
 		void InitSetting(const QString& From, const QString& To, bool Case, bool RegExp);
 		void FinishSetting(const QList<QStringList>& Data, int Count);
+		void InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values);
+		void FinishDeleting(const QList<QStringList>& Data, int Count);
 
 		void UpdateTree(void);
 
@@ -112,9 +116,13 @@ class MainWindow : public QMainWindow
 						   const QString&,
 						   const QString&,
 						   bool, bool);
+		void onDeleteRequest(const QList<QStringList>&,
+						 const QStringList&,
+						 const QMap<QString, QString>&);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
+		void onDeletingFinish(int);
 
 };
 

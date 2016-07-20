@@ -96,6 +96,9 @@ class AppCore : public QObject
 					   const QString &Source,
 					   const QString &Replace,
 					   bool Case, bool RegExp);
+		void DeleteData(const QList<QStringList>& Data,
+					 const QStringList& Classes,
+					 const QMap<QString, QString>& List);
 
 		void Terminate(void);
 
@@ -108,6 +111,7 @@ class AppCore : public QObject
 		void onObjectsConvert(const QList<QStringList>&);
 		void onDataReplace(const QList<QStringList>, int);
 		void onValuesUpdate(const QList<QStringList>, int);
+		void onDataDelete(const QList<QStringList>, int);
 
 		void onOutputSave(bool);
 

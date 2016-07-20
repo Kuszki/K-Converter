@@ -30,18 +30,21 @@ SOURCES	+=	main.cpp \
 			changesdialog.cpp \
 			appcore.cpp \
 			replacedialog.cpp \
-			aboutdialog.cpp
+			aboutdialog.cpp \
+			deletedialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
 			appcore.hpp \
 			replacedialog.hpp \
-			aboutdialog.hpp
+			aboutdialog.hpp \
+			deletedialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
 			replacedialog.ui \
-			aboutdialog.ui
+			aboutdialog.ui \
+			deletedialog.ui
 
 RESOURCES	+=	resources.qrc
 

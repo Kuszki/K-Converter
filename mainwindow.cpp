@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	About = new AboutDialog(this);
 	Replace = new ReplaceDialog(this);
 	Setvalue = new ReplaceDialog(this);
+	Delete = new DeleteDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 	Newline = new QComboBox(this);
@@ -55,6 +56,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onConvertRequest, AppCore::getInstance(), &AppCore::ConvertData);
 	connect(this, &MainWindow::onReplaceRequest, AppCore::getInstance(), &AppCore::ReplaceData);
 	connect(this, &MainWindow::onSetvalueRequest, AppCore::getInstance(), &AppCore::UpdateValues);
+	connect(this, &MainWindow::onDeleteRequest, AppCore::getInstance(), &AppCore::DeleteData);
 
 	connect(AppCore::getInstance(), &AppCore::onHeaderLoad, this, &MainWindow::LoadHeader);
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::LoadTree);
@@ -62,8 +64,9 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onOutputSave, this, &MainWindow::FinishSave);
 	connect(AppCore::getInstance(), &AppCore::onDataReplace, this, &MainWindow::FinishReplace);
 	connect(AppCore::getInstance(), &AppCore::onValuesUpdate, this, &MainWindow::FinishSetting);
+	connect(AppCore::getInstance(), &AppCore::onDataDelete, this, &MainWindow::FinishDeleting);
 
-	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::open);
+	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
 	connect(ui->actionReplace, &QAction::triggered, Replace, &ReplaceDialog::open);
 	connect(Replace, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitReplace);
@@ -74,6 +77,11 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(Setvalue, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitSetting);
 	connect(this, &MainWindow::onSettingFinish, Setvalue, &ReplaceDialog::ShowProgress);
 	connect(Setvalue, &ReplaceDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+
+	connect(ui->actionDelete, &QAction::triggered, Delete, &DeleteDialog::open);
+	connect(Delete, &DeleteDialog::onDeleteRequest, this, &MainWindow::InitDeleting);
+	connect(this, &MainWindow::onDeletingFinish, Delete, &DeleteDialog::ShowProgress);
+	connect(Delete, &DeleteDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -281,6 +289,18 @@ void MainWindow::FinishSetting(const QList<QStringList>& Data, int Count)
 	loadedData = Data;
 
 	emit onSettingFinish(Count);
+}
+
+void MainWindow::InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values)
+{
+	emit onDeleteRequest(loadedData, Classes, Values);
+}
+
+void MainWindow::FinishDeleting(const QList<QStringList>& Data, int Count)
+{
+	loadedData = Data;
+
+	emit onDeletingFinish(Count);
 }
 
 void MainWindow::UpdateTree(void)

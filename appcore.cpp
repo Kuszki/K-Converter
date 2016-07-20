@@ -385,3 +385,71 @@ void AppCore::UpdateValues(const QList<QStringList>& Data, const QString &Source
 
 	emit onValuesUpdate(Output, Count);
 }
+
+void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Classes, const QMap<QString, QString>& List)
+{
+	QList<QStringList> Output = Data;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	const QString Expr = Classes.join('|');
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &List, &Expr] (auto& Item) -> void
+	{
+		QMap<QString, QString> ListCopy = List;
+		QRegExp classExpr(QString("A,(%1),").arg(Expr));
+		QRegExp objectExpr("(C,.*)=(.*)");
+		QMap<QString, QString> Values;
+		bool Delete = true;
+
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+
+			for (auto& String : Item) if (objectExpr.indexIn(String) != -1)
+			{
+				Values.insert(objectExpr.capturedTexts()[1], objectExpr.capturedTexts()[2]);
+			}
+
+			for (const auto& Key : Values.keys())
+			{
+				for (auto& Value : ListCopy)
+				{
+					Value.replace(QString("$%1").arg(Key), Values[Key], Qt::CaseSensitive);
+				}
+			}
+
+			for (const auto& Key : ListCopy.keys()) if (Delete)
+			{
+				if (!(Values.contains(Key) && Values[Key] == ListCopy[Key])) Delete = false;
+			}
+			else break;
+
+			if (Delete)
+			{
+				Item = QStringList();
+
+				CountLocker.lock();
+				Count += Delete;
+				CountLocker.unlock();
+			}
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	Output.removeAll(QStringList());
+
+	emit onDataDelete(Output, Count);
+}

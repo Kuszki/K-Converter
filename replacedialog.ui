@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>230</height>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,10 +15,9 @@
   </property>
   <property name="windowIcon">
    <iconset theme="edit-find-replace">
-    <normaloff/>
-   </iconset>
+    <normaloff>.</normaloff>.</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QFormLayout" name="formLayout_2">
    <item row="0" column="0" colspan="2">
     <widget class="QGroupBox" name="textGroup">
      <property name="title">
@@ -48,7 +47,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2">
+   <item row="1" column="0">
     <widget class="QGroupBox" name="optionsGroup">
      <property name="title">
       <string>Options</string>
@@ -71,25 +70,34 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="cancelButton">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QProgressBar" name="progressBar"/>
-   </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="procedButton">
-     <property name="text">
-      <string>Proced</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Actions</string>
      </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPushButton" name="procedButton">
+        <property name="text">
+         <string>Proced</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cancelButton">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QProgressBar" name="progressBar"/>
    </item>
   </layout>
  </widget>
