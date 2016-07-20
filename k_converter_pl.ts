@@ -154,6 +154,91 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
 </context>
 <context>
+    <name>DeleteDialog</name>
+    <message>
+        <location filename="deletedialog.ui" line="23"/>
+        <source>Class</source>
+        <translation>Kod obiektu</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="35"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="46"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="70"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="14"/>
+        <location filename="deletedialog.ui" line="77"/>
+        <source>Delete</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="102"/>
+        <source>Key</source>
+        <translation>Klucz</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="107"/>
+        <source>Value</source>
+        <translation>Wartość</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="49"/>
+        <source>key</source>
+        <translation>klucz</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="50"/>
+        <source>value</source>
+        <translation>wartość</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="80"/>
+        <location filename="deletedialog.cpp" line="82"/>
+        <location filename="deletedialog.cpp" line="95"/>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="80"/>
+        <source>Found duplicated keys</source>
+        <translation>Napotkano zdublowane klucze</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="82"/>
+        <source>Class to delete is empty</source>
+        <translation>Nie podano kodu obiektu</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="95"/>
+        <source>Deleting in progress</source>
+        <translation>Trwa usuwanie obiektów</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="100"/>
+        <source>Delete progress</source>
+        <translation>Postęp usuwania</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="deletedialog.cpp" line="101"/>
+        <source>Deleted %n item(s)</source>
+        <translation>
+            <numerusform>Usunięto %n wpis</numerusform>
+            <numerusform>Usunięto %n wpisy</numerusform>
+            <numerusform>Usunięto %n wpisów</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="14"/>
@@ -176,147 +261,152 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="64"/>
+        <location filename="mainwindow.ui" line="65"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="93"/>
+        <location filename="mainwindow.ui" line="94"/>
         <source>Convert</source>
         <translation>Konwertuj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="96"/>
+        <location filename="mainwindow.ui" line="97"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="105"/>
+        <location filename="mainwindow.ui" line="106"/>
         <source>Edit sources</source>
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="108"/>
+        <location filename="mainwindow.ui" line="109"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="117"/>
+        <location filename="mainwindow.ui" line="118"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="120"/>
+        <location filename="mainwindow.ui" line="121"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="129"/>
+        <location filename="mainwindow.ui" line="130"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="132"/>
+        <location filename="mainwindow.ui" line="133"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="141"/>
+        <location filename="mainwindow.ui" line="142"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="144"/>
+        <location filename="mainwindow.ui" line="145"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="153"/>
+        <location filename="mainwindow.ui" line="154"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="156"/>
+        <location filename="mainwindow.ui" line="157"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="165"/>
+        <location filename="mainwindow.ui" line="166"/>
         <source>Set value</source>
         <translation>Ustal pole</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="168"/>
+        <location filename="mainwindow.ui" line="169"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="177"/>
+        <location filename="mainwindow.ui" line="178"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="180"/>
+        <location filename="mainwindow.ui" line="181"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="114"/>
+        <location filename="mainwindow.ui" line="189"/>
+        <source>Delete</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="122"/>
         <source>Converting data...</source>
         <translation>Konwertowanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
-        <location filename="mainwindow.cpp" line="257"/>
+        <location filename="mainwindow.cpp" line="125"/>
+        <location filename="mainwindow.cpp" line="265"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="117"/>
+        <location filename="mainwindow.cpp" line="125"/>
         <source>No data in buffer</source>
         <translation>Brak danych w buforze</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
-        <location filename="mainwindow.cpp" line="288"/>
+        <location filename="mainwindow.cpp" line="147"/>
+        <location filename="mainwindow.cpp" line="308"/>
         <source>Loading data...</source>
         <translation>Wczytywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="150"/>
+        <location filename="mainwindow.cpp" line="158"/>
         <source>Saving data...</source>
         <translation>Zapisywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="163"/>
+        <location filename="mainwindow.cpp" line="171"/>
         <source>Copy all</source>
         <translation>Kopiuj wszystko</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="165"/>
+        <location filename="mainwindow.cpp" line="173"/>
         <source>Copy key</source>
         <translation>Kopiuj klucz</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="174"/>
         <source>Copy value</source>
         <translation>Kopiuj wartość</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="199"/>
+        <location filename="mainwindow.cpp" line="207"/>
         <source>Clearing tree...</source>
         <oldsource>Clearing tree..</oldsource>
         <translation>Czyszczenie drzewa...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="201"/>
+        <location filename="mainwindow.cpp" line="209"/>
         <source>Populating tree...</source>
         <oldsource>Populating tree..</oldsource>
         <translation>Zapełnianie drzewa...</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="241"/>
-        <location filename="mainwindow.cpp" line="290"/>
+        <location filename="mainwindow.cpp" line="249"/>
+        <location filename="mainwindow.cpp" line="310"/>
         <source>Action complete. Loaded %n item(s)</source>
         <translation>
             <numerusform>Zadanie ukończone. Wczytano %n wpis</numerusform>
@@ -325,13 +415,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="253"/>
+        <location filename="mainwindow.cpp" line="261"/>
         <source>File saved</source>
         <translation>Plik zapisany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="257"/>
-        <location filename="mainwindow.cpp" line="258"/>
+        <location filename="mainwindow.cpp" line="265"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>Error while saving file</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
