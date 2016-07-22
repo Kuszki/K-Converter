@@ -56,7 +56,7 @@ class UnpinnDialog : public QDialog
 
 	signals:
 
-		void onUnpinnRequest(const QStringList&);
+		void onUnpinnRequest(const QStringList&, bool);
 		void onRefreshRequest(void);
 
 };

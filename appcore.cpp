@@ -452,7 +452,7 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 	emit onDataDelete(Output, Count);
 }
 
-void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes)
+void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes, bool Delete)
 {
 	QList<QStringList> Output = Data;
 	QFutureWatcher<void> Watcher;
@@ -467,14 +467,17 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 
 	QRegExp classExpr(QString("A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
 	QList<QString> List;
+	int Count = 0;
 
 	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
 	{
 		List.append(classExpr.capturedTexts().last());
-		Item = QStringList();
+		if (Delete) Item = QStringList();
+
+		++Count;
 	}
 
-	int Count = Output.removeAll(QStringList());
+	Output.removeAll(QStringList());
 
 	Watcher.setFuture(QtConcurrent::map(Output, [&List] (auto& Item) -> void
 	{

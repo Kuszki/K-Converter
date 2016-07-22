@@ -99,7 +99,8 @@ class AppCore : public QObject
 					 const QStringList& Classes,
 					 const QMap<QString, QString>& List);
 		void UnpinnData(const QList<QStringList>& Data,
-					 const QStringList& Classes);
+					 const QStringList& Classes,
+					 bool Delete);
 
 		void Terminate(void);
 

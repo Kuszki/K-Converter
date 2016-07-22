@@ -512,44 +512,49 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="39"/>
+        <location filename="unpinndialog.ui" line="63"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="46"/>
+        <location filename="unpinndialog.ui" line="70"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="71"/>
+        <location filename="unpinndialog.ui" line="24"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="50"/>
-        <location filename="unpinndialog.cpp" line="63"/>
+        <location filename="unpinndialog.ui" line="43"/>
+        <source>Delete unpinned objects</source>
+        <translation>Usuń odczepione obiekty</translation>
+    </message>
+    <message>
+        <location filename="unpinndialog.cpp" line="51"/>
+        <location filename="unpinndialog.cpp" line="64"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="50"/>
+        <location filename="unpinndialog.cpp" line="51"/>
         <source>Classes list is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="63"/>
+        <location filename="unpinndialog.cpp" line="64"/>
         <source>Work in progress</source>
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="68"/>
+        <location filename="unpinndialog.cpp" line="69"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="69"/>
+        <location filename="unpinndialog.cpp" line="70"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>

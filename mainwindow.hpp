@@ -96,7 +96,7 @@ class MainWindow : public QMainWindow
 		void FinishSetting(const QList<QStringList>& Data, int Count);
 		void InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values);
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
-		void InitUnpinning(const QStringList& Classes);
+		void InitUnpinning(const QStringList& Classes, bool Delete);
 		void FinishUnpinning(const QList<QStringList>& Data, int Count);
 
 		void UpdateTree(void);
@@ -122,7 +122,7 @@ class MainWindow : public QMainWindow
 						 const QStringList&,
 						 const QMap<QString, QString>&);
 		void onUnpinnRequest(const QList<QStringList>&,
-						 const QStringList&);
+						 const QStringList&, bool);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);

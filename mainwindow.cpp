@@ -304,9 +304,9 @@ void MainWindow::FinishDeleting(const QList<QStringList>& Data, int Count)
 	emit onDeletingFinish(Count);
 }
 
-void MainWindow::InitUnpinning(const QStringList& Classes)
+void MainWindow::InitUnpinning(const QStringList& Classes, bool Delete)
 {
-	emit onUnpinnRequest(loadedData, Classes);
+	emit onUnpinnRequest(loadedData, Classes, Delete);
 }
 
 void MainWindow::FinishUnpinning(const QList<QStringList>& Data, int Count)
