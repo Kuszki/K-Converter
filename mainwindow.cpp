@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget* Parent)
 	Unpinn = new UnpinnDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
-	Newline = new QComboBox(this);
 
 	Progress->setRange(0, 100);
 	Progress->setVisible(false);
@@ -41,15 +40,9 @@ MainWindow::MainWindow(QWidget* Parent)
 	Codecs->addItems(QStringList() << "Windows-1250" << "UTF-8");
 	Codecs->setLayoutDirection(Qt::LeftToRight);
 
-	Newline->setLayoutDirection(Qt::LeftToRight);
-	Newline->addItem("CRLF", "\r\n");
-	Newline->addItem("LF", "\n");
-	Newline->addItem("CR", "\r");
-
 	ui->Tree->setContextMenuPolicy(Qt::CustomContextMenu);
 	ui->statusBar->addPermanentWidget(Progress);
 	ui->actionStop->setEnabled(false);
-	ui->optionTools->addWidget(Newline);
 	ui->optionTools->addWidget(Codecs);
 
 	connect(this, &MainWindow::onOpenRequest, AppCore::getInstance(), &AppCore::LoadData);
@@ -164,7 +157,7 @@ void MainWindow::SaveActionClicked(void)
 	if (!Path.isEmpty())
 	{
 		LockUI(true, tr("Saving data..."));
-		emit onSaveRequest(Path, loadedHeader, loadedData, Codecs->currentText(), Newline->currentData().toString());
+		emit onSaveRequest(Path, loadedHeader, loadedData, Codecs->currentText());
 	}
 }
 

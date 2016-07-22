@@ -174,7 +174,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 	isTerminated = false;
 	Locker.unlock();
 
-	QRegExp headerExpr("\\[OPCJE\\](.*)\\[OBIEKTY\\]");
+	QRegExp headerExpr("(.*)\\[OBIEKTY\\]");
 	QRegExp objectExpr("(A,.*)(\\n|\\r|\\r\\n)\\2");
 
 	QList<QStringList> Items;
@@ -195,7 +195,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 
 		headerExpr.indexIn(fileText);
 
-		emit onHeaderLoad(headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts));
+		emit onHeaderLoad(headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::KeepEmptyParts));
 
 		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !isTerminated)
 		{
@@ -209,7 +209,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 	emit onObjectsLoad(Items);
 }
 
-void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName, const QString& Newline)
+void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName)
 {
 	Locker.lock();
 	isTerminated = false;
@@ -225,13 +225,11 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 
 		emit onProgressInit(0, Data.size());
 
-		streamOut << "[OPCJE]" << Newline << Newline
-				<< Header.join(Newline) << Newline << Newline
-				<< "[OBIEKTY]" << Newline << Newline;
+		streamOut << Header.join('\n') << "[OBIEKTY]" << '\n';
 
 		for (const auto& Item : Data) if (!isTerminated)
 		{
-			streamOut << Item.join(Newline) << Newline << Newline;
+			streamOut << Item.join('\n') << "\n\n";
 
 			emit onProgressUpdate(++Step);
 		}
@@ -472,7 +470,6 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 
 	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
 	{
-		qDebug() << classExpr.capturedTexts().first();
 		List.append(classExpr.capturedTexts().last());
 		Item = QStringList();
 	}

@@ -32,7 +32,7 @@ SOURCES	+=	main.cpp \
 			replacedialog.cpp \
 			aboutdialog.cpp \
 			deletedialog.cpp \
-    unpinndialog.cpp
+			unpinndialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
@@ -40,14 +40,14 @@ HEADERS	+=	mainwindow.hpp \
 			replacedialog.hpp \
 			aboutdialog.hpp \
 			deletedialog.hpp \
-    unpinndialog.hpp
+			unpinndialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
 			replacedialog.ui \
 			aboutdialog.ui \
 			deletedialog.ui \
-    unpinndialog.ui
+			unpinndialog.ui
 
 RESOURCES	+=	resources.qrc
 

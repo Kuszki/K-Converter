@@ -15,30 +15,21 @@
   </property>
   <property name="windowIcon">
    <iconset theme="preferences-system">
-    <normaloff/>
-   </iconset>
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="3">
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QToolButton" name="addButton">
+   <item row="1" column="1">
+    <widget class="QToolButton" name="removeButton">
      <property name="text">
-      <string>Add</string>
+      <string>Remove</string>
      </property>
      <property name="icon">
-      <iconset theme="list-add">
-       <normaloff/>
-      </iconset>
+      <iconset theme="list-remove">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="7">
+   <item row="0" column="0" colspan="6">
     <widget class="QTableWidget" name="Items">
      <property name="alternatingRowColors">
       <bool>true</bool>
@@ -80,7 +71,7 @@
      </column>
     </widget>
    </item>
-   <item row="1" column="5">
+   <item row="1" column="4">
     <spacer name="rightSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -96,39 +87,21 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="6">
-    <widget class="QToolButton" name="closeButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="icon">
-      <iconset theme="exit">
-       <normaloff/>
-      </iconset>
+   <item row="1" column="3">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="1" column="4">
-    <widget class="QToolButton" name="clearButton">
+   <item row="1" column="0">
+    <widget class="QToolButton" name="addButton">
      <property name="text">
-      <string>Clear</string>
+      <string>Add</string>
      </property>
      <property name="icon">
-      <iconset theme="edit-clear">
-       <normaloff/>
-      </iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QToolButton" name="removeButton">
-     <property name="text">
-      <string>Remove</string>
-     </property>
-     <property name="icon">
-      <iconset theme="list-remove">
-       <normaloff/>
-      </iconset>
+      <iconset theme="list-add">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </item>
@@ -144,6 +117,17 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="5">
+    <widget class="QToolButton" name="closeButton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="icon">
+      <iconset theme="exit">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -194,22 +178,6 @@
     <hint type="destinationlabel">
      <x>172</x>
      <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clearButton</sender>
-   <signal>clicked()</signal>
-   <receiver>lineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>230</x>
-     <y>274</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>194</x>
-     <y>274</y>
     </hint>
    </hints>
   </connection>

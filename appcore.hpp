@@ -85,8 +85,7 @@ class AppCore : public QObject
 		void SaveData(const QString& Path,
 				    const QStringList& Header,
 				    const QList<QStringList>& Data,
-				    const QString& CoderName,
-				    const QString& Newline);
+				    const QString& CoderName);
 		void ConvertData(const QList<QStringList>& Data);
 		void ReplaceData(const QList<QStringList>& Data,
 					  const QString& Source,

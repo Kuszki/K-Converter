@@ -63,7 +63,6 @@ class MainWindow : public QMainWindow
 
 		QProgressBar* Progress;
 		QComboBox* Codecs;
-		QComboBox* Newline;
 
 		QList<QStringList> loadedData;
 		QStringList loadedHeader;
@@ -110,7 +109,6 @@ class MainWindow : public QMainWindow
 		void onSaveRequest(const QString&,
 					    const QStringList&,
 					    const QList<QStringList>&,
-					    const QString&,
 					    const QString&);
 		void onReplaceRequest(const QList<QStringList>&,
 						  const QString&,

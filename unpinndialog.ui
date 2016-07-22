@@ -14,7 +14,8 @@
    <string>Unpinn</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="edit-unpinn"/>
+   <iconset theme="edit-unpinn">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="0" colspan="2">
@@ -43,6 +44,9 @@
       <widget class="QPushButton" name="procedButton">
        <property name="text">
         <string>Unpinn</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
