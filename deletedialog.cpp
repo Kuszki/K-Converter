@@ -75,7 +75,7 @@ void DeleteDialog::accept(void)
 			ui->cancelButton->setEnabled(false);
 			ui->progressBar->setVisible(true);
 
-			emit onDeleteRequest(ui->Class->text().split(','), Values);
+			emit onDeleteRequest(ui->Class->text().split(',', QString::SkipEmptyParts), Values);
 		}
 		else QMessageBox::warning(this, tr("Error"), tr("Found duplicated keys"));
 	}

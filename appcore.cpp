@@ -453,3 +453,43 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 
 	emit onDataDelete(Output, Count);
 }
+
+void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes)
+{
+	QList<QStringList> Output = Data;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	QRegExp classExpr(QString("A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
+	QList<QString> List;
+
+	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
+	{
+		qDebug() << classExpr.capturedTexts().first();
+		List.append(classExpr.capturedTexts().last());
+		Item = QStringList();
+	}
+
+	int Count = Output.removeAll(QStringList());
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&List] (auto& Item) -> void
+	{
+		for (auto& String : Item) if (String[0] == 'B') for (const auto& Pinn : List)
+		{
+			String.replace(QString("B,%1,").arg(Pinn), "B,,");
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	emit onDataUnpinn(Output, Count);
+}

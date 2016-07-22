@@ -42,6 +42,9 @@
    <property name="movable">
     <bool>false</bool>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextOnly</enum>
+   </property>
    <property name="floatable">
     <bool>false</bool>
    </property>
@@ -58,6 +61,7 @@
    <addaction name="actionReplace"/>
    <addaction name="actionSetvalue"/>
    <addaction name="actionDelete"/>
+   <addaction name="actionUnpinn"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="optionTools">
@@ -69,6 +73,9 @@
    </property>
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextOnly</enum>
    </property>
    <property name="floatable">
     <bool>false</bool>
@@ -183,10 +190,19 @@
   </action>
   <action name="actionDelete">
    <property name="icon">
-    <iconset theme="edit-delete"/>
+    <iconset theme="edit-delete">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionUnpinn">
+   <property name="icon">
+    <iconset theme="edit-unpinn"/>
+   </property>
+   <property name="text">
+    <string>Unpinn</string>
    </property>
   </action>
  </widget>

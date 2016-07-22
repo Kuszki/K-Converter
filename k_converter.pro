@@ -31,20 +31,23 @@ SOURCES	+=	main.cpp \
 			appcore.cpp \
 			replacedialog.cpp \
 			aboutdialog.cpp \
-			deletedialog.cpp
+			deletedialog.cpp \
+    unpinndialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
 			appcore.hpp \
 			replacedialog.hpp \
 			aboutdialog.hpp \
-			deletedialog.hpp
+			deletedialog.hpp \
+    unpinndialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
 			replacedialog.ui \
 			aboutdialog.ui \
-			deletedialog.ui
+			deletedialog.ui \
+    unpinndialog.ui
 
 RESOURCES	+=	resources.qrc
 

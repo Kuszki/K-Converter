@@ -99,6 +99,8 @@ class AppCore : public QObject
 		void DeleteData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
 					 const QMap<QString, QString>& List);
+		void UnpinnData(const QList<QStringList>& Data,
+					 const QStringList& Classes);
 
 		void Terminate(void);
 
@@ -112,6 +114,7 @@ class AppCore : public QObject
 		void onDataReplace(const QList<QStringList>, int);
 		void onValuesUpdate(const QList<QStringList>, int);
 		void onDataDelete(const QList<QStringList>, int);
+		void onDataUnpinn(const QList<QStringList>, int);
 
 		void onOutputSave(bool);
 

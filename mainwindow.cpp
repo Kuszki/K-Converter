@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Replace = new ReplaceDialog(this);
 	Setvalue = new ReplaceDialog(this);
 	Delete = new DeleteDialog(this);
+	Unpinn = new UnpinnDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 	Newline = new QComboBox(this);
@@ -57,6 +58,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onReplaceRequest, AppCore::getInstance(), &AppCore::ReplaceData);
 	connect(this, &MainWindow::onSetvalueRequest, AppCore::getInstance(), &AppCore::UpdateValues);
 	connect(this, &MainWindow::onDeleteRequest, AppCore::getInstance(), &AppCore::DeleteData);
+	connect(this, &MainWindow::onUnpinnRequest, AppCore::getInstance(), &AppCore::UnpinnData);
 
 	connect(AppCore::getInstance(), &AppCore::onHeaderLoad, this, &MainWindow::LoadHeader);
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::LoadTree);
@@ -65,6 +67,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataReplace, this, &MainWindow::FinishReplace);
 	connect(AppCore::getInstance(), &AppCore::onValuesUpdate, this, &MainWindow::FinishSetting);
 	connect(AppCore::getInstance(), &AppCore::onDataDelete, this, &MainWindow::FinishDeleting);
+	connect(AppCore::getInstance(), &AppCore::onDataUnpinn, this, &MainWindow::FinishUnpinning);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -82,6 +85,11 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(Delete, &DeleteDialog::onDeleteRequest, this, &MainWindow::InitDeleting);
 	connect(this, &MainWindow::onDeletingFinish, Delete, &DeleteDialog::ShowProgress);
 	connect(Delete, &DeleteDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+
+	connect(ui->actionUnpinn, &QAction::triggered, Unpinn, &UnpinnDialog::open);
+	connect(Unpinn, &UnpinnDialog::onUnpinnRequest, this, &MainWindow::InitUnpinning);
+	connect(this, &MainWindow::onUnpinningFinish, Unpinn, &UnpinnDialog::ShowProgress);
+	connect(Unpinn, &UnpinnDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -301,6 +309,18 @@ void MainWindow::FinishDeleting(const QList<QStringList>& Data, int Count)
 	loadedData = Data;
 
 	emit onDeletingFinish(Count);
+}
+
+void MainWindow::InitUnpinning(const QStringList& Classes)
+{
+	emit onUnpinnRequest(loadedData, Classes);
+}
+
+void MainWindow::FinishUnpinning(const QList<QStringList>& Data, int Count)
+{
+	loadedData = Data;
+
+	emit onUnpinningFinish(Count);
 }
 
 void MainWindow::UpdateTree(void)

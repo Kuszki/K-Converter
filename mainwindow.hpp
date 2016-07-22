@@ -37,6 +37,7 @@
 #include "changesdialog.hpp"
 #include "replacedialog.hpp"
 #include "deletedialog.hpp"
+#include "unpinndialog.hpp"
 #include "aboutdialog.hpp"
 #include "appcore.hpp"
 
@@ -58,6 +59,7 @@ class MainWindow : public QMainWindow
 		ReplaceDialog* Replace;
 		ReplaceDialog* Setvalue;
 		DeleteDialog* Delete;
+		UnpinnDialog* Unpinn;
 
 		QProgressBar* Progress;
 		QComboBox* Codecs;
@@ -95,6 +97,8 @@ class MainWindow : public QMainWindow
 		void FinishSetting(const QList<QStringList>& Data, int Count);
 		void InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values);
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
+		void InitUnpinning(const QStringList& Classes);
+		void FinishUnpinning(const QList<QStringList>& Data, int Count);
 
 		void UpdateTree(void);
 
@@ -119,10 +123,13 @@ class MainWindow : public QMainWindow
 		void onDeleteRequest(const QList<QStringList>&,
 						 const QStringList&,
 						 const QMap<QString, QString>&);
+		void onUnpinnRequest(const QList<QStringList>&,
+						 const QStringList&);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
 		void onDeletingFinish(int);
+		void onUnpinningFinish(int);
 
 };
 
