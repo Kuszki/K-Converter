@@ -14,7 +14,8 @@
    <string>Delete</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="edit-delete"/>
+   <iconset theme="edit-delete">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -58,8 +59,8 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>199</width>
-         <height>20</height>
+         <width>100</width>
+         <height>0</height>
         </size>
        </property>
       </spacer>

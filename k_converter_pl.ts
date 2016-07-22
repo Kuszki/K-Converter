@@ -434,47 +434,44 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     <name>ReplaceDialog</name>
     <message>
         <location filename="replacedialog.ui" line="14"/>
-        <location filename="replacedialog.ui" line="40"/>
+        <location filename="replacedialog.ui" line="24"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="24"/>
         <source>Text</source>
-        <translation>Tekst</translation>
+        <translation type="vanished">Tekst</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="30"/>
+        <location filename="replacedialog.ui" line="34"/>
         <source>Find</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="53"/>
         <source>Options</source>
-        <translation>Opcje</translation>
+        <translation type="vanished">Opcje</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="59"/>
+        <location filename="replacedialog.ui" line="44"/>
         <source>Case sensitivity</source>
         <translation>Rozróżniaj wielkość liter</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="66"/>
+        <location filename="replacedialog.ui" line="95"/>
         <source>Use regexp</source>
         <translation>Użyj wyrażeń regularnych</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="76"/>
         <source>Actions</source>
-        <translation>Akcje</translation>
+        <translation type="vanished">Akcje</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="82"/>
+        <location filename="replacedialog.ui" line="80"/>
         <source>Proced</source>
         <translation>Wykonaj</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="92"/>
+        <location filename="replacedialog.ui" line="73"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>

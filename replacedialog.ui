@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>272</height>
+    <height>175</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,87 +17,90 @@
    <iconset theme="edit-find-replace">
     <normaloff>.</normaloff>.</iconset>
   </property>
-  <layout class="QFormLayout" name="formLayout_2">
-   <item row="0" column="0" colspan="2">
-    <widget class="QGroupBox" name="textGroup">
-     <property name="title">
-      <string>Text</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="findLabel">
-        <property name="text">
-         <string>Find</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="Find"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="replaceLabel">
-        <property name="text">
-         <string>Replace</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="Replace"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
-    <widget class="QGroupBox" name="optionsGroup">
-     <property name="title">
-      <string>Options</string>
+    <widget class="QLabel" name="replaceLabel">
+     <property name="text">
+      <string>Replace</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QCheckBox" name="caseCheck">
-        <property name="text">
-         <string>Case sensitivity</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="regexpCheck">
-        <property name="text">
-         <string>Use regexp</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Actions</string>
+    <widget class="QLineEdit" name="Replace"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="findLabel">
+     <property name="text">
+      <string>Find</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QPushButton" name="procedButton">
-        <property name="text">
-         <string>Proced</string>
-        </property>
-        <property name="default">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="cancelButton">
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="Find"/>
+   </item>
    <item row="2" column="0" colspan="2">
+    <widget class="QCheckBox" name="caseCheck">
+     <property name="text">
+      <string>Case sensitivity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="procedButton">
+       <property name="text">
+        <string>Proced</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0" colspan="2">
     <widget class="QProgressBar" name="progressBar"/>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="regexpCheck">
+     <property name="text">
+      <string>Use regexp</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
