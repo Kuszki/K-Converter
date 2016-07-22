@@ -79,42 +79,41 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="32"/>
+        <location filename="changesdialog.ui" line="100"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="63"/>
+        <location filename="changesdialog.ui" line="54"/>
         <source>ID</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="68"/>
+        <location filename="changesdialog.ui" line="59"/>
         <source>Source</source>
         <translation>Źródło</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="73"/>
+        <location filename="changesdialog.ui" line="64"/>
         <source>Replace</source>
         <translation>Zamiana</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="78"/>
+        <location filename="changesdialog.ui" line="69"/>
         <source>RegExp</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="102"/>
+        <location filename="changesdialog.ui" line="124"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="114"/>
         <source>Clear</source>
-        <translation>Wyczyść</translation>
+        <translation type="vanished">Wyczyść</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="126"/>
+        <location filename="changesdialog.ui" line="24"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
@@ -356,62 +355,62 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="130"/>
+        <location filename="mainwindow.cpp" line="123"/>
         <source>Converting data...</source>
         <translation>Konwertowanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
-        <location filename="mainwindow.cpp" line="273"/>
+        <location filename="mainwindow.cpp" line="126"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="133"/>
+        <location filename="mainwindow.cpp" line="126"/>
         <source>No data in buffer</source>
         <translation>Brak danych w buforze</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
-        <location filename="mainwindow.cpp" line="328"/>
+        <location filename="mainwindow.cpp" line="148"/>
+        <location filename="mainwindow.cpp" line="321"/>
         <source>Loading data...</source>
         <translation>Wczytywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="166"/>
+        <location filename="mainwindow.cpp" line="159"/>
         <source>Saving data...</source>
         <translation>Zapisywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="179"/>
+        <location filename="mainwindow.cpp" line="172"/>
         <source>Copy all</source>
         <translation>Kopiuj wszystko</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="181"/>
+        <location filename="mainwindow.cpp" line="174"/>
         <source>Copy key</source>
         <translation>Kopiuj klucz</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="182"/>
+        <location filename="mainwindow.cpp" line="175"/>
         <source>Copy value</source>
         <translation>Kopiuj wartość</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="215"/>
+        <location filename="mainwindow.cpp" line="208"/>
         <source>Clearing tree...</source>
         <oldsource>Clearing tree..</oldsource>
         <translation>Czyszczenie drzewa...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="217"/>
+        <location filename="mainwindow.cpp" line="210"/>
         <source>Populating tree...</source>
         <oldsource>Populating tree..</oldsource>
         <translation>Zapełnianie drzewa...</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="257"/>
-        <location filename="mainwindow.cpp" line="330"/>
+        <location filename="mainwindow.cpp" line="250"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Action complete. Loaded %n item(s)</source>
         <translation>
             <numerusform>Zadanie ukończone. Wczytano %n wpis</numerusform>
@@ -420,13 +419,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="269"/>
+        <location filename="mainwindow.cpp" line="262"/>
         <source>File saved</source>
         <translation>Plik zapisany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="273"/>
-        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="266"/>
+        <location filename="mainwindow.cpp" line="267"/>
         <source>Error while saving file</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
@@ -513,18 +512,18 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="38"/>
+        <location filename="unpinndialog.ui" line="39"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="45"/>
+        <location filename="unpinndialog.ui" line="46"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="67"/>
+        <location filename="unpinndialog.ui" line="71"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
