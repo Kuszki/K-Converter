@@ -42,9 +42,6 @@
    <property name="movable">
     <bool>false</bool>
    </property>
-   <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonTextOnly</enum>
-   </property>
    <property name="floatable">
     <bool>false</bool>
    </property>
@@ -73,9 +70,6 @@
    </property>
    <property name="movable">
     <bool>false</bool>
-   </property>
-   <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonTextOnly</enum>
    </property>
    <property name="floatable">
     <bool>false</bool>
@@ -199,7 +193,8 @@
   </action>
   <action name="actionUnpinn">
    <property name="icon">
-    <iconset theme="edit-unpinn"/>
+    <iconset theme="edit-cut">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Unpinn</string>

@@ -155,38 +155,38 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>DeleteDialog</name>
     <message>
-        <location filename="deletedialog.ui" line="23"/>
+        <location filename="deletedialog.ui" line="24"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="35"/>
+        <location filename="deletedialog.ui" line="36"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="46"/>
+        <location filename="deletedialog.ui" line="47"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="70"/>
+        <location filename="deletedialog.ui" line="71"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="deletedialog.ui" line="14"/>
-        <location filename="deletedialog.ui" line="77"/>
+        <location filename="deletedialog.ui" line="78"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="102"/>
+        <location filename="deletedialog.ui" line="103"/>
         <source>Key</source>
         <translation>Klucz</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="107"/>
+        <location filename="deletedialog.ui" line="108"/>
         <source>Value</source>
         <translation>Wartość</translation>
     </message>
@@ -260,97 +260,97 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="69"/>
+        <location filename="mainwindow.ui" line="66"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="101"/>
+        <location filename="mainwindow.ui" line="95"/>
         <source>Convert</source>
         <translation>Konwertuj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="104"/>
+        <location filename="mainwindow.ui" line="98"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="113"/>
+        <location filename="mainwindow.ui" line="107"/>
         <source>Edit sources</source>
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="116"/>
+        <location filename="mainwindow.ui" line="110"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="125"/>
+        <location filename="mainwindow.ui" line="119"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="128"/>
+        <location filename="mainwindow.ui" line="122"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="137"/>
+        <location filename="mainwindow.ui" line="131"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="140"/>
+        <location filename="mainwindow.ui" line="134"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="149"/>
+        <location filename="mainwindow.ui" line="143"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="152"/>
+        <location filename="mainwindow.ui" line="146"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="161"/>
+        <location filename="mainwindow.ui" line="155"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="164"/>
+        <location filename="mainwindow.ui" line="158"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="173"/>
+        <location filename="mainwindow.ui" line="167"/>
         <source>Set value</source>
         <translation>Ustal pole</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="176"/>
+        <location filename="mainwindow.ui" line="170"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="185"/>
+        <location filename="mainwindow.ui" line="179"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="188"/>
+        <location filename="mainwindow.ui" line="182"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="197"/>
+        <location filename="mainwindow.ui" line="191"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="200"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
@@ -457,7 +457,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Rozróżniaj wielkość liter</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="95"/>
+        <location filename="replacedialog.ui" line="101"/>
         <source>Use regexp</source>
         <translation>Użyj wyrażeń regularnych</translation>
     </message>
@@ -466,12 +466,12 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Akcje</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="80"/>
+        <location filename="replacedialog.ui" line="86"/>
         <source>Proced</source>
         <translation>Wykonaj</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="73"/>
+        <location filename="replacedialog.ui" line="79"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -509,23 +509,23 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="63"/>
+        <location filename="unpinndialog.ui" line="62"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="70"/>
+        <location filename="unpinndialog.ui" line="69"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="24"/>
+        <location filename="unpinndialog.ui" line="23"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="43"/>
+        <location filename="unpinndialog.ui" line="42"/>
         <source>Delete unpinned objects</source>
         <translation>Usuń odczepione obiekty</translation>
     </message>

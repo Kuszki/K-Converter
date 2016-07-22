@@ -7,15 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>105</height>
+    <height>122</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Unpinn</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="edit-unpinn">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset theme="edit-cut"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
