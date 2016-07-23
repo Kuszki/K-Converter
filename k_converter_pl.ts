@@ -191,44 +191,44 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Wartość</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="49"/>
+        <location filename="deletedialog.cpp" line="46"/>
         <source>key</source>
         <translation>klucz</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="50"/>
+        <location filename="deletedialog.cpp" line="47"/>
         <source>value</source>
         <translation>wartość</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="80"/>
-        <location filename="deletedialog.cpp" line="82"/>
-        <location filename="deletedialog.cpp" line="95"/>
+        <location filename="deletedialog.cpp" line="85"/>
+        <location filename="deletedialog.cpp" line="87"/>
+        <location filename="deletedialog.cpp" line="104"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="80"/>
+        <location filename="deletedialog.cpp" line="85"/>
         <source>Found duplicated keys</source>
         <translation>Napotkano zdublowane klucze</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="82"/>
+        <location filename="deletedialog.cpp" line="87"/>
         <source>Class to delete is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="95"/>
+        <location filename="deletedialog.cpp" line="104"/>
         <source>Deleting in progress</source>
         <translation>Trwa usuwanie obiektów</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="100"/>
+        <location filename="deletedialog.cpp" line="109"/>
         <source>Delete progress</source>
         <translation>Postęp usuwania</translation>
     </message>
     <message numerus="yes">
-        <location filename="deletedialog.cpp" line="101"/>
+        <location filename="deletedialog.cpp" line="110"/>
         <source>Deleted %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n wpis</numerusform>
@@ -350,9 +350,19 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="200"/>
+        <location filename="mainwindow.ui" line="194"/>
+        <source>Del</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="203"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="206"/>
+        <source>Ctrl+X</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="123"/>
@@ -476,28 +486,28 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="53"/>
-        <location filename="replacedialog.cpp" line="66"/>
+        <location filename="replacedialog.cpp" line="61"/>
+        <location filename="replacedialog.cpp" line="78"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="53"/>
+        <location filename="replacedialog.cpp" line="61"/>
         <source>Text to find is empty</source>
         <translation>Zadany tekst jest pusty</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="66"/>
+        <location filename="replacedialog.cpp" line="78"/>
         <source>Replacing in progress</source>
         <translation>Trwa wprowadzanie zmian</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="71"/>
+        <location filename="replacedialog.cpp" line="83"/>
         <source>Replace progress</source>
         <translation>Postęp zmian</translation>
     </message>
     <message numerus="yes">
-        <location filename="replacedialog.cpp" line="72"/>
+        <location filename="replacedialog.cpp" line="84"/>
         <source>Replaced %n item(s)</source>
         <translation>
             <numerusform>Zamieniono %n wpis</numerusform>
@@ -530,28 +540,28 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Usuń odczepione obiekty</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="51"/>
-        <location filename="unpinndialog.cpp" line="64"/>
+        <location filename="unpinndialog.cpp" line="59"/>
+        <location filename="unpinndialog.cpp" line="76"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="51"/>
+        <location filename="unpinndialog.cpp" line="59"/>
         <source>Classes list is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="64"/>
+        <location filename="unpinndialog.cpp" line="76"/>
         <source>Work in progress</source>
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="69"/>
+        <location filename="unpinndialog.cpp" line="81"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="70"/>
+        <location filename="unpinndialog.cpp" line="82"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>

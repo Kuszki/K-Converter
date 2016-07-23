@@ -37,6 +37,14 @@ UnpinnDialog::~UnpinnDialog(void)
     delete ui;
 }
 
+void UnpinnDialog::open(void)
+{
+	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
+
+	QDialog::open();
+}
+
 void UnpinnDialog::accept(void)
 {
 	if (ui->Class->text().size())
@@ -55,11 +63,15 @@ void UnpinnDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
+		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
+
+		if (Unpinned)
+		{
+			emit onRefreshRequest(); Unpinned = 0;
+		}
+
 		QDialog::reject();
-
-		if (Unpinned) emit onRefreshRequest();
-
-		Unpinned = 0;
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Work in progress"));
 }

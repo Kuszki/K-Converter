@@ -190,6 +190,9 @@
    <property name="text">
     <string>Delete</string>
    </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
   </action>
   <action name="actionUnpinn">
    <property name="icon">
@@ -198,6 +201,9 @@
    </property>
    <property name="text">
     <string>Unpinn</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
  </widget>

@@ -27,9 +27,6 @@ DeleteDialog::DeleteDialog(QWidget* Parent)
 	ui->setupUi(this);
 
 	ui->progressBar->setVisible(false);
-
-	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
-	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 }
 
 DeleteDialog::~DeleteDialog(void)
@@ -59,6 +56,14 @@ void DeleteDialog::RemoveButtonClicked(void)
 	if (Row != -1) ui->Values->removeRow(Row);
 }
 
+void DeleteDialog::open(void)
+{
+	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
+
+	QDialog::open();
+}
+
 void DeleteDialog::accept(void)
 {
 	if (ui->Class->text().size())
@@ -86,11 +91,15 @@ void DeleteDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
+		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
+
+		if (Deleted)
+		{
+			emit onRefreshRequest(); Deleted = 0;
+		}
+
 		QDialog::reject();
-
-		if (Deleted) emit onRefreshRequest();
-
-		Deleted = 0;
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Deleting in progress"));
 }

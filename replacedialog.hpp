@@ -49,6 +49,7 @@ class ReplaceDialog : public QDialog
 
 	public slots:
 
+		virtual void open(void) override;
 		virtual void accept(void) override;
 		virtual void reject(void) override;
 
