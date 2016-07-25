@@ -221,17 +221,46 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 	if (dataFile.open(QFile::WriteOnly | QFile::Text))
 	{
 		QTextStream streamOut(&dataFile);
+
 		streamOut.setCodec(QTextCodec::codecForName(CoderName.toUtf8()));
 
 		emit onProgressInit(0, Data.size());
 
-		streamOut << Header.join('\n') << "[OBIEKTY]" << '\n';
+		streamOut << Header.join('\n') << "[OBIEKTY]\n";
 
 		for (const auto& Item : Data) if (!isTerminated)
 		{
 			streamOut << Item.join('\n') << "\n\n";
 
 			emit onProgressUpdate(++Step);
+		}
+
+		streamOut << "; Crc32Sum=";
+
+		streamOut.flush();
+		dataFile.close();
+
+		if (dataFile.open(QFile::ReadWrite))
+		{
+			uint32_t Seed = 4294967295u;
+			uint32_t Poly[256];
+
+			for (int i = 0; i < 256; i++)
+			{
+				uint32_t crc = i;
+
+				for (int j = 0; j < 8; j++)
+					crc = crc & 1 ? (crc >> 1) ^ 3988292384u : crc >> 1;
+
+				Poly[i] = crc;
+			}
+
+			for (const auto& Value : dataFile.readAll()) if (Value != 10 && Value != 13)
+			{
+				Seed = Poly[(Seed ^ Value) & 0xFF] ^ (Seed >> 8);
+			}
+
+			dataFile.write(QString::number(~Seed, 16).toUtf8());
 		}
 	}
 
