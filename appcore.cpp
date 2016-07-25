@@ -260,7 +260,7 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 				Seed = Poly[(Seed ^ Value) & 0xFF] ^ (Seed >> 8);
 			}
 
-			dataFile.write(QString::number(~Seed, 16).toUtf8());
+			dataFile.write(QString("%1").arg(~Seed, 8, 16, QChar('0')).toUtf8());
 		}
 	}
 
