@@ -191,44 +191,44 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Wartość</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="46"/>
+        <location filename="deletedialog.cpp" line="49"/>
         <source>key</source>
         <translation>klucz</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="47"/>
+        <location filename="deletedialog.cpp" line="50"/>
         <source>value</source>
         <translation>wartość</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="85"/>
-        <location filename="deletedialog.cpp" line="87"/>
-        <location filename="deletedialog.cpp" line="101"/>
+        <location filename="deletedialog.cpp" line="88"/>
+        <location filename="deletedialog.cpp" line="90"/>
+        <location filename="deletedialog.cpp" line="104"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="85"/>
+        <location filename="deletedialog.cpp" line="88"/>
         <source>Found duplicated keys</source>
         <translation>Napotkano zdublowane klucze</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="87"/>
+        <location filename="deletedialog.cpp" line="90"/>
         <source>Class to delete is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="101"/>
+        <location filename="deletedialog.cpp" line="104"/>
         <source>Deleting in progress</source>
         <translation>Trwa usuwanie obiektów</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="106"/>
+        <location filename="deletedialog.cpp" line="109"/>
         <source>Delete progress</source>
         <translation>Postęp usuwania</translation>
     </message>
     <message numerus="yes">
-        <location filename="deletedialog.cpp" line="107"/>
+        <location filename="deletedialog.cpp" line="110"/>
         <source>Deleted %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n wpis</numerusform>
@@ -416,7 +416,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="mainwindow.cpp" line="177"/>
-        <location filename="mainwindow.cpp" line="345"/>
+        <location filename="mainwindow.cpp" line="355"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
@@ -456,6 +456,11 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Kopiuj wartość</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="351"/>
+        <source>File saved, checksum is %1</source>
+        <translation>Plik zapisany, suma kontrolna wynosi %1</translation>
+    </message>
+    <message>
         <source>Clearing tree...</source>
         <oldsource>Clearing tree..</oldsource>
         <translation type="vanished">Czyszczenie drzewa...</translation>
@@ -468,21 +473,21 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message numerus="yes">
         <location filename="mainwindow.cpp" line="334"/>
-        <source>Action complete. Loaded %n item(s)</source>
+        <source>Action complete, loaded %n item(s)</source>
+        <oldsource>Action complete. Loaded %n item(s)</oldsource>
         <translation>
-            <numerusform>Zadanie ukończone. Wczytano %n wpis</numerusform>
-            <numerusform>Zadanie ukończone. Wczytano %n wpisy</numerusform>
-            <numerusform>Zadanie ukończone. Wczytano %n wpisów</numerusform>
+            <numerusform>Zadanie ukończone, wczytano %n wpis</numerusform>
+            <numerusform>Zadanie ukończone, wczytano %n wpisy</numerusform>
+            <numerusform>Zadanie ukończone, wczytano %n wpisów</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="341"/>
         <source>File saved</source>
-        <translation>Plik zapisany</translation>
+        <translation type="vanished">Plik zapisany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="345"/>
-        <location filename="mainwindow.cpp" line="346"/>
+        <location filename="mainwindow.cpp" line="355"/>
+        <location filename="mainwindow.cpp" line="356"/>
         <source>Error while saving file</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
@@ -587,28 +592,28 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Usuń odczepione obiekty</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="59"/>
-        <location filename="unpinndialog.cpp" line="73"/>
+        <location filename="unpinndialog.cpp" line="62"/>
+        <location filename="unpinndialog.cpp" line="76"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="59"/>
+        <location filename="unpinndialog.cpp" line="62"/>
         <source>Classes list is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="73"/>
+        <location filename="unpinndialog.cpp" line="76"/>
         <source>Work in progress</source>
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="78"/>
+        <location filename="unpinndialog.cpp" line="81"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="79"/>
+        <location filename="unpinndialog.cpp" line="82"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>
