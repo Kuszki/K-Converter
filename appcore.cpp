@@ -178,6 +178,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 	QRegExp objectExpr("(A,.*)(\\n|\\r|\\r\\n)\\2");
 
 	QList<QStringList> Items;
+	QStringList Header;
 	QFile dataFile(Path);
 
 	objectExpr.setMinimal(true);
@@ -194,8 +195,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 		emit onProgressInit(0, fileText.size());
 
 		headerExpr.indexIn(fileText);
-
-		emit onHeaderLoad(headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::KeepEmptyParts));
+		Header = headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::KeepEmptyParts);
 
 		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !isTerminated)
 		{
@@ -206,7 +206,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 		}
 	}
 
-	emit onObjectsLoad(Items);
+	emit onObjectsLoad(Header, Items);
 }
 
 void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName)

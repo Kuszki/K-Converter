@@ -91,15 +91,12 @@ void DeleteDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
+		QDialog::reject();
+
 		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 
-		if (Deleted)
-		{
-			emit onRefreshRequest(); Deleted = 0;
-		}
-
-		QDialog::reject();
+		if (Deleted) { emit onRefreshRequest(); Deleted = 0; }
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Deleting in progress"));
 }

@@ -53,23 +53,28 @@ class MainWindow : public QMainWindow
 
 	private:
 
-		Ui::MainWindow* ui;
+		Ui::MainWindow* ui = nullptr;
 
-		AboutDialog* About;
-		ReplaceDialog* Replace;
-		ReplaceDialog* Setvalue;
-		DeleteDialog* Delete;
-		UnpinnDialog* Unpinn;
+		AboutDialog* About = nullptr;
+		ReplaceDialog* Replace = nullptr;
+		ReplaceDialog* Setvalue = nullptr;
+		DeleteDialog* Delete = nullptr;
+		UnpinnDialog* Unpinn = nullptr;
 
-		QProgressBar* Progress;
-		QComboBox* Codecs;
+		QProgressBar* Progress = nullptr;
+		QComboBox* Codecs = nullptr;
 
-		QList<QStringList> loadedData;
+		QList<QStringList>* loadedData = nullptr;
 		QStringList loadedHeader;
+
+		QList<QList<QStringList>*> Undo;
+		QList<QList<QStringList>*> Redo;
 
 	private:
 
 		void LockUI(bool Lock = true, const QString& Message = QString());
+		void SaveDAT(const QList<QStringList>& Data);
+		void ClearDAT(void);
 
 	public:
 
@@ -82,13 +87,18 @@ class MainWindow : public QMainWindow
 		void EditActionClicked(void);
 		void OpenActionClicked(void);
 		void SaveActionClicked(void);
+		void UndoActionClicked(void);
+		void RedoActionClicked(void);
+		void ClearActionClicked(void);
 
 		void TreeMenuRequest(const QPoint& Pos);
 
-		void LoadTree(const QList<QStringList>& Data);
-		void LoadHeader(const QStringList& Header);
+		void LoadTree(void);
 
 		void FinishSave(bool OK);
+
+		void FinishLoad(const QStringList Head, const QList<QStringList>& Data);
+		void FinishConvert(const QList<QStringList>& Data);
 
 		void InitReplace(const QString& From, const QString& To, bool Case, bool RegExp);
 		void FinishReplace(const QList<QStringList>& Data, int Count);
@@ -98,8 +108,6 @@ class MainWindow : public QMainWindow
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
 		void InitUnpinning(const QStringList& Classes, bool Delete);
 		void FinishUnpinning(const QList<QStringList>& Data, int Count);
-
-		void UpdateTree(void);
 
 	signals:
 

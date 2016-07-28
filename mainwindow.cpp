@@ -35,7 +35,6 @@ MainWindow::MainWindow(QWidget* Parent)
 	Codecs = new QComboBox(this);
 
 	Progress->setRange(0, 100);
-	Progress->setVisible(false);
 
 	Codecs->addItems(QStringList() << "Windows-1250" << "UTF-8");
 	Codecs->setLayoutDirection(Qt::LeftToRight);
@@ -45,6 +44,8 @@ MainWindow::MainWindow(QWidget* Parent)
 	ui->actionStop->setEnabled(false);
 	ui->optionTools->addWidget(Codecs);
 
+	LockUI(false);
+
 	connect(this, &MainWindow::onOpenRequest, AppCore::getInstance(), &AppCore::LoadData);
 	connect(this, &MainWindow::onSaveRequest, AppCore::getInstance(), &AppCore::SaveData);
 	connect(this, &MainWindow::onConvertRequest, AppCore::getInstance(), &AppCore::ConvertData);
@@ -53,9 +54,8 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onDeleteRequest, AppCore::getInstance(), &AppCore::DeleteData);
 	connect(this, &MainWindow::onUnpinnRequest, AppCore::getInstance(), &AppCore::UnpinnData);
 
-	connect(AppCore::getInstance(), &AppCore::onHeaderLoad, this, &MainWindow::LoadHeader);
-	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::LoadTree);
-	connect(AppCore::getInstance(), &AppCore::onObjectsConvert, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
+	connect(AppCore::getInstance(), &AppCore::onObjectsConvert, this, &MainWindow::FinishConvert);
 	connect(AppCore::getInstance(), &AppCore::onOutputSave, this, &MainWindow::FinishSave);
 	connect(AppCore::getInstance(), &AppCore::onDataReplace, this, &MainWindow::FinishReplace);
 	connect(AppCore::getInstance(), &AppCore::onValuesUpdate, this, &MainWindow::FinishSetting);
@@ -67,22 +67,22 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(ui->actionReplace, &QAction::triggered, Replace, &ReplaceDialog::open);
 	connect(Replace, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitReplace);
 	connect(this, &MainWindow::onReplaceFinish, Replace, &ReplaceDialog::ShowProgress);
-	connect(Replace, &ReplaceDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+	connect(Replace, &ReplaceDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
 	connect(ui->actionSetvalue, &QAction::triggered, Setvalue, &ReplaceDialog::open);
 	connect(Setvalue, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitSetting);
 	connect(this, &MainWindow::onSettingFinish, Setvalue, &ReplaceDialog::ShowProgress);
-	connect(Setvalue, &ReplaceDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+	connect(Setvalue, &ReplaceDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
 	connect(ui->actionDelete, &QAction::triggered, Delete, &DeleteDialog::open);
 	connect(Delete, &DeleteDialog::onDeleteRequest, this, &MainWindow::InitDeleting);
 	connect(this, &MainWindow::onDeletingFinish, Delete, &DeleteDialog::ShowProgress);
-	connect(Delete, &DeleteDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+	connect(Delete, &DeleteDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
 	connect(ui->actionUnpinn, &QAction::triggered, Unpinn, &UnpinnDialog::open);
 	connect(Unpinn, &UnpinnDialog::onUnpinnRequest, this, &MainWindow::InitUnpinning);
 	connect(this, &MainWindow::onUnpinningFinish, Unpinn, &UnpinnDialog::ShowProgress);
-	connect(Unpinn, &UnpinnDialog::onRefreshRequest, this, &MainWindow::UpdateTree);
+	connect(Unpinn, &UnpinnDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -94,36 +94,88 @@ MainWindow::MainWindow(QWidget* Parent)
 
 MainWindow::~MainWindow(void)
 {
-	delete ui;
+	ClearDAT(); delete ui;
 }
 
 void MainWindow::LockUI(bool Lock, const QString& Message)
 {
 	Progress->setVisible(Lock);
-	Codecs->setVisible(!Lock);
+	Codecs->setEnabled(!Lock);
 
 	ui->Tree->setEnabled(!Lock);
 
-	ui->actionConvert->setEnabled(!Lock);
-	ui->actionEdit->setEnabled(!Lock);
 	ui->actionOpen->setEnabled(!Lock);
-	ui->actionReplace->setEnabled(!Lock);
-	ui->actionSave->setEnabled(!Lock);
-	ui->actionTools->setEnabled(!Lock);
-
+	ui->actionEdit->setEnabled(!Lock);
 	ui->actionStop->setEnabled(Lock);
+
+	if (Lock)
+	{
+		ui->actionConvert->setEnabled(false);
+		ui->actionReplace->setEnabled(false);
+		ui->actionSave->setEnabled(false);
+		ui->actionDelete->setEnabled(false);
+		ui->actionUnpinn->setEnabled(false);
+		ui->actionSetvalue->setEnabled(false);
+		ui->actionClear->setEnabled(false);
+	}
+	else
+	{
+		ui->actionConvert->setEnabled(loadedData);
+		ui->actionReplace->setEnabled(loadedData);
+		ui->actionSave->setEnabled(loadedData);
+		ui->actionDelete->setEnabled(loadedData);
+		ui->actionUnpinn->setEnabled(loadedData);
+		ui->actionSetvalue->setEnabled(loadedData);
+		ui->actionClear->setEnabled(loadedData);
+	}
+
+	ui->actionUndo->setEnabled(!Lock && !Undo.isEmpty());
+	ui->actionRedo->setEnabled(!Lock && !Redo.isEmpty());
 
 	if (Message.size()) ui->statusBar->showMessage(Message);
 }
 
+void MainWindow::SaveDAT(const QList<QStringList>& Data)
+{
+	if (loadedData)
+	{
+		for (auto I : Redo) delete I;
+
+		Undo.append(loadedData);
+		Redo.clear();
+
+		loadedData = nullptr;
+	}
+
+	loadedData = new QList<QStringList>(Data);
+}
+
+void MainWindow::ClearDAT(void)
+{
+	for (auto I : Redo) delete I;
+	for (auto I : Undo) delete I;
+
+	if (loadedData) delete loadedData;
+
+	loadedData = nullptr;
+	Redo.clear();
+	Undo.clear();
+
+	ui->Tree->clear();
+
+	LockUI(false);
+}
+
 void MainWindow::ConvertActionClicked(void)
 {
-	if (!loadedData.isEmpty())
+	if (!loadedData->isEmpty())
 	{
 		LockUI(true, tr("Converting data..."));
-		emit onConvertRequest(loadedData);
+
+		emit onConvertRequest(*loadedData);
 	}
-	else QMessageBox::warning(this, tr("Error"), tr("No data in buffer"));
+	else QMessageBox::warning(this, tr("Error"),
+						 tr("No data in buffer"));
 }
 
 void MainWindow::EditActionClicked(void)
@@ -157,8 +209,43 @@ void MainWindow::SaveActionClicked(void)
 	if (!Path.isEmpty())
 	{
 		LockUI(true, tr("Saving data..."));
-		emit onSaveRequest(Path, loadedHeader, loadedData, Codecs->currentText());
+
+		emit onSaveRequest(Path, loadedHeader, *loadedData,
+					    Codecs->currentText());
 	}
+}
+
+void MainWindow::UndoActionClicked(void)
+{
+	if (!Undo.isEmpty())
+	{
+		Redo.append(loadedData);
+
+		loadedData = Undo.takeLast();
+
+		LoadTree();
+	}
+
+	ui->actionUndo->setEnabled(!Undo.isEmpty());
+}
+
+void MainWindow::RedoActionClicked(void)
+{
+	if (!Redo.isEmpty())
+	{
+		Undo.append(loadedData);
+
+		loadedData = Redo.takeLast();
+
+		LoadTree();
+	}
+
+	ui->actionRedo->setEnabled(!Redo.isEmpty());
+}
+
+void MainWindow::ClearActionClicked(void)
+{
+	ClearDAT(); ui->statusBar->showMessage(tr("Data cleared"));
 }
 
 void MainWindow::TreeMenuRequest(const QPoint& Pos)
@@ -197,22 +284,19 @@ void MainWindow::TreeMenuRequest(const QPoint& Pos)
 	}
 }
 
-void MainWindow::LoadTree(const QList<QStringList>& Data)
+void MainWindow::LoadTree(void)
 {
 	QList<QTreeWidgetItem*> Items;
 	int Step = 0;
 	int ID = 0;
 
-	loadedData = Data;
+	LockUI(true, tr("Populating tree..."));
 
-	ui->statusBar->showMessage(tr("Clearing tree..."));
 	ui->Tree->clear();
-	ui->statusBar->showMessage(tr("Populating tree..."));
-	ui->actionStop->setEnabled(false);
 
-	Progress->setRange(0, loadedData.size());
+	Progress->setRange(0, loadedData->size());
 
-	for (const auto& Item : loadedData)
+	for (const auto& Item : *loadedData)
 	{
 		QTreeWidgetItem* Entry = new QTreeWidgetItem(QStringList(QString::number(++ID)));
 		QList<QTreeWidgetItem*> Values;
@@ -247,12 +331,7 @@ void MainWindow::LoadTree(const QList<QStringList>& Data)
 
 	ui->Tree->addTopLevelItems(Items);
 
-	LockUI(false, tr("Action complete. Loaded %n item(s)", 0, loadedData.count()));
-}
-
-void MainWindow::LoadHeader(const QStringList& Header)
-{
-	loadedHeader = Header;
+	LockUI(false, tr("Action complete. Loaded %n item(s)", 0, loadedData->count()));
 }
 
 void MainWindow::FinishSave(bool OK)
@@ -268,57 +347,57 @@ void MainWindow::FinishSave(bool OK)
 	}
 }
 
+void MainWindow::FinishLoad(const QStringList Head, const QList<QStringList>& Data)
+{
+	ClearActionClicked();
+
+	loadedHeader = Head;
+
+	SaveDAT(Data);
+	LoadTree();
+}
+
+void MainWindow::FinishConvert(const QList<QStringList>& Data)
+{
+	SaveDAT(Data); LoadTree();
+}
+
 void MainWindow::InitReplace(const QString& From, const QString& To, bool Case, bool RegExp)
 {
-	emit onReplaceRequest(loadedData, From, To, Case, RegExp);
+	emit onReplaceRequest(*loadedData, From, To, Case, RegExp);
 }
 
 void MainWindow::FinishReplace(const QList<QStringList>& Data, int Count)
 {
-	loadedData = Data;
-
-	emit onReplaceFinish(Count);
+	SaveDAT(Data); emit onReplaceFinish(Count);
 }
 
 void MainWindow::InitSetting(const QString &From, const QString &To, bool Case, bool RegExp)
 {
-	emit onSetvalueRequest(loadedData, From, To, Case, RegExp);
+	emit onSetvalueRequest(*loadedData, From, To, Case, RegExp);
 }
 
 void MainWindow::FinishSetting(const QList<QStringList>& Data, int Count)
 {
-	loadedData = Data;
-
-	emit onSettingFinish(Count);
+	SaveDAT(Data); emit onSettingFinish(Count);
 }
 
 void MainWindow::InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values)
 {
-	emit onDeleteRequest(loadedData, Classes, Values);
+	emit onDeleteRequest(*loadedData, Classes, Values);
 }
 
 void MainWindow::FinishDeleting(const QList<QStringList>& Data, int Count)
 {
-	loadedData = Data;
-
-	emit onDeletingFinish(Count);
+	SaveDAT(Data); emit onDeletingFinish(Count);
 }
 
 void MainWindow::InitUnpinning(const QStringList& Classes, bool Delete)
 {
-	emit onUnpinnRequest(loadedData, Classes, Delete);
+	emit onUnpinnRequest(*loadedData, Classes, Delete);
 }
 
 void MainWindow::FinishUnpinning(const QList<QStringList>& Data, int Count)
 {
-	loadedData = Data;
-
-	emit onUnpinningFinish(Count);
-}
-
-void MainWindow::UpdateTree(void)
-{
-	LockUI(true, tr("Loading data..."));
-	LoadTree(loadedData);
-	LockUI(false, tr("Action complete. Loaded %n item(s)", 0, loadedData.count()));
+	SaveDAT(Data); emit onUnpinningFinish(Count);
 }

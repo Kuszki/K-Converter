@@ -65,15 +65,12 @@ void ReplaceDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
+		QDialog::reject();
+
 		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 
-		if (Replaces)
-		{
-			emit onRefreshRequest(); Replaces = 0;
-		}
-
-		QDialog::reject();
+		if (Replaces) { emit onRefreshRequest(); Replaces = 0; }
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Replacing in progress"));
 }

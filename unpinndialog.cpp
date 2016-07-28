@@ -63,15 +63,12 @@ void UnpinnDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
+		QDialog::reject();
+
 		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 
-		if (Unpinned)
-		{
-			emit onRefreshRequest(); Unpinned = 0;
-		}
-
-		QDialog::reject();
+		if (Unpinned) { emit onRefreshRequest(); Unpinned = 0; }
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Work in progress"));
 }

@@ -108,7 +108,8 @@ class AppCore : public QObject
 
 		void onHeaderLoad(const QStringList&);
 		void onItemsLoad(const QMap<int, Entry>&);
-		void onObjectsLoad(const QList<QStringList>&);
+		void onObjectsLoad(const QStringList&,
+					    const QList<QStringList>&);
 
 		void onObjectsConvert(const QList<QStringList>&);
 		void onDataReplace(const QList<QStringList>, int);
