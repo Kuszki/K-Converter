@@ -24,17 +24,20 @@
 UnpinnDialog::UnpinnDialog(QWidget *Parent)
 : QDialog(Parent), ui(new Ui::UnpinnDialog)
 {
-    ui->setupUi(this);
+	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(,[A-z]+)*"), this);
 
-    ui->progressBar->setVisible(false);
+	ui->setupUi(this);
 
-    connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
-    connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
+	ui->progressBar->setVisible(false);
+	ui->Class->setValidator(Validator);
+
+	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
+	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 }
 
 UnpinnDialog::~UnpinnDialog(void)
 {
-    delete ui;
+	delete ui;
 }
 
 void UnpinnDialog::open(void)
