@@ -28,7 +28,7 @@
    <item row="0" column="1" colspan="2">
     <widget class="QLineEdit" name="Class">
      <property name="toolTip">
-      <string>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</string>
+      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</string>
      </property>
     </widget>
    </item>
@@ -94,7 +94,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QTableWidget" name="Values">
      <property name="toolTip">
-      <string>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</string>
+      <string>&lt;p&gt;List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.&lt;/p&gt;</string>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>

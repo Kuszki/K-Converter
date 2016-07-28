@@ -28,7 +28,7 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="Class">
      <property name="toolTip">
-      <string>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</string>
+      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</string>
      </property>
     </widget>
    </item>

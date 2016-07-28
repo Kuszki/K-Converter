@@ -9,47 +9,46 @@
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="30"/>
         <source>Close this dialog.</source>
-        <translation>Zamyka dialog.</translation>
+        <translation type="vanished">Zamyka dialog.</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="33"/>
+        <location filename="aboutdialog.ui" line="30"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="74"/>
+        <location filename="aboutdialog.ui" line="71"/>
         <source>Program name:</source>
         <translation>Program:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="91"/>
+        <location filename="aboutdialog.ui" line="88"/>
         <source>Author:</source>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="108"/>
+        <location filename="aboutdialog.ui" line="105"/>
         <source>Mail:</source>
         <translation>E-mail:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="128"/>
+        <location filename="aboutdialog.ui" line="125"/>
         <source>Project slite:</source>
         <translation>Strona projektu:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="148"/>
+        <location filename="aboutdialog.ui" line="145"/>
         <source>License:</source>
         <translation>Licencja:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="168"/>
+        <location filename="aboutdialog.ui" line="165"/>
         <source>Powered by:</source>
         <translation>Wsparcie:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="190"/>
+        <location filename="aboutdialog.ui" line="187"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</source>
@@ -58,7 +57,7 @@ The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRAN
 Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny – jednak BEZ ŻADNEJ GWARANCJI, nawet domyślnej gwarancji PRZYDATNOŚCI HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. Bliższe informacje na ten temat można uzyskać z Powszechnej Licencji Publicznej GNU.</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="205"/>
+        <location filename="aboutdialog.ui" line="202"/>
         <source>&lt;a href=&quot;http://www.fsf.org/&quot;&gt;See more&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fsf.org/&quot;&gt;Dowiedz się więcej&lt;/a&gt;</translation>
     </message>
@@ -206,8 +205,9 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="deletedialog.ui" line="31"/>
-        <source>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</source>
-        <translation>Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.</translation>
+        <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</source>
+        <oldsource>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="deletedialog.ui" line="40"/>
@@ -247,8 +247,9 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="deletedialog.ui" line="97"/>
-        <source>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</source>
-        <translation>Lista dodatkowych regów. Wszystkie utworzone reguły muszą zostać spełnione by obiekt został usunięty. Można stosować wyrażenia &quot;$nazwa_pola&quot; w celu użycia wartości pola testowanego obiektu.</translation>
+        <source>&lt;p&gt;List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.&lt;/p&gt;</source>
+        <oldsource>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</oldsource>
+        <translation>&lt;p&gt;Lista dodatkowych regów. Wszystkie utworzone reguły muszą zostać spełnione by obiekt został usunięty. Można stosować wyrażenia &quot;$nazwa_pola&quot; w celu użycia wartości pola testowanego obiektu.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="deletedialog.ui" line="116"/>
@@ -748,8 +749,9 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="unpinndialog.ui" line="31"/>
-        <source>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</source>
-        <translation>Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.</translation>
+        <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</source>
+        <oldsource>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="47"/>
