@@ -95,9 +95,8 @@ class MainWindow : public QMainWindow
 
 		void LoadTree(void);
 
-		void FinishSave(bool OK);
-
 		void FinishLoad(const QStringList Head, const QList<QStringList>& Data);
+		void FinishSave(unsigned Crc32);
 		void FinishConvert(const QList<QStringList>& Data);
 
 		void InitReplace(const QString& From, const QString& To, bool Case, bool RegExp);

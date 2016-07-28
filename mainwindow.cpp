@@ -331,20 +331,7 @@ void MainWindow::LoadTree(void)
 
 	ui->Tree->addTopLevelItems(Items);
 
-	LockUI(false, tr("Action complete. Loaded %n item(s)", 0, loadedData->count()));
-}
-
-void MainWindow::FinishSave(bool OK)
-{
-	if (OK)
-	{
-		LockUI(false, tr("File saved"));
-	}
-	else
-	{
-		QMessageBox::warning(this, tr("Error"), tr("Error while saving file"));
-		LockUI(false, tr("Error while saving file"));
-	}
+	LockUI(false, tr("Action complete, loaded %n item(s)", 0, loadedData->count()));
 }
 
 void MainWindow::FinishLoad(const QStringList Head, const QList<QStringList>& Data)
@@ -355,6 +342,19 @@ void MainWindow::FinishLoad(const QStringList Head, const QList<QStringList>& Da
 
 	SaveDAT(Data);
 	LoadTree();
+}
+
+void MainWindow::FinishSave(unsigned Crc32)
+{
+	if (Crc32)
+	{
+		LockUI(false, tr("File saved, checksum is %1").arg(Crc32, 8, 16, QChar(0)));
+	}
+	else
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Error while saving file"));
+		LockUI(false, tr("Error while saving file"));
+	}
 }
 
 void MainWindow::FinishConvert(const QList<QStringList>& Data)
