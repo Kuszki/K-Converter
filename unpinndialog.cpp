@@ -24,7 +24,7 @@
 UnpinnDialog::UnpinnDialog(QWidget *Parent)
 : QDialog(Parent), ui(new Ui::UnpinnDialog)
 {
-	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(,[A-z]+)*"), this);
+	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(?:,[A-z]+)*"), this);
 
 	ui->setupUi(this);
 

@@ -24,7 +24,7 @@
 DeleteDialog::DeleteDialog(QWidget* Parent)
 : QDialog(Parent), ui(new Ui::DeleteDialog)
 {
-	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(,[A-z]+)*"), this);
+	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(?:,[A-z]+)*"), this);
 
 	ui->setupUi(this);
 
