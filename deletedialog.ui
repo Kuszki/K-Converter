@@ -26,12 +26,19 @@
     </widget>
    </item>
    <item row="0" column="1" colspan="2">
-    <widget class="QLineEdit" name="Class"/>
+    <widget class="QLineEdit" name="Class">
+     <property name="toolTip">
+      <string>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="addButton">
+       <property name="toolTip">
+        <string>Add condition.</string>
+       </property>
        <property name="text">
         <string>Add</string>
        </property>
@@ -43,6 +50,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="removeButton">
+       <property name="toolTip">
+        <string>Remove selected condition.</string>
+       </property>
        <property name="text">
         <string>Remove</string>
        </property>
@@ -83,6 +93,9 @@
    </item>
    <item row="1" column="0" colspan="3">
     <widget class="QTableWidget" name="Values">
+     <property name="toolTip">
+      <string>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</string>
+     </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
@@ -102,10 +115,16 @@
       <property name="text">
        <string>Key</string>
       </property>
+      <property name="toolTip">
+       <string>Key to check.</string>
+      </property>
      </column>
      <column>
       <property name="text">
        <string>Value</string>
+      </property>
+      <property name="toolTip">
+       <string>Required key value.</string>
       </property>
      </column>
     </widget>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>175</height>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,11 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="Replace"/>
+    <widget class="QLineEdit" name="Replace">
+     <property name="toolTip">
+      <string>Text to replace old data.</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="findLabel">
@@ -36,10 +40,17 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="Find"/>
+    <widget class="QLineEdit" name="Find">
+     <property name="toolTip">
+      <string>Text to find.</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0" colspan="2">
     <widget class="QCheckBox" name="caseCheck">
+     <property name="toolTip">
+      <string>If enabled search engine will be case sensitive.</string>
+     </property>
      <property name="text">
       <string>Case sensitivity</string>
      </property>
@@ -97,6 +108,9 @@
    </item>
    <item row="3" column="0" colspan="2">
     <widget class="QCheckBox" name="regexpCheck">
+     <property name="toolTip">
+      <string>If enabled text to find will act as regular expression.</string>
+     </property>
      <property name="text">
       <string>Use regexp</string>
      </property>

@@ -14,7 +14,8 @@
    <string>Unpinn</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="edit-cut"/>
+   <iconset theme="edit-cut">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -25,7 +26,11 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="Class"/>
+    <widget class="QLineEdit" name="Class">
+     <property name="toolTip">
+      <string>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0" colspan="2">
     <widget class="QProgressBar" name="progressBar">
@@ -38,6 +43,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QCheckBox" name="Delete">
+       <property name="toolTip">
+        <string>If enabled items unpinned from object geometry will be deleted from current item list.</string>
+       </property>
        <property name="text">
         <string>Delete unpinned objects</string>
        </property>
