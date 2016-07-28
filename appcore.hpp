@@ -117,7 +117,7 @@ class AppCore : public QObject
 		void onDataDelete(const QList<QStringList>, int);
 		void onDataUnpinn(const QList<QStringList>, int);
 
-		void onOutputSave(bool);
+		void onOutputSave(unsigned);
 
 		void onProgressInit(int, int);
 		void onProgressUpdate(int);

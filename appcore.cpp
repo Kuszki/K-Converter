@@ -216,6 +216,8 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 	Locker.unlock();
 
 	QFile dataFile(Path);
+	uint32_t Seed = 4294967295u;
+	uint32_t Poly[256];
 	int Step = 0;
 
 	if (dataFile.open(QFile::WriteOnly | QFile::Text))
@@ -242,9 +244,6 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 
 		if (dataFile.open(QFile::ReadWrite))
 		{
-			uint32_t Seed = 4294967295u;
-			uint32_t Poly[256];
-
 			for (int i = 0; i < 256; i++)
 			{
 				uint32_t crc = i;
@@ -264,7 +263,7 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 		}
 	}
 
-	emit onOutputSave(Step == Data.size());
+	emit onOutputSave(Step == Data.size() ? ~Seed : 0);
 }
 
 void AppCore::ConvertData(const QList<QStringList>& Data)
