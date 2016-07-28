@@ -10,41 +10,46 @@
     </message>
     <message>
         <location filename="aboutdialog.ui" line="30"/>
+        <source>Close this dialog.</source>
+        <translation>Zamyka dialog.</translation>
+    </message>
+    <message>
+        <location filename="aboutdialog.ui" line="33"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="71"/>
+        <location filename="aboutdialog.ui" line="74"/>
         <source>Program name:</source>
         <translation>Program:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="88"/>
+        <location filename="aboutdialog.ui" line="91"/>
         <source>Author:</source>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="105"/>
+        <location filename="aboutdialog.ui" line="108"/>
         <source>Mail:</source>
         <translation>E-mail:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="125"/>
+        <location filename="aboutdialog.ui" line="128"/>
         <source>Project slite:</source>
         <translation>Strona projektu:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="145"/>
+        <location filename="aboutdialog.ui" line="148"/>
         <source>License:</source>
         <translation>Licencja:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="165"/>
+        <location filename="aboutdialog.ui" line="168"/>
         <source>Powered by:</source>
         <translation>Wsparcie:</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="187"/>
+        <location filename="aboutdialog.ui" line="190"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</source>
@@ -53,7 +58,7 @@ The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRAN
 Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny – jednak BEZ ŻADNEJ GWARANCJI, nawet domyślnej gwarancji PRZYDATNOŚCI HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. Bliższe informacje na ten temat można uzyskać z Powszechnej Licencji Publicznej GNU.</translation>
     </message>
     <message>
-        <location filename="aboutdialog.ui" line="202"/>
+        <location filename="aboutdialog.ui" line="205"/>
         <source>&lt;a href=&quot;http://www.fsf.org/&quot;&gt;See more&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fsf.org/&quot;&gt;Dowiedz się więcej&lt;/a&gt;</translation>
     </message>
@@ -79,32 +84,72 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="100"/>
+        <location filename="changesdialog.ui" line="121"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="54"/>
+        <location filename="changesdialog.ui" line="57"/>
         <source>ID</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="59"/>
+        <location filename="changesdialog.ui" line="24"/>
+        <source>Remove selected rule.</source>
+        <translation>Usuwa zaznaczoną regułę.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="60"/>
+        <source>Unique rule identifier.</source>
+        <translation>Unikatowy identyfikator reguły.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="65"/>
         <source>Source</source>
         <translation>Źródło</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="64"/>
+        <location filename="changesdialog.ui" line="68"/>
+        <source>Text to find.</source>
+        <translation>Szukany tekst.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="73"/>
         <source>Replace</source>
         <translation>Zamiana</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="69"/>
+        <location filename="changesdialog.ui" line="76"/>
+        <source>Text to replace.</source>
+        <translation>Podmieniany tekst.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="81"/>
         <source>RegExp</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="124"/>
+        <location filename="changesdialog.ui" line="84"/>
+        <source>Determines if rule is a regular expression.</source>
+        <translation>Ustala czy reguła ma być wyrażeniem regularnym.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="108"/>
+        <source>Find selected text in all rules.</source>
+        <translation>Szuka reguł w których występuje podana fraza.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="118"/>
+        <source>Add new rule.</source>
+        <translation>Dodaje nową regułę.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="145"/>
+        <source>Close this dialog.</source>
+        <translation>Zamyka dialog.</translation>
+    </message>
+    <message>
+        <location filename="changesdialog.ui" line="148"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
@@ -113,7 +158,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Wyczyść</translation>
     </message>
     <message>
-        <location filename="changesdialog.ui" line="24"/>
+        <location filename="changesdialog.ui" line="27"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
@@ -160,33 +205,63 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="36"/>
+        <location filename="deletedialog.ui" line="31"/>
+        <source>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</source>
+        <translation>Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="40"/>
+        <source>Add condition.</source>
+        <translation>Dodaje warunek.</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="43"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="47"/>
+        <location filename="deletedialog.ui" line="54"/>
+        <source>Remove selected condition.</source>
+        <translation>Usuwa zaznaczony warunek.</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="57"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="71"/>
+        <location filename="deletedialog.ui" line="81"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
+        <location filename="deletedialog.ui" line="127"/>
+        <source>Required key value.</source>
+        <translation>Wymagana wartość klucza.</translation>
+    </message>
+    <message>
         <location filename="deletedialog.ui" line="14"/>
-        <location filename="deletedialog.ui" line="78"/>
+        <location filename="deletedialog.ui" line="88"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="103"/>
+        <location filename="deletedialog.ui" line="97"/>
+        <source>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</source>
+        <translation>Lista dodatkowych regów. Wszystkie utworzone reguły muszą zostać spełnione by obiekt został usunięty. Można stosować wyrażenia &quot;$nazwa_pola&quot; w celu użycia wartości pola testowanego obiektu.</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="116"/>
         <source>Key</source>
         <translation>Klucz</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="108"/>
+        <location filename="deletedialog.ui" line="119"/>
+        <source>Key to check.</source>
+        <translation>Nazwa klucza do sprawdzenia.</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="124"/>
         <source>Value</source>
         <translation>Wartość</translation>
     </message>
@@ -286,126 +361,191 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="mainwindow.ui" line="145"/>
+        <source>Converts loaded data using enabled rules.</source>
+        <translation>Konwertuje załadowane dane zgodnie z bieżącymi regułami.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="148"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="154"/>
+        <location filename="mainwindow.ui" line="157"/>
         <source>Edit sources</source>
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="157"/>
+        <location filename="mainwindow.ui" line="160"/>
+        <source>Edit conversion rules database.</source>
+        <translation>Edytuje baze danych reguł.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="163"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="166"/>
+        <location filename="mainwindow.ui" line="172"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="169"/>
+        <location filename="mainwindow.ui" line="175"/>
+        <source>Open data file.</source>
+        <translation>Otwiera wybrany plik.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="178"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="178"/>
+        <location filename="mainwindow.ui" line="187"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="181"/>
+        <location filename="mainwindow.ui" line="190"/>
+        <source>Save data into file.</source>
+        <translation>Zapisuje dane do wybranego pliku.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="193"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="190"/>
+        <location filename="mainwindow.ui" line="202"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="193"/>
+        <location filename="mainwindow.ui" line="205"/>
+        <source>Execute single rule created by user.</source>
+        <translation>Wprowadza pojedynczą regułę utworzoną przeż użytkownika.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="208"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="202"/>
+        <location filename="mainwindow.ui" line="217"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="220"/>
+        <source>Stop current action.</source>
+        <translation>Zatrzymuje aktualną akcję.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="223"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="214"/>
+        <location filename="mainwindow.ui" line="232"/>
         <source>Set value</source>
         <translation>Ustal pole</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="217"/>
+        <location filename="mainwindow.ui" line="235"/>
+        <source>Set value for selected keys.</source>
+        <translation>Ustala wartość wybranym polom.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="238"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="226"/>
+        <location filename="mainwindow.ui" line="247"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="229"/>
+        <location filename="mainwindow.ui" line="250"/>
+        <source>Show about dialog.</source>
+        <translation>Pokazuje dialog &quot;O programie&quot;.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="253"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.ui" line="262"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="241"/>
+        <location filename="mainwindow.ui" line="265"/>
+        <source>Delete items selected by rules.</source>
+        <translation>Usuwa obiekty spełniające zadane reguły.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="268"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="280"/>
+        <source>Unpinn objects from item geometry.</source>
+        <translation>Usuwa wybrane obiekty z geometrii innych obiektów.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="292"/>
         <source>Undo</source>
         <translation>Cofnij</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="265"/>
+        <location filename="mainwindow.ui" line="295"/>
+        <source>Undo last commit.</source>
+        <translation>Cofa ostatnią zmianę.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="298"/>
         <source>Ctrl+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="274"/>
+        <location filename="mainwindow.ui" line="307"/>
         <source>Redo</source>
         <translation>Ponów</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="277"/>
+        <location filename="mainwindow.ui" line="310"/>
+        <source>Redo last commit.</source>
+        <translation>Przywraca cofniętą zmianę.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="313"/>
         <source>Ctrl+Shift+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="286"/>
+        <location filename="mainwindow.ui" line="322"/>
         <source>Clear</source>
         <translation>Wyczyść</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="289"/>
+        <location filename="mainwindow.ui" line="325"/>
+        <source>Clear all data.</source>
+        <translation>Usuwa wszystkie dane.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="328"/>
         <source>Ctrl+R</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="250"/>
+        <location filename="mainwindow.ui" line="277"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
+        <location filename="mainwindow.ui" line="283"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
@@ -505,7 +645,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Tekst</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="34"/>
+        <location filename="replacedialog.ui" line="38"/>
         <source>Find</source>
         <translation>Szukaj</translation>
     </message>
@@ -514,12 +654,32 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Opcje</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="44"/>
+        <location filename="replacedialog.ui" line="31"/>
+        <source>Text to replace old data.</source>
+        <translation>Tekst do podmiany.</translation>
+    </message>
+    <message>
+        <location filename="replacedialog.ui" line="45"/>
+        <source>Text to find.</source>
+        <translation>Szukany tekst.</translation>
+    </message>
+    <message>
+        <location filename="replacedialog.ui" line="52"/>
+        <source>If enabled search engine will be case sensitive.</source>
+        <translation>Jeśli załączone wielkość liter będzie miała znaczenie.</translation>
+    </message>
+    <message>
+        <location filename="replacedialog.ui" line="55"/>
         <source>Case sensitivity</source>
         <translation>Rozróżniaj wielkość liter</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="101"/>
+        <location filename="replacedialog.ui" line="112"/>
+        <source>If enabled text to find will act as regular expression.</source>
+        <translation>Jeśli załączone szukany tekst traktowany będzie jak wyrażenie reguralne.</translation>
+    </message>
+    <message>
+        <location filename="replacedialog.ui" line="115"/>
         <source>Use regexp</source>
         <translation>Użyj wyrażeń regularnych</translation>
     </message>
@@ -528,12 +688,12 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Akcje</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="86"/>
+        <location filename="replacedialog.ui" line="97"/>
         <source>Proced</source>
         <translation>Wykonaj</translation>
     </message>
     <message>
-        <location filename="replacedialog.ui" line="79"/>
+        <location filename="replacedialog.ui" line="90"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -571,23 +731,33 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="62"/>
+        <location filename="unpinndialog.ui" line="70"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="69"/>
+        <location filename="unpinndialog.ui" line="77"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="23"/>
+        <location filename="unpinndialog.ui" line="24"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="42"/>
+        <location filename="unpinndialog.ui" line="31"/>
+        <source>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</source>
+        <translation>Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.</translation>
+    </message>
+    <message>
+        <location filename="unpinndialog.ui" line="47"/>
+        <source>If enabled items unpinned from object geometry will be deleted from current item list.</source>
+        <translation>Jeśli załączone obiekty usunięte z geometrii innych obiektów zostaną trwale wykasowane z listy obiektów.</translation>
+    </message>
+    <message>
+        <location filename="unpinndialog.ui" line="50"/>
         <source>Delete unpinned objects</source>
         <translation>Usuń odczepione obiekty</translation>
     </message>
