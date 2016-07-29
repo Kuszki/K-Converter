@@ -195,12 +195,21 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 		emit onProgressInit(0, fileText.size());
 
 		headerExpr.indexIn(fileText);
-		Header = headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::KeepEmptyParts);
+
+		Header = headerExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts);
+
+		for (auto& Line : Header) if (Line[0] == ';') Line.clear();
+
+		Header.removeAll(QString());
 
 		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !isTerminated)
 		{
 			Items.append(objectExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts));
 			lastPos += objectExpr.matchedLength();
+
+			for (auto& Line : Items.last()) if (Line[0] == ';') Line.clear();
+
+			Items.last().removeAll(QString());
 
 			emit onProgressUpdate(lastPos);
 		}
@@ -228,7 +237,10 @@ void AppCore::SaveData(const QString& Path, const QStringList& Header, const QLi
 
 		emit onProgressInit(0, Data.size());
 
-		streamOut << Header.join('\n') << "[OBIEKTY]\n";
+		streamOut << QString("; Genated by K-Converter ") << QDateTime::currentDateTimeUtc().toString() << "\n"
+				<< QString("; Developed by Łukasz \"Kuszki\" Dróżdż l.drozdz@openmailbox.org\n")
+				<< QString("; See more at https://github.com/Kuszki/K-Converter\n\n")
+				<< Header.join('\n') << "\n\n[OBIEKTY]\n\n";
 
 		for (const auto& Item : Data) if (!isTerminated)
 		{
