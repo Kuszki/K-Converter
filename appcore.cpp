@@ -353,7 +353,7 @@ void AppCore::ReplaceData(const QList<QStringList>& Data, const QString &Source,
 	emit onDataReplace(Output, Count);
 }
 
-void AppCore::UpdateValues(const QList<QStringList>& Data, const QString &Source, const QString &Replace, bool Case, bool RegExp)
+void AppCore::UpdateValues(const QList<QStringList>& Data, const QString& Field, const QString& Setto, const QStringList& Classes, const QMap<QString, QString>& List)
 {
 	QList<QStringList> Output = Data;
 	QFutureWatcher<void> Watcher;
@@ -369,52 +369,80 @@ void AppCore::UpdateValues(const QList<QStringList>& Data, const QString &Source
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
-	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Source, &Replace, Case, RegExp] (auto& Item) -> void
+	const QString Expr = Classes.join('|');
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Field, &Setto, &List, &Expr] (auto& Item) -> void
 	{
+		QMap<QString, QString> ListCopy = List;
+		QRegExp classExpr(QString("A,(%1),").arg(Expr));
 		QRegExp objectExpr("(C,.*)=(.*)");
 		QMap<QString, QString> Values;
-		QMap<int, QString> foundList;
+		bool Checked = true;
+		int Index = -1;
 		int ID = 0;
 
-		for (auto& String : Item)
+		if (classExpr.indexIn(Item.first()) != -1)
 		{
-			if (objectExpr.indexIn(String) != -1)
+
+			for (auto& String : Item)
 			{
-				const QString LastKey = objectExpr.capturedTexts()[1];
-				bool isFound = false;
-
-				Values.insert(QString("$%1").arg(objectExpr.capturedTexts()[1]),
-										   objectExpr.capturedTexts()[2]);
-
-				if (RegExp)
+				if (objectExpr.indexIn(String) != -1)
 				{
-					QRegExp nameExpr(Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
+					const QString Key = objectExpr.capturedTexts()[1];
 
-					isFound = nameExpr.indexIn(LastKey) != -1;
+					Values.insert(Key, objectExpr.capturedTexts()[2]);
+
+					if (Key == Field)
+					{
+						Index = ID;
+					}
 				}
-				else isFound = !QString::compare(LastKey, Source, Case ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
-				if (isFound) foundList.insert(ID, LastKey);
+				++ID;
 			}
 
-			++ID;
-		}
-
-		for (const auto& Index : foundList.keys())
-		{
-			Item[Index] = foundList[Index] + "=" + Replace;
-
-			for (const auto& Value : Values.keys())
+			for (const auto& Key : Values.keys())
 			{
-				Item[Index].replace(Value, Values[Value]);
+				for (auto& Value : ListCopy)
+				{
+					Value.replace(QString("$%1").arg(Key), Values[Key], Qt::CaseSensitive);
+				}
 			}
 
-			Item[Index] = Item[Index].trimmed();
-		}
+			for (const auto& Key : ListCopy.keys()) if (Checked)
+			{
+				if (!(Values.contains(Key) && Values[Key] == ListCopy[Key])) Checked = false;
+			}
+			else break;
 
-		CountLocker.lock();
-		Count += foundList.size();
-		CountLocker.unlock();
+			if (Index != -1)
+			{
+
+				for (const auto& Key : ListCopy.keys()) if (Checked)
+				{
+					if (!(Values.contains(Key) && Values[Key] == ListCopy[Key])) Checked = false;
+				}
+				else break;
+
+				if (Checked)
+				{
+					Item[Index] = Field + "=" + Setto;
+
+					for (const auto& Value : Values.keys())
+					{
+						Item[Index].replace(QString("$%1").arg(Value), Values[Value]);
+					}
+
+					Item[Index] = Item[Index].trimmed();
+
+					CountLocker.lock();
+					++Count;
+					CountLocker.unlock();
+				}
+
+			}
+
+		}
 	}));
 
 	Watcher.waitForFinished();

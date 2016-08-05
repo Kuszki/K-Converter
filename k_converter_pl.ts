@@ -205,9 +205,9 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="deletedialog.ui" line="31"/>
-        <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</source>
-        <oldsource>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</oldsource>
-        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Classes of items to delete. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</source>
+        <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte. Kolejne wartości mogą być oddzielone przecinkiem. Puste pole oznacza dowolne klasy.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="deletedialog.ui" line="40"/>
@@ -277,34 +277,34 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>wartość</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="88"/>
-        <location filename="deletedialog.cpp" line="90"/>
-        <location filename="deletedialog.cpp" line="104"/>
+        <location filename="deletedialog.cpp" line="92"/>
+        <location filename="deletedialog.cpp" line="94"/>
+        <location filename="deletedialog.cpp" line="108"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="88"/>
+        <location filename="deletedialog.cpp" line="92"/>
         <source>Found duplicated keys</source>
         <translation>Napotkano zdublowane klucze</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="90"/>
+        <location filename="deletedialog.cpp" line="94"/>
         <source>Class to delete is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="104"/>
+        <location filename="deletedialog.cpp" line="108"/>
         <source>Deleting in progress</source>
         <translation>Trwa usuwanie obiektów</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="109"/>
+        <location filename="deletedialog.cpp" line="113"/>
         <source>Delete progress</source>
         <translation>Postęp usuwania</translation>
     </message>
     <message numerus="yes">
-        <location filename="deletedialog.cpp" line="110"/>
+        <location filename="deletedialog.cpp" line="114"/>
         <source>Deleted %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n wpis</numerusform>
@@ -699,28 +699,173 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="61"/>
-        <location filename="replacedialog.cpp" line="75"/>
+        <location filename="replacedialog.cpp" line="58"/>
+        <location filename="replacedialog.cpp" line="72"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="61"/>
+        <location filename="replacedialog.cpp" line="58"/>
         <source>Text to find is empty</source>
         <translation>Zadany tekst jest pusty</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="75"/>
+        <location filename="replacedialog.cpp" line="72"/>
         <source>Replacing in progress</source>
         <translation>Trwa wprowadzanie zmian</translation>
     </message>
     <message>
-        <location filename="replacedialog.cpp" line="80"/>
+        <location filename="replacedialog.cpp" line="77"/>
         <source>Replace progress</source>
         <translation>Postęp zmian</translation>
     </message>
     <message numerus="yes">
-        <location filename="replacedialog.cpp" line="81"/>
+        <location filename="replacedialog.cpp" line="78"/>
+        <source>Replaced %n item(s)</source>
+        <translation>
+            <numerusform>Zamieniono %n wpis</numerusform>
+            <numerusform>Zamieniono %n wpisy</numerusform>
+            <numerusform>Zamieniono %n wpisów</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>SetvalueDialog</name>
+    <message>
+        <location filename="setvaluedialog.ui" line="14"/>
+        <source>Update values</source>
+        <translation>Ustal wartości</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="26"/>
+        <source>Add condition.</source>
+        <translation>Dodaje warunek.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="29"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="40"/>
+        <source>Remove selected condition.</source>
+        <translation>Usuwa zaznaczony warunek.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="43"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="67"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="74"/>
+        <source>Proced</source>
+        <translation>Wykonaj</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="86"/>
+        <source>&lt;p&gt;List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Lista dodatkowych regów. Wszystkie utworzone reguły muszą zostać spełnione by obiekt został usunięty. Można stosować wyrażenia &quot;$nazwa_pola&quot; w celu użycia wartości pola testowanego obiektu.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="105"/>
+        <source>Key</source>
+        <translation>Klucz</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="108"/>
+        <source>Key to check.</source>
+        <translation>Nazwa klucza do sprawdzenia.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="113"/>
+        <location filename="setvaluedialog.ui" line="138"/>
+        <source>Value</source>
+        <translation>Wartość</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="116"/>
+        <source>Required key value.</source>
+        <translation>Wymagana wartość klucza.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="124"/>
+        <source>Field</source>
+        <translation>Pole</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="131"/>
+        <source>Key to set value.</source>
+        <translation>Nazwa klucza do ustalenia wartości.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="148"/>
+        <source>&lt;p&gt;New field data. You can type &quot;$field_name&quot; to use value of selected field.&lt;/p&gt;</source>
+        <oldsource>New field data. You can type &quot;$field_name&quot; to use value of selected field.</oldsource>
+        <translation>&lt;p&gt;Nowa wartość pola. Można zastosować wyrażenie &quot;$nazwa_pola&quot; w celu użycia wartości wybranego pola.&lt;p&gt;</translation>
+    </message>
+    <message>
+        <source>Text to find.</source>
+        <translation type="obsolete">Szukany tekst.</translation>
+    </message>
+    <message>
+        <source>Text to replace old data.</source>
+        <translation type="vanished">Tekst do podmiany.</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="155"/>
+        <source>&lt;p&gt;Classes of items to update data. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</source>
+        <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów których pola mają być zaktualizowane. Kolejne wartości mogą być oddzielone przecinkiem. Puste pole oznacza dowolne klasy.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.ui" line="162"/>
+        <source>Class</source>
+        <translation>Kod obiektu</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="49"/>
+        <source>key</source>
+        <translation>klucz</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="50"/>
+        <source>value</source>
+        <translation>wartość</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="92"/>
+        <location filename="setvaluedialog.cpp" line="94"/>
+        <location filename="setvaluedialog.cpp" line="108"/>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="92"/>
+        <source>Found duplicated keys</source>
+        <translation>Napotkano zdublowane klucze</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="94"/>
+        <source>Text to find is empty</source>
+        <translation>Zadany tekst jest pusty</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="108"/>
+        <source>Replacing in progress</source>
+        <translation>Trwa wprowadzanie zmian</translation>
+    </message>
+    <message>
+        <location filename="setvaluedialog.cpp" line="113"/>
+        <source>Replace progress</source>
+        <translation>Postęp zmian</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="setvaluedialog.cpp" line="114"/>
         <source>Replaced %n item(s)</source>
         <translation>
             <numerusform>Zamieniono %n wpis</numerusform>
@@ -732,13 +877,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="70"/>
+        <location filename="unpinndialog.ui" line="66"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="77"/>
+        <location filename="unpinndialog.ui" line="73"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
@@ -749,43 +894,43 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="unpinndialog.ui" line="31"/>
-        <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</source>
-        <oldsource>Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.</oldsource>
-        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem. Dopuszcza się stosowanie wyrażeń reguralnych w celu dopasowania nazw klas.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</source>
+        <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="47"/>
+        <location filename="unpinndialog.ui" line="43"/>
         <source>If enabled items unpinned from object geometry will be deleted from current item list.</source>
         <translation>Jeśli załączone obiekty usunięte z geometrii innych obiektów zostaną trwale wykasowane z listy obiektów.</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="50"/>
+        <location filename="unpinndialog.ui" line="46"/>
         <source>Delete unpinned objects</source>
         <translation>Usuń odczepione obiekty</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="62"/>
-        <location filename="unpinndialog.cpp" line="76"/>
+        <location filename="unpinndialog.cpp" line="59"/>
+        <location filename="unpinndialog.cpp" line="73"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="62"/>
+        <location filename="unpinndialog.cpp" line="59"/>
         <source>Classes list is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="76"/>
+        <location filename="unpinndialog.cpp" line="73"/>
         <source>Work in progress</source>
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="81"/>
+        <location filename="unpinndialog.cpp" line="78"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="82"/>
+        <location filename="unpinndialog.cpp" line="79"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>

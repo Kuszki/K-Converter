@@ -69,7 +69,7 @@ void DeleteDialog::open(void)
 
 void DeleteDialog::accept(void)
 {
-	if (ui->Class->text().size())
+	if (ui->Class->text().size() || ui->Values->rowCount())
 	{
 		const int Count = ui->Values->rowCount();
 
@@ -79,11 +79,15 @@ void DeleteDialog::accept(void)
 
 		if (Values.size() == Count)
 		{
+			const QStringList Classes = !ui->Class->text().isEmpty() ?
+									   ui->Class->text().split(',', QString::SkipEmptyParts) :
+									   QStringList() << ".*";
+
 			ui->procedButton->setEnabled(false);
 			ui->cancelButton->setEnabled(false);
 			ui->progressBar->setVisible(true);
 
-			emit onDeleteRequest(ui->Class->text().split(',', QString::SkipEmptyParts), Values);
+			emit onDeleteRequest(Classes, Values);
 		}
 		else QMessageBox::warning(this, tr("Error"), tr("Found duplicated keys"));
 	}

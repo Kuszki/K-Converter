@@ -34,6 +34,7 @@
 #include <QLabel>
 #include <QMenu>
 
+#include "setvaluedialog.hpp"
 #include "changesdialog.hpp"
 #include "replacedialog.hpp"
 #include "deletedialog.hpp"
@@ -57,7 +58,7 @@ class MainWindow : public QMainWindow
 
 		AboutDialog* About = nullptr;
 		ReplaceDialog* Replace = nullptr;
-		ReplaceDialog* Setvalue = nullptr;
+		SetvalueDialog* Setvalue = nullptr;
 		DeleteDialog* Delete = nullptr;
 		UnpinnDialog* Unpinn = nullptr;
 
@@ -101,7 +102,7 @@ class MainWindow : public QMainWindow
 
 		void InitReplace(const QString& From, const QString& To, bool Case, bool RegExp);
 		void FinishReplace(const QList<QStringList>& Data, int Count);
-		void InitSetting(const QString& From, const QString& To, bool Case, bool RegExp);
+		void InitSetting(const QString& Field, const QString& Value, const QStringList& Classes, const QMap<QString, QString>& Values);
 		void FinishSetting(const QList<QStringList>& Data, int Count);
 		void InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values);
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
@@ -124,7 +125,8 @@ class MainWindow : public QMainWindow
 		void onSetvalueRequest(const QList<QStringList>&,
 						   const QString&,
 						   const QString&,
-						   bool, bool);
+						   const QStringList&,
+						   const QMap<QString, QString>&);
 		void onDeleteRequest(const QList<QStringList>&,
 						 const QStringList&,
 						 const QMap<QString, QString>&);

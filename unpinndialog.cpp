@@ -30,9 +30,6 @@ UnpinnDialog::UnpinnDialog(QWidget *Parent)
 
 	ui->progressBar->setVisible(false);
 	ui->Class->setValidator(Validator);
-
-	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
-	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 }
 
 UnpinnDialog::~UnpinnDialog(void)

@@ -28,16 +28,12 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="Class">
      <property name="toolTip">
-      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</string>
+      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0" colspan="2">
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>24</number>
-     </property>
-    </widget>
+    <widget class="QProgressBar" name="progressBar"/>
    </item>
    <item row="4" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">

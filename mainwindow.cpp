@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget* Parent)
 
 	About = new AboutDialog(this);
 	Replace = new ReplaceDialog(this);
-	Setvalue = new ReplaceDialog(this);
+	Setvalue = new SetvalueDialog(this);
 	Delete = new DeleteDialog(this);
 	Unpinn = new UnpinnDialog(this);
 	Progress = new QProgressBar(this);
@@ -69,10 +69,10 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onReplaceFinish, Replace, &ReplaceDialog::ShowProgress);
 	connect(Replace, &ReplaceDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
-	connect(ui->actionSetvalue, &QAction::triggered, Setvalue, &ReplaceDialog::open);
-	connect(Setvalue, &ReplaceDialog::onReplaceRequest, this, &MainWindow::InitSetting);
-	connect(this, &MainWindow::onSettingFinish, Setvalue, &ReplaceDialog::ShowProgress);
-	connect(Setvalue, &ReplaceDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(ui->actionSetvalue, &QAction::triggered, Setvalue, &SetvalueDialog::open);
+	connect(Setvalue, &SetvalueDialog::onSetvalueRequest, this, &MainWindow::InitSetting);
+	connect(this, &MainWindow::onSettingFinish, Setvalue, &SetvalueDialog::ShowProgress);
+	connect(Setvalue, &SetvalueDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 
 	connect(ui->actionDelete, &QAction::triggered, Delete, &DeleteDialog::open);
 	connect(Delete, &DeleteDialog::onDeleteRequest, this, &MainWindow::InitDeleting);
@@ -372,9 +372,9 @@ void MainWindow::FinishReplace(const QList<QStringList>& Data, int Count)
 	SaveDAT(Data); emit onReplaceFinish(Count);
 }
 
-void MainWindow::InitSetting(const QString &From, const QString &To, bool Case, bool RegExp)
+void MainWindow::InitSetting(const QString &Field, const QString& Value, const QStringList& Classes, const QMap<QString, QString>& Values)
 {
-	emit onSetvalueRequest(*loadedData, From, To, Case, RegExp);
+	emit onSetvalueRequest(*loadedData, Field, Value, Classes, Values);
 }
 
 void MainWindow::FinishSetting(const QList<QStringList>& Data, int Count)

@@ -92,9 +92,10 @@ class AppCore : public QObject
 					  const QString& Replace,
 					  bool Case, bool RegExp);
 		void UpdateValues(const QList<QStringList>& Data,
-					   const QString &Source,
-					   const QString &Replace,
-					   bool Case, bool RegExp);
+					   const QString& Field,
+					   const QString& Setto,
+					   const QStringList& Classes,
+					   const QMap<QString, QString>& List);
 		void DeleteData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
 					 const QMap<QString, QString>& List);

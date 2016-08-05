@@ -18,23 +18,48 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "replacedialog.hpp"
-#include "ui_replacedialog.h"
+#include "setvaluedialog.hpp"
+#include "ui_setvaluedialog.h"
 
-ReplaceDialog::ReplaceDialog(QWidget* Parent)
-: QDialog(Parent), ui(new Ui::ReplaceDialog)
+SetvalueDialog::SetvalueDialog(QWidget* Parent)
+: QDialog(Parent), ui(new Ui::SetvalueDialog)
 {
+	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(?:,[A-z]+)*"), this);
+
 	ui->setupUi(this);
 
 	ui->progressBar->setVisible(false);
+	ui->Class->setValidator(Validator);
 }
 
-ReplaceDialog::~ReplaceDialog(void)
+SetvalueDialog::~SetvalueDialog(void)
 {
 	delete ui;
 }
 
-void ReplaceDialog::open(void)
+void SetvalueDialog::AddButtonClicked(void)
+{
+	const int Rows = ui->Values->rowCount();
+
+	const bool Sorting = ui->Values->isSortingEnabled();
+
+	ui->Values->setSortingEnabled(false);
+	ui->Values->insertRow(Rows);
+
+	ui->Values->setItem(Rows, 0, new QTableWidgetItem(tr("key")));
+	ui->Values->setItem(Rows, 1, new QTableWidgetItem(tr("value")));
+
+	ui->Values->setSortingEnabled(Sorting);
+}
+
+void SetvalueDialog::RemoveButtonClicked(void)
+{
+	const int Row = ui->Values->currentRow();
+
+	if (Row != -1) ui->Values->removeRow(Row);
+}
+
+void SetvalueDialog::open(void)
 {
 	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
@@ -42,23 +67,34 @@ void ReplaceDialog::open(void)
 	QDialog::open();
 }
 
-void ReplaceDialog::accept(void)
+void SetvalueDialog::accept(void)
 {
-	if (ui->Find->text().size())
+	if (ui->Field->text().size())
 	{
-		ui->procedButton->setEnabled(false);
-		ui->cancelButton->setEnabled(false);
-		ui->progressBar->setVisible(true);
+		const int Count = ui->Values->rowCount();
 
-		emit onReplaceRequest(ui->Find->text(),
-						  ui->Replace->text(),
-						  ui->caseCheck->isChecked(),
-						  ui->regexpCheck->isChecked());
+		QMap<QString, QString> Values;
+
+		for (int i = 0; i < Count; ++i) Values.insert(ui->Values->item(i, 0)->text(), (ui->Values->item(i, 1)->text()));
+
+		if (Values.size() == Count)
+		{
+			const QStringList Classes = !ui->Class->text().isEmpty() ?
+									   ui->Class->text().split(',', QString::SkipEmptyParts) :
+									   QStringList() << ".*";
+
+			ui->procedButton->setEnabled(false);
+			ui->cancelButton->setEnabled(false);
+			ui->progressBar->setVisible(true);
+
+			emit onSetvalueRequest(ui->Field->text(), ui->Value->text(), Classes, Values);
+		}
+		else QMessageBox::warning(this, tr("Error"), tr("Found duplicated keys"));
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Text to find is empty"));
 }
 
-void ReplaceDialog::reject(void)
+void SetvalueDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
@@ -72,7 +108,7 @@ void ReplaceDialog::reject(void)
 	else QMessageBox::warning(this, tr("Error"), tr("Replacing in progress"));
 }
 
-void ReplaceDialog::ShowProgress(int Count)
+void SetvalueDialog::ShowProgress(int Count)
 {
 	QMessageBox::information(this, tr("Replace progress"),
 						tr("Replaced %n item(s)", 0, Count));
