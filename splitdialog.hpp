@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                         *
- *  Tango file converter for DaroD                                         *
+ *  {description}                                                          *
  *  Copyright (C) 2016  Łukasz "Kuszki" Dróżdż  l.drozdz@openmailbox.org   *
  *                                                                         *
  *  This program is free software: you can redistribute it and/or modify   *
@@ -18,8 +18,8 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef SETVALUEDIALOG_HPP
-#define SETVALUEDIALOG_HPP
+#ifndef SPLITDIALOG_HPP
+#define SPLITDIALOG_HPP
 
 #include <QMessageBox>
 #include <QDialog>
@@ -28,29 +28,24 @@
 
 namespace Ui
 {
-	class SetvalueDialog;
+	class SplitDialog;
 }
 
-class SetvalueDialog : public QDialog
+class SplitDialog : public QDialog
 {
 
 		Q_OBJECT
 
 	private:
 
-		Ui::SetvalueDialog* ui;
+		Ui::SplitDialog* ui;
 
-		int Replaces = 0;
+		int Splitted = 0;
 
 	public:
 
-		explicit SetvalueDialog(QWidget* Parent = nullptr);
-		virtual ~SetvalueDialog(void) override;
-
-	private slots:
-
-		void AddButtonClicked(void);
-		void RemoveButtonClicked(void);
+		explicit SplitDialog(QWidget* Parent = nullptr);
+		virtual ~SplitDialog(void) override;
 
 	public slots:
 
@@ -63,12 +58,9 @@ class SetvalueDialog : public QDialog
 
 	signals:
 
-		void onSetvalueRequest(const QString&,
-						   const QString&,
-						   const QStringList&,
-						   const QMap<QString, QString>&);
+		void onSplitRequest(const QStringList&, bool, bool);
 		void onRefreshRequest(void);
 
 };
 
-#endif // SETVALUEDIALOG_HPP
+#endif // SPLITDIALOG_HPP

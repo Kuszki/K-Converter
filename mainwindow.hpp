@@ -39,6 +39,7 @@
 #include "replacedialog.hpp"
 #include "deletedialog.hpp"
 #include "unpinndialog.hpp"
+#include "splitdialog.hpp"
 #include "aboutdialog.hpp"
 #include "appcore.hpp"
 
@@ -61,6 +62,7 @@ class MainWindow : public QMainWindow
 		SetvalueDialog* Setvalue = nullptr;
 		DeleteDialog* Delete = nullptr;
 		UnpinnDialog* Unpinn = nullptr;
+		SplitDialog* Split = nullptr;
 
 		QProgressBar* Progress = nullptr;
 		QComboBox* Codecs = nullptr;
@@ -108,6 +110,8 @@ class MainWindow : public QMainWindow
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
 		void InitUnpinning(const QStringList& Classes, bool Delete);
 		void FinishUnpinning(const QList<QStringList>& Data, int Count);
+		void InitSplitting(const QStringList& Classes, bool Keep, bool Hide);
+		void FinishSplitting(const QList<QStringList>& Data, int Count);
 
 	signals:
 
@@ -132,11 +136,15 @@ class MainWindow : public QMainWindow
 						 const QMap<QString, QString>&);
 		void onUnpinnRequest(const QList<QStringList>&,
 						 const QStringList&, bool);
+		void onSplitRequest(const QList<QStringList>&,
+						const QStringList&,
+						bool, bool);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
 		void onDeletingFinish(int);
 		void onUnpinningFinish(int);
+		void onSplittingFinish(int);
 
 };
 

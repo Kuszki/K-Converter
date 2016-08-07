@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Setvalue = new SetvalueDialog(this);
 	Delete = new DeleteDialog(this);
 	Unpinn = new UnpinnDialog(this);
+	Split = new SplitDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 
@@ -50,17 +51,19 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onSaveRequest, AppCore::getInstance(), &AppCore::SaveData);
 	connect(this, &MainWindow::onConvertRequest, AppCore::getInstance(), &AppCore::ConvertData);
 	connect(this, &MainWindow::onReplaceRequest, AppCore::getInstance(), &AppCore::ReplaceData);
-	connect(this, &MainWindow::onSetvalueRequest, AppCore::getInstance(), &AppCore::UpdateValues);
+	connect(this, &MainWindow::onSetvalueRequest, AppCore::getInstance(), &AppCore::UpdateData);
 	connect(this, &MainWindow::onDeleteRequest, AppCore::getInstance(), &AppCore::DeleteData);
 	connect(this, &MainWindow::onUnpinnRequest, AppCore::getInstance(), &AppCore::UnpinnData);
+	connect(this, &MainWindow::onSplitRequest, AppCore::getInstance(), &AppCore::SplitData);
 
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
-	connect(AppCore::getInstance(), &AppCore::onObjectsConvert, this, &MainWindow::FinishConvert);
+	connect(AppCore::getInstance(), &AppCore::onDataConvert, this, &MainWindow::FinishConvert);
 	connect(AppCore::getInstance(), &AppCore::onOutputSave, this, &MainWindow::FinishSave);
 	connect(AppCore::getInstance(), &AppCore::onDataReplace, this, &MainWindow::FinishReplace);
-	connect(AppCore::getInstance(), &AppCore::onValuesUpdate, this, &MainWindow::FinishSetting);
+	connect(AppCore::getInstance(), &AppCore::onDataUpdate, this, &MainWindow::FinishSetting);
 	connect(AppCore::getInstance(), &AppCore::onDataDelete, this, &MainWindow::FinishDeleting);
 	connect(AppCore::getInstance(), &AppCore::onDataUnpinn, this, &MainWindow::FinishUnpinning);
+	connect(AppCore::getInstance(), &AppCore::onDataSplit, this, &MainWindow::FinishSplitting);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -73,16 +76,25 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(Setvalue, &SetvalueDialog::onSetvalueRequest, this, &MainWindow::InitSetting);
 	connect(this, &MainWindow::onSettingFinish, Setvalue, &SetvalueDialog::ShowProgress);
 	connect(Setvalue, &SetvalueDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Setvalue, &SetvalueDialog::UpdateList);
 
 	connect(ui->actionDelete, &QAction::triggered, Delete, &DeleteDialog::open);
 	connect(Delete, &DeleteDialog::onDeleteRequest, this, &MainWindow::InitDeleting);
 	connect(this, &MainWindow::onDeletingFinish, Delete, &DeleteDialog::ShowProgress);
 	connect(Delete, &DeleteDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Delete, &DeleteDialog::UpdateList);
 
 	connect(ui->actionUnpinn, &QAction::triggered, Unpinn, &UnpinnDialog::open);
 	connect(Unpinn, &UnpinnDialog::onUnpinnRequest, this, &MainWindow::InitUnpinning);
 	connect(this, &MainWindow::onUnpinningFinish, Unpinn, &UnpinnDialog::ShowProgress);
 	connect(Unpinn, &UnpinnDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Unpinn, &UnpinnDialog::UpdateList);
+
+	connect(ui->actionSplit, &QAction::triggered, Split, &SplitDialog::open);
+	connect(Split, &SplitDialog::onSplitRequest, this, &MainWindow::InitSplitting);
+	connect(this, &MainWindow::onSplittingFinish, Split, &SplitDialog::ShowProgress);
+	connect(Split, &SplitDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Split, &SplitDialog::UpdateList);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -115,6 +127,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionSave->setEnabled(false);
 		ui->actionDelete->setEnabled(false);
 		ui->actionUnpinn->setEnabled(false);
+		ui->actionSplit->setEnabled(false);
 		ui->actionSetvalue->setEnabled(false);
 		ui->actionClear->setEnabled(false);
 	}
@@ -125,6 +138,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionSave->setEnabled(loadedData);
 		ui->actionDelete->setEnabled(loadedData);
 		ui->actionUnpinn->setEnabled(loadedData);
+		ui->actionSplit->setEnabled(loadedData);
 		ui->actionSetvalue->setEnabled(loadedData);
 		ui->actionClear->setEnabled(loadedData);
 	}
@@ -400,4 +414,14 @@ void MainWindow::InitUnpinning(const QStringList& Classes, bool Delete)
 void MainWindow::FinishUnpinning(const QList<QStringList>& Data, int Count)
 {
 	SaveDAT(Data); emit onUnpinningFinish(Count);
+}
+
+void MainWindow::InitSplitting(const QStringList& Classes, bool Keep, bool Hide)
+{
+	emit onSplitRequest(*loadedData, Classes, Keep, Hide);
+}
+
+void MainWindow::FinishSplitting(const QList<QStringList>& Data, int Count)
+{
+	SaveDAT(Data); emit onSplittingFinish(Count);
 }

@@ -79,8 +79,8 @@ void SetvalueDialog::accept(void)
 
 		if (Values.size() == Count)
 		{
-			const QStringList Classes = !ui->Class->text().isEmpty() ?
-									   ui->Class->text().split(',', QString::SkipEmptyParts) :
+			const QStringList Classes = !ui->Class->currentText().isEmpty() ?
+									   ui->Class->currentText().split(',', QString::SkipEmptyParts) :
 									   QStringList() << ".*";
 
 			ui->procedButton->setEnabled(false);
@@ -106,6 +106,13 @@ void SetvalueDialog::reject(void)
 		if (Replaces) { emit onRefreshRequest(); Replaces = 0; }
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Replacing in progress"));
+}
+
+void SetvalueDialog::UpdateList(const QStringList& Classes)
+{
+	ui->Class->clear();
+	ui->Class->addItems(Classes);
+	ui->Class->setCurrentText("");
 }
 
 void SetvalueDialog::ShowProgress(int Count)

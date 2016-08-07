@@ -204,65 +204,65 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="31"/>
+        <location filename="deletedialog.ui" line="137"/>
         <source>&lt;p&gt;Classes of items to delete. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;Klasy obiektów które mają być usunięte. Kolejne wartości mogą być oddzielone przecinkiem. Puste pole oznacza dowolne klasy.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="40"/>
+        <location filename="deletedialog.ui" line="33"/>
         <source>Add condition.</source>
         <translation>Dodaje warunek.</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="43"/>
+        <location filename="deletedialog.ui" line="36"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="54"/>
+        <location filename="deletedialog.ui" line="47"/>
         <source>Remove selected condition.</source>
         <translation>Usuwa zaznaczony warunek.</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="57"/>
+        <location filename="deletedialog.ui" line="50"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="81"/>
+        <location filename="deletedialog.ui" line="74"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="127"/>
+        <location filename="deletedialog.ui" line="120"/>
         <source>Required key value.</source>
         <translation>Wymagana wartość klucza.</translation>
     </message>
     <message>
         <location filename="deletedialog.ui" line="14"/>
-        <location filename="deletedialog.ui" line="88"/>
+        <location filename="deletedialog.ui" line="81"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="97"/>
+        <location filename="deletedialog.ui" line="90"/>
         <source>&lt;p&gt;List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.&lt;/p&gt;</source>
         <oldsource>List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.</oldsource>
         <translation>&lt;p&gt;Lista dodatkowych regów. Wszystkie utworzone reguły muszą zostać spełnione by obiekt został usunięty. Można stosować wyrażenia &quot;$nazwa_pola&quot; w celu użycia wartości pola testowanego obiektu.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="116"/>
+        <location filename="deletedialog.ui" line="109"/>
         <source>Key</source>
         <translation>Klucz</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="119"/>
+        <location filename="deletedialog.ui" line="112"/>
         <source>Key to check.</source>
         <translation>Nazwa klucza do sprawdzenia.</translation>
     </message>
     <message>
-        <location filename="deletedialog.ui" line="124"/>
+        <location filename="deletedialog.ui" line="117"/>
         <source>Value</source>
         <translation>Wartość</translation>
     </message>
@@ -299,12 +299,12 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Trwa usuwanie obiektów</translation>
     </message>
     <message>
-        <location filename="deletedialog.cpp" line="113"/>
+        <location filename="deletedialog.cpp" line="120"/>
         <source>Delete progress</source>
         <translation>Postęp usuwania</translation>
     </message>
     <message numerus="yes">
-        <location filename="deletedialog.cpp" line="114"/>
+        <location filename="deletedialog.cpp" line="121"/>
         <source>Deleted %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n wpis</numerusform>
@@ -336,268 +336,278 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Akcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="70"/>
+        <location filename="mainwindow.ui" line="71"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="104"/>
+        <location filename="mainwindow.ui" line="105"/>
         <source>File</source>
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="111"/>
+        <location filename="mainwindow.ui" line="112"/>
         <source>Edit</source>
         <translation>Edycja</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="126"/>
+        <location filename="mainwindow.ui" line="128"/>
         <source>Tools</source>
         <translation>Narzędzia</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="142"/>
+        <location filename="mainwindow.ui" line="144"/>
         <source>Convert</source>
         <translation>Konwertuj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="145"/>
+        <location filename="mainwindow.ui" line="147"/>
         <source>Converts loaded data using enabled rules.</source>
         <translation>Konwertuje załadowane dane zgodnie z bieżącymi regułami.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="148"/>
+        <location filename="mainwindow.ui" line="150"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="157"/>
+        <location filename="mainwindow.ui" line="159"/>
         <source>Edit sources</source>
         <translation>Edytuj źródła</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="160"/>
+        <location filename="mainwindow.ui" line="162"/>
         <source>Edit conversion rules database.</source>
         <translation>Edytuje baze danych reguł.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="163"/>
+        <location filename="mainwindow.ui" line="165"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="172"/>
+        <location filename="mainwindow.ui" line="174"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="175"/>
+        <location filename="mainwindow.ui" line="177"/>
         <source>Open data file.</source>
         <translation>Otwiera wybrany plik.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="178"/>
+        <location filename="mainwindow.ui" line="180"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="187"/>
+        <location filename="mainwindow.ui" line="189"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="190"/>
+        <location filename="mainwindow.ui" line="192"/>
         <source>Save data into file.</source>
         <translation>Zapisuje dane do wybranego pliku.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="193"/>
+        <location filename="mainwindow.ui" line="195"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="202"/>
+        <location filename="mainwindow.ui" line="204"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="207"/>
         <source>Execute single rule created by user.</source>
         <translation>Wprowadza pojedynczą regułę utworzoną przeż użytkownika.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="208"/>
+        <location filename="mainwindow.ui" line="210"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="217"/>
+        <location filename="mainwindow.ui" line="219"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="220"/>
+        <location filename="mainwindow.ui" line="222"/>
         <source>Stop current action.</source>
         <translation>Zatrzymuje aktualną akcję.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="223"/>
+        <location filename="mainwindow.ui" line="225"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="232"/>
+        <location filename="mainwindow.ui" line="234"/>
         <source>Set value</source>
         <translation>Ustal pole</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="235"/>
+        <location filename="mainwindow.ui" line="237"/>
         <source>Set value for selected keys.</source>
         <translation>Ustala wartość wybranym polom.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.ui" line="240"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="247"/>
+        <location filename="mainwindow.ui" line="249"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="250"/>
+        <location filename="mainwindow.ui" line="252"/>
         <source>Show about dialog.</source>
         <translation>Pokazuje dialog &quot;O programie&quot;.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
+        <location filename="mainwindow.ui" line="255"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="262"/>
+        <location filename="mainwindow.ui" line="264"/>
         <source>Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="265"/>
+        <location filename="mainwindow.ui" line="267"/>
         <source>Delete items selected by rules.</source>
         <translation>Usuwa obiekty spełniające zadane reguły.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="268"/>
+        <location filename="mainwindow.ui" line="270"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="280"/>
+        <location filename="mainwindow.ui" line="282"/>
         <source>Unpinn objects from item geometry.</source>
         <translation>Usuwa wybrane obiekty z geometrii innych obiektów.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="292"/>
+        <location filename="mainwindow.ui" line="294"/>
         <source>Undo</source>
         <translation>Cofnij</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="295"/>
+        <location filename="mainwindow.ui" line="297"/>
         <source>Undo last commit.</source>
         <translation>Cofa ostatnią zmianę.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="298"/>
+        <location filename="mainwindow.ui" line="300"/>
         <source>Ctrl+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="307"/>
+        <location filename="mainwindow.ui" line="309"/>
         <source>Redo</source>
         <translation>Ponów</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="310"/>
+        <location filename="mainwindow.ui" line="312"/>
         <source>Redo last commit.</source>
         <translation>Przywraca cofniętą zmianę.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="313"/>
+        <location filename="mainwindow.ui" line="315"/>
         <source>Ctrl+Shift+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="322"/>
+        <location filename="mainwindow.ui" line="324"/>
         <source>Clear</source>
         <translation>Wyczyść</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="325"/>
+        <location filename="mainwindow.ui" line="327"/>
         <source>Clear all data.</source>
         <translation>Usuwa wszystkie dane.</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="328"/>
+        <location filename="mainwindow.ui" line="330"/>
         <source>Ctrl+R</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="277"/>
+        <location filename="mainwindow.ui" line="339"/>
+        <source>Split objects</source>
+        <translation>Podziel obiekty</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="342"/>
+        <source>Splits all objects with selected class in geometry.</source>
+        <translation>Dzieli obiekty których geometria opiera się na podanych klasach.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="279"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="283"/>
+        <location filename="mainwindow.ui" line="285"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="173"/>
+        <location filename="mainwindow.cpp" line="187"/>
         <source>Converting data...</source>
         <translation>Konwertowanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="177"/>
-        <location filename="mainwindow.cpp" line="355"/>
+        <location filename="mainwindow.cpp" line="191"/>
+        <location filename="mainwindow.cpp" line="369"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="178"/>
+        <location filename="mainwindow.cpp" line="192"/>
         <source>No data in buffer</source>
         <translation>Brak danych w buforze</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="200"/>
+        <location filename="mainwindow.cpp" line="214"/>
         <source>Loading data...</source>
         <translation>Wczytywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="211"/>
+        <location filename="mainwindow.cpp" line="225"/>
         <source>Saving data...</source>
         <translation>Zapisywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="248"/>
+        <location filename="mainwindow.cpp" line="262"/>
         <source>Data cleared</source>
         <translation>Wyczyszczono dane</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="259"/>
+        <location filename="mainwindow.cpp" line="273"/>
         <source>Copy all</source>
         <translation>Kopiuj wszystko</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="261"/>
+        <location filename="mainwindow.cpp" line="275"/>
         <source>Copy key</source>
         <translation>Kopiuj klucz</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="262"/>
+        <location filename="mainwindow.cpp" line="276"/>
         <source>Copy value</source>
         <translation>Kopiuj wartość</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="351"/>
+        <location filename="mainwindow.cpp" line="365"/>
         <source>File saved, checksum is %1</source>
         <translation>Plik zapisany, suma kontrolna wynosi %1</translation>
     </message>
@@ -607,13 +617,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Czyszczenie drzewa...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="293"/>
+        <location filename="mainwindow.cpp" line="307"/>
         <source>Populating tree...</source>
         <oldsource>Populating tree..</oldsource>
         <translation>Zapełnianie drzewa...</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="334"/>
+        <location filename="mainwindow.cpp" line="348"/>
         <source>Action complete, loaded %n item(s)</source>
         <oldsource>Action complete. Loaded %n item(s)</oldsource>
         <translation>
@@ -627,8 +637,8 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Plik zapisany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="355"/>
-        <location filename="mainwindow.cpp" line="356"/>
+        <location filename="mainwindow.cpp" line="369"/>
+        <location filename="mainwindow.cpp" line="370"/>
         <source>Error while saving file</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
@@ -817,13 +827,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Tekst do podmiany.</translation>
     </message>
     <message>
-        <location filename="setvaluedialog.ui" line="155"/>
+        <location filename="setvaluedialog.ui" line="168"/>
         <source>&lt;p&gt;Classes of items to update data. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;Klasy obiektów których pola mają być zaktualizowane. Kolejne wartości mogą być oddzielone przecinkiem. Puste pole oznacza dowolne klasy.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="setvaluedialog.ui" line="162"/>
+        <location filename="setvaluedialog.ui" line="155"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
@@ -860,12 +870,12 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Trwa wprowadzanie zmian</translation>
     </message>
     <message>
-        <location filename="setvaluedialog.cpp" line="113"/>
+        <location filename="setvaluedialog.cpp" line="120"/>
         <source>Replace progress</source>
         <translation>Postęp zmian</translation>
     </message>
     <message numerus="yes">
-        <location filename="setvaluedialog.cpp" line="114"/>
+        <location filename="setvaluedialog.cpp" line="121"/>
         <source>Replaced %n item(s)</source>
         <translation>
             <numerusform>Zamieniono %n wpis</numerusform>
@@ -875,36 +885,115 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
 </context>
 <context>
+    <name>SplitDialog</name>
+    <message>
+        <location filename="splitdialog.ui" line="14"/>
+        <source>Split item</source>
+        <translation>Podziel obiekt</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="24"/>
+        <source>Class</source>
+        <translation>Kod obiektu</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="94"/>
+        <source>&lt;p&gt;Classes of items to split items with them in geometry. Next values can be separated by comma sign.&lt;/p&gt;</source>
+        <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</oldsource>
+        <translation>&lt;p&gt;Klasy obiektów będących punktami podziału. Każdy obiekt, którego geometria opiera się na obiekcie o podanej klasie zostanie podzielony. Kolejne wartości mogą być oddzielone przecinkiem.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="31"/>
+        <source>If enabled keeps oryginal objects and marks them as removed.</source>
+        <translation>Jeśli zaznaczono oryginalne obiekty zostaną zachowane wraz ze statusem &quot;usunięty&quot;.</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="34"/>
+        <source>Keep changed objects</source>
+        <translation>Zachowaj oryginalne obiekty</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="41"/>
+        <source>If enabled hides neartes connections to object.</source>
+        <translation>Jeśli zaznaczone ukrywa najbliższe połączenia przy punkcie podziału.</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="44"/>
+        <source>Hide nearest connections</source>
+        <translation>Ukryj najbliższe połączenia</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="69"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.ui" line="76"/>
+        <source>Split</source>
+        <translation>Podziel</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.cpp" line="60"/>
+        <location filename="splitdialog.cpp" line="74"/>
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.cpp" line="60"/>
+        <source>Classes list is empty</source>
+        <translation>Nie podano kodu obiektu</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.cpp" line="74"/>
+        <source>Work in progress</source>
+        <translation>Trwa podział obiektów</translation>
+    </message>
+    <message>
+        <location filename="splitdialog.cpp" line="86"/>
+        <source>Split progress</source>
+        <translation>Postęp podziału</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="splitdialog.cpp" line="87"/>
+        <source>Created %n new item(s)</source>
+        <translation>
+            <numerusform>Utworzono %n nowy obiekt</numerusform>
+            <numerusform>Utworzono %n nowe obiekty</numerusform>
+            <numerusform>Utworzono %n nowych obiektów</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="66"/>
+        <location filename="unpinndialog.ui" line="49"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="73"/>
+        <location filename="unpinndialog.ui" line="56"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="24"/>
+        <location filename="unpinndialog.ui" line="27"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="31"/>
+        <location filename="unpinndialog.ui" line="97"/>
         <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="43"/>
+        <location filename="unpinndialog.ui" line="68"/>
         <source>If enabled items unpinned from object geometry will be deleted from current item list.</source>
         <translation>Jeśli załączone obiekty usunięte z geometrii innych obiektów zostaną trwale wykasowane z listy obiektów.</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="46"/>
+        <location filename="unpinndialog.ui" line="71"/>
         <source>Delete unpinned objects</source>
         <translation>Usuń odczepione obiekty</translation>
     </message>
@@ -925,12 +1014,12 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="78"/>
+        <location filename="unpinndialog.cpp" line="85"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="79"/>
+        <location filename="unpinndialog.cpp" line="86"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>

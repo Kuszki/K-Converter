@@ -149,6 +149,26 @@ QMap<int, AppCore::Entry> AppCore::getItems(void)
 	return Items;
 }
 
+QStringList AppCore::getClasses(const QList<QStringList>& Data)
+{
+	QRegExp classExpr("^A,(\\w+),");
+	QStringList Items;
+
+	for (const auto& Item : Data)
+	{
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+			const QString Class = classExpr.capturedTexts().last();
+
+			if (!Items.contains(Class)) Items.append(Class);
+		}
+	}
+
+	qSort(Items);
+
+	return Items;
+}
+
 void AppCore::Terminate(void)
 {
 	Locker.lock();
@@ -215,6 +235,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 		}
 	}
 
+	emit onClassesLoad(getClasses(Items));
 	emit onObjectsLoad(Header, Items);
 }
 
@@ -308,7 +329,7 @@ void AppCore::ConvertData(const QList<QStringList>& Data)
 	WatcherThread.exit();
 	WatcherThread.wait();
 
-	emit onObjectsConvert(Output);
+	emit onDataConvert(Output);
 }
 
 void AppCore::ReplaceData(const QList<QStringList>& Data, const QString &Source, const QString &Replace, bool Case, bool RegExp)
@@ -353,7 +374,7 @@ void AppCore::ReplaceData(const QList<QStringList>& Data, const QString &Source,
 	emit onDataReplace(Output, Count);
 }
 
-void AppCore::UpdateValues(const QList<QStringList>& Data, const QString& Field, const QString& Setto, const QStringList& Classes, const QMap<QString, QString>& List)
+void AppCore::UpdateData(const QList<QStringList>& Data, const QString& Field, const QString& Setto, const QStringList& Classes, const QMap<QString, QString>& List)
 {
 	QList<QStringList> Output = Data;
 	QFutureWatcher<void> Watcher;
@@ -374,7 +395,7 @@ void AppCore::UpdateValues(const QList<QStringList>& Data, const QString& Field,
 	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Field, &Setto, &List, &Expr] (auto& Item) -> void
 	{
 		QMap<QString, QString> ListCopy = List;
-		QRegExp classExpr(QString("A,(%1),").arg(Expr));
+		QRegExp classExpr(QString("^A,(%1),").arg(Expr));
 		QRegExp objectExpr("(C,.*)=(.*)");
 		QMap<QString, QString> Values;
 		bool Checked = true;
@@ -449,7 +470,7 @@ void AppCore::UpdateValues(const QList<QStringList>& Data, const QString& Field,
 	WatcherThread.exit();
 	WatcherThread.wait();
 
-	emit onValuesUpdate(Output, Count);
+	emit onDataUpdate(Output, Count);
 }
 
 void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Classes, const QMap<QString, QString>& List)
@@ -473,7 +494,7 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &List, &Expr] (auto& Item) -> void
 	{
 		QMap<QString, QString> ListCopy = List;
-		QRegExp classExpr(QString("A,(%1),").arg(Expr));
+		QRegExp classExpr(QString("^A,(%1),").arg(Expr));
 		QRegExp objectExpr("(C,.*)=(.*)");
 		QMap<QString, QString> Values;
 		bool Delete = true;
@@ -533,8 +554,8 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
-	QRegExp classExpr(QString("A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
-	QList<QString> List;
+	QRegExp classExpr(QString("^A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
+	QStringList List;
 	int Count = 0;
 
 	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
@@ -551,7 +572,7 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 	{
 		for (auto& String : Item) if (String[0] == 'B') for (const auto& Pinn : List)
 		{
-			String.replace(QString("B,%1,").arg(Pinn), "B,,");
+			String.replace(QString("^B,%1,").arg(Pinn), "B,,");
 		}
 	}));
 
@@ -560,4 +581,126 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 	WatcherThread.wait();
 
 	emit onDataUnpinn(Output, Count);
+}
+
+void AppCore::SplitData(const QList<QStringList> &Data, const QStringList &Classes, bool Keep, bool Hide)
+{
+	QList<QStringList> Output = Data;
+	QList<QStringList> Divided;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	QRegExp classExpr(QString("^A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
+	QStringList List;
+
+	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
+	{
+		List.append(classExpr.capturedTexts().last());
+	}
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Divided, &List, Keep, Hide] (auto& Item) -> void
+	{
+		QStringList Geometry = Item.filter(QRegExp("^B,.*"));
+		QRegExp pinExpr("^B,(\\d+),");
+		QList<int> Cuts;
+		int ID = 0;
+
+		for (const auto& Pin : Geometry)
+		{
+			if (pinExpr.indexIn(Pin) != -1 && List.contains(pinExpr.capturedTexts().last()))
+			{
+				if (ID != 0 && ID != Geometry.size() - 1) Cuts.append(ID);
+			}
+
+			++ID;
+		}
+
+		if (!Cuts.isEmpty())
+		{
+			QStringList Copy = Item;
+			QString Header = Copy.takeFirst().replace(QRegExp("^A,(\\w+),(\\d+),(\\d+),(.*)"), "A,\\1,\\2,,\\4");
+
+			ID = Cuts.size() + 1;
+
+			Copy.replaceInStrings(QRegExp("^C,_identifier=.*"), "C,_identifier=")
+			    .replaceInStrings(QRegExp("^B,.*"), QString())
+			    .removeAll(QString());
+
+			if (Keep)
+			{
+				Item.replaceInStrings(QRegExp("^C,_status=.*"), "C,_status=0");
+			}
+			else
+			{
+				Item = QStringList();
+			}
+
+			QList<QStringList> NewItems;
+			QStringList NewGeometry;
+
+			for (int i = 0; i < Geometry.size(); ++i)
+			{
+				NewGeometry << Geometry[i];
+
+				if (!Cuts.isEmpty() && i == Cuts.first())
+				{
+					if (Hide)
+					{
+						QRegExp attrExpr("^B,(.+),(\\d+)");
+						const int PreLast = NewGeometry.size() - 2;
+
+						if (attrExpr.indexIn(NewGeometry[PreLast]) != -1)
+						{
+							const int Flags = attrExpr.capturedTexts().last().toInt() & ~int(0x1);
+
+							NewGeometry[PreLast] = QString("B,%1,%2").arg(attrExpr.capturedTexts()[1]).arg(Flags);
+						}
+
+						if (attrExpr.indexIn(Geometry[i]) != -1)
+						{
+							const int Flags = attrExpr.capturedTexts().last().toInt() & ~int(0x1);
+
+							Geometry[i] = QString("B,%1,%2").arg(attrExpr.capturedTexts()[1]).arg(Flags);
+						}
+					}
+
+					NewItems.append(QStringList() << Header << NewGeometry << Copy);
+
+					NewGeometry.clear();
+					Cuts.removeFirst();
+
+					NewGeometry << Geometry[i];
+				}
+			}
+
+			if (NewGeometry.size() > 1)
+			{
+				NewItems.append(QStringList() << Header << NewGeometry << Copy);
+			}
+
+			CountLocker.lock();
+			Count += ID;
+			Divided.append(NewItems);
+			CountLocker.unlock();
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	Output.removeAll(QStringList());
+	Output.append(Divided);
+
+	emit onDataSplit(Output, Count);
 }

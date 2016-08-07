@@ -59,6 +59,7 @@
    <addaction name="actionSetvalue"/>
    <addaction name="actionDelete"/>
    <addaction name="actionUnpinn"/>
+   <addaction name="actionSplit"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
@@ -116,6 +117,7 @@
     <addaction name="actionSetvalue"/>
     <addaction name="actionDelete"/>
     <addaction name="actionUnpinn"/>
+    <addaction name="actionSplit"/>
     <addaction name="separator"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -326,6 +328,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionSplit">
+   <property name="icon">
+    <iconset theme="insert-link">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Split objects</string>
+   </property>
+   <property name="toolTip">
+    <string>Splits all objects with selected class in geometry.</string>
    </property>
   </action>
  </widget>

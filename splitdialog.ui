@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UnpinnDialog</class>
- <widget class="QDialog" name="UnpinnDialog">
+ <class>SplitDialog</class>
+ <widget class="QDialog" name="SplitDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>160</height>
+    <height>190</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Unpinn</string>
+   <string>Split item</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="edit-cut">
+   <iconset theme="insert-link">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="0" colspan="2">
-    <widget class="QProgressBar" name="progressBar"/>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="classLabel">
      <property name="text">
@@ -28,7 +25,30 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="Keep">
+     <property name="toolTip">
+      <string>If enabled keeps oryginal objects and marks them as removed.</string>
+     </property>
+     <property name="text">
+      <string>Keep changed objects</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QCheckBox" name="Hide">
+     <property name="toolTip">
+      <string>If enabled hides neartes connections to object.</string>
+     </property>
+     <property name="text">
+      <string>Hide nearest connections</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QProgressBar" name="progressBar"/>
+   </item>
+   <item row="5" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -53,7 +73,7 @@
      <item>
       <widget class="QPushButton" name="procedButton">
        <property name="text">
-        <string>Unpinn</string>
+        <string>Split</string>
        </property>
        <property name="default">
         <bool>true</bool>
@@ -61,29 +81,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QCheckBox" name="Delete">
-     <property name="toolTip">
-      <string>If enabled items unpinned from object geometry will be deleted from current item list.</string>
-     </property>
-     <property name="text">
-      <string>Delete unpinned objects</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="Class">
@@ -94,46 +91,59 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</string>
+      <string>&lt;p&gt;Classes of items to split items with them in geometry. Next values can be separated by comma sign.&lt;/p&gt;</string>
      </property>
      <property name="editable">
       <bool>true</bool>
      </property>
     </widget>
    </item>
+   <item row="3" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>111</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>procedButton</sender>
+   <sender>cancelButton</sender>
    <signal>clicked()</signal>
-   <receiver>UnpinnDialog</receiver>
-   <slot>accept()</slot>
+   <receiver>SplitDialog</receiver>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>350</x>
-     <y>281</y>
+     <x>281</x>
+     <y>273</y>
     </hint>
     <hint type="destinationlabel">
-     <x>352</x>
-     <y>371</y>
+     <x>281</x>
+     <y>491</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>cancelButton</sender>
+   <sender>procedButton</sender>
    <signal>clicked()</signal>
-   <receiver>UnpinnDialog</receiver>
-   <slot>reject()</slot>
+   <receiver>SplitDialog</receiver>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>285</x>
-     <y>281</y>
+     <x>379</x>
+     <y>280</y>
     </hint>
     <hint type="destinationlabel">
-     <x>301</x>
-     <y>420</y>
+     <x>379</x>
+     <y>385</y>
     </hint>
    </hints>
   </connection>

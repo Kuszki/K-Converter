@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                         *
- *  Tango file converter for DaroD                                         *
+ *  {description}                                                          *
  *  Copyright (C) 2016  Łukasz "Kuszki" Dróżdż  l.drozdz@openmailbox.org   *
  *                                                                         *
  *  This program is free software: you can redistribute it and/or modify   *
@@ -18,11 +18,11 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "deletedialog.hpp"
-#include "ui_deletedialog.h"
+#include "splitdialog.hpp"
+#include "ui_splitdialog.h"
 
-DeleteDialog::DeleteDialog(QWidget* Parent)
-: QDialog(Parent), ui(new Ui::DeleteDialog)
+SplitDialog::SplitDialog(QWidget *Parent)
+: QDialog(Parent), ui(new Ui::SplitDialog)
 {
 	QRegExpValidator* Validator = new QRegExpValidator(QRegExp("[A-z]+(?:,[A-z]+)*"), this);
 
@@ -32,34 +32,12 @@ DeleteDialog::DeleteDialog(QWidget* Parent)
 	ui->Class->setValidator(Validator);
 }
 
-DeleteDialog::~DeleteDialog(void)
+SplitDialog::~SplitDialog(void)
 {
 	delete ui;
 }
 
-void DeleteDialog::AddButtonClicked(void)
-{
-	const int Rows = ui->Values->rowCount();
-
-	const bool Sorting = ui->Values->isSortingEnabled();
-
-	ui->Values->setSortingEnabled(false);
-	ui->Values->insertRow(Rows);
-
-	ui->Values->setItem(Rows, 0, new QTableWidgetItem(tr("key")));
-	ui->Values->setItem(Rows, 1, new QTableWidgetItem(tr("value")));
-
-	ui->Values->setSortingEnabled(Sorting);
-}
-
-void DeleteDialog::RemoveButtonClicked(void)
-{
-	const int Row = ui->Values->currentRow();
-
-	if (Row != -1) ui->Values->removeRow(Row);
-}
-
-void DeleteDialog::open(void)
+void SplitDialog::open(void)
 {
 	connect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 	connect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
@@ -67,34 +45,22 @@ void DeleteDialog::open(void)
 	QDialog::open();
 }
 
-void DeleteDialog::accept(void)
+void SplitDialog::accept(void)
 {
-	if (ui->Class->currentText().size() || ui->Values->rowCount())
+	if (ui->Class->currentText().size())
 	{
-		const int Count = ui->Values->rowCount();
+		ui->procedButton->setEnabled(false);
+		ui->cancelButton->setEnabled(false);
+		ui->progressBar->setVisible(true);
 
-		QMap<QString, QString> Values;
-
-		for (int i = 0; i < Count; ++i) Values.insert(ui->Values->item(i, 0)->text(), (ui->Values->item(i, 1)->text()));
-
-		if (Values.size() == Count)
-		{
-			const QStringList Classes = !ui->Class->currentText().isEmpty() ?
-									   ui->Class->currentText().split(',', QString::SkipEmptyParts) :
-									   QStringList() << ".*";
-
-			ui->procedButton->setEnabled(false);
-			ui->cancelButton->setEnabled(false);
-			ui->progressBar->setVisible(true);
-
-			emit onDeleteRequest(Classes, Values);
-		}
-		else QMessageBox::warning(this, tr("Error"), tr("Found duplicated keys"));
+		emit onSplitRequest(ui->Class->currentText().split(',', QString::SkipEmptyParts),
+						ui->Keep->isChecked(),
+						ui->Hide->isChecked());
 	}
-	else QMessageBox::warning(this, tr("Error"), tr("Class to delete is empty"));
+	else QMessageBox::warning(this, tr("Error"), tr("Classes list is empty"));
 }
 
-void DeleteDialog::reject(void)
+void SplitDialog::reject(void)
 {
 	if (ui->cancelButton->isEnabled())
 	{
@@ -103,26 +69,26 @@ void DeleteDialog::reject(void)
 		disconnect(AppCore::getInstance(), &AppCore::onProgressInit, ui->progressBar, &QProgressBar::setRange);
 		disconnect(AppCore::getInstance(), &AppCore::onProgressUpdate, ui->progressBar, &QProgressBar::setValue);
 
-		if (Deleted) { emit onRefreshRequest(); Deleted = 0; }
+		if (Splitted) { emit onRefreshRequest(); Splitted = 0; }
 	}
-	else QMessageBox::warning(this, tr("Error"), tr("Deleting in progress"));
+	else QMessageBox::warning(this, tr("Error"), tr("Work in progress"));
 }
 
-void DeleteDialog::UpdateList(const QStringList& Classes)
+void SplitDialog::UpdateList(const QStringList& Classes)
 {
 	ui->Class->clear();
 	ui->Class->addItems(Classes);
 	ui->Class->setCurrentText("");
 }
 
-void DeleteDialog::ShowProgress(int Count)
+void SplitDialog::ShowProgress(int Count)
 {
-	QMessageBox::information(this, tr("Delete progress"),
-						tr("Deleted %n item(s)", 0, Count));
+	QMessageBox::information(this, tr("Split progress"),
+						tr("Created %n new item(s)", 0, Count));
 
 	ui->procedButton->setEnabled(true);
 	ui->cancelButton->setEnabled(true);
 	ui->progressBar->setVisible(false);
 
-	Deleted += Count;
+	Splitted += Count;
 }

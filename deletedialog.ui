@@ -25,14 +25,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
-    <widget class="QLineEdit" name="Class">
-     <property name="toolTip">
-      <string>&lt;p&gt;Classes of items to delete. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
+   <item row="3" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="addButton">
@@ -91,7 +84,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="3">
+   <item row="1" column="0" colspan="2">
     <widget class="QTableWidget" name="Values">
      <property name="toolTip">
       <string>&lt;p&gt;List of additional rules. All selected rules must be met to delete object. You can type &quot;$field_name&quot; to use value of selected field in value column.&lt;/p&gt;</string>
@@ -129,8 +122,24 @@
      </column>
     </widget>
    </item>
-   <item row="2" column="0" colspan="3">
+   <item row="2" column="0" colspan="2">
     <widget class="QProgressBar" name="progressBar"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="Class">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>&lt;p&gt;Classes of items to delete. Next values can be separated by comma sign. Empty string means all classes.&lt;/p&gt;</string>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -47,13 +47,13 @@ void UnpinnDialog::open(void)
 
 void UnpinnDialog::accept(void)
 {
-	if (ui->Class->text().size())
+	if (ui->Class->currentText().size())
 	{
 		ui->procedButton->setEnabled(false);
 		ui->cancelButton->setEnabled(false);
 		ui->progressBar->setVisible(true);
 
-		emit onUnpinnRequest(ui->Class->text().split(',', QString::SkipEmptyParts),
+		emit onUnpinnRequest(ui->Class->currentText().split(',', QString::SkipEmptyParts),
 						 ui->Delete->isChecked());
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Classes list is empty"));
@@ -71,6 +71,13 @@ void UnpinnDialog::reject(void)
 		if (Unpinned) { emit onRefreshRequest(); Unpinned = 0; }
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Work in progress"));
+}
+
+void UnpinnDialog::UpdateList(const QStringList& Classes)
+{
+	ui->Class->clear();
+	ui->Class->addItems(Classes);
+	ui->Class->setCurrentText("");
 }
 
 void UnpinnDialog::ShowProgress(int Count)

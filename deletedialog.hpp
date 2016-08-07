@@ -58,6 +58,7 @@ class DeleteDialog : public QDialog
 		virtual void accept(void) override;
 		virtual void reject(void) override;
 
+		void UpdateList(const QStringList& Classes);
 		void ShowProgress(int Count);
 
 	signals:

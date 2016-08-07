@@ -74,6 +74,8 @@ class AppCore : public QObject
 		Entry getItem(int ID);
 		QMap<int, Entry> getItems(void);
 
+		QStringList getClasses(const QList<QStringList>& Data);
+
 		static AppCore* getInstance(void);
 
 	public slots:
@@ -91,7 +93,7 @@ class AppCore : public QObject
 					  const QString& Source,
 					  const QString& Replace,
 					  bool Case, bool RegExp);
-		void UpdateValues(const QList<QStringList>& Data,
+		void UpdateData(const QList<QStringList>& Data,
 					   const QString& Field,
 					   const QString& Setto,
 					   const QStringList& Classes,
@@ -102,6 +104,9 @@ class AppCore : public QObject
 		void UnpinnData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
 					 bool Delete);
+		void SplitData(const QList<QStringList>& Data,
+					const QStringList& Classes,
+					bool Keep, bool Hide);
 
 		void Terminate(void);
 
@@ -111,12 +116,14 @@ class AppCore : public QObject
 		void onItemsLoad(const QMap<int, Entry>&);
 		void onObjectsLoad(const QStringList&,
 					    const QList<QStringList>&);
+		void onClassesLoad(const QStringList&);
 
-		void onObjectsConvert(const QList<QStringList>&);
+		void onDataConvert(const QList<QStringList>&);
 		void onDataReplace(const QList<QStringList>, int);
-		void onValuesUpdate(const QList<QStringList>, int);
+		void onDataUpdate(const QList<QStringList>, int);
 		void onDataDelete(const QList<QStringList>, int);
 		void onDataUnpinn(const QList<QStringList>, int);
+		void onDataSplit(const QList<QStringList>, int);
 
 		void onOutputSave(unsigned);
 
