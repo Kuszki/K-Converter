@@ -34,7 +34,7 @@ SOURCES	+=	main.cpp \
 			deletedialog.cpp \
 			unpinndialog.cpp \
 			setvaluedialog.cpp \
-    splitdialog.cpp
+			splitdialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
@@ -44,7 +44,7 @@ HEADERS	+=	mainwindow.hpp \
 			deletedialog.hpp \
 			unpinndialog.hpp \
 			setvaluedialog.hpp \
-    splitdialog.hpp
+			splitdialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
@@ -53,7 +53,7 @@ FORMS	+=	mainwindow.ui \
 			deletedialog.ui \
 			unpinndialog.ui \
 			setvaluedialog.ui \
-    splitdialog.ui
+			splitdialog.ui
 
 RESOURCES	+=	resources.qrc
 
