@@ -80,6 +80,9 @@
        <property name="text">
         <string>Delete</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
