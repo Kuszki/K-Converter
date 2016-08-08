@@ -107,6 +107,9 @@ class AppCore : public QObject
 		void SplitData(const QList<QStringList>& Data,
 					const QStringList& Classes,
 					bool Keep, bool Hide);
+		void InsertData(const QList<QStringList>& Data,
+					 const QStringList& Classes,
+					 const QString& Insert);
 
 		void Terminate(void);
 
@@ -124,6 +127,7 @@ class AppCore : public QObject
 		void onDataDelete(const QList<QStringList>, int);
 		void onDataUnpinn(const QList<QStringList>, int);
 		void onDataSplit(const QList<QStringList>, int);
+		void onDataInsert(const QList<QStringList>, int);
 
 		void onOutputSave(unsigned);
 

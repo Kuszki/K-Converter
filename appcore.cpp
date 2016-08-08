@@ -704,3 +704,55 @@ void AppCore::SplitData(const QList<QStringList> &Data, const QStringList &Class
 
 	emit onDataSplit(Output, Count);
 }
+
+void AppCore::InsertData(const QList<QStringList> &Data, const QStringList &Classes, const QString &Insert)
+{
+	QList<QStringList> Output = Data;
+	QList<QStringList> Inserted;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	const QString Class = QString("^A,%1,.*").arg(Classes.join('|'));
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Inserted, &Class, &Insert] (auto& Item) -> void
+	{
+		QRegExp classExpr(Class);
+
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+			QStringList Geometry = Item.filter(QRegExp("^B,,.*"));
+			QStringList Attributes = Item.filter(QRegExp("^C,.*"));
+
+			if (!Geometry.isEmpty())
+			{
+				QList<QStringList> NewItems;
+
+				Geometry.replaceInStrings(QRegExp("^B,,(.*),\\d+$"), "B,,\\1,196609");
+
+				for (const auto& Pin : Geometry) NewItems.append(QStringList()
+							<< QString("A,%1,1,,,").arg(Insert)
+							<< Pin << Attributes);
+
+				CountLocker.lock();
+				Inserted.append(NewItems);
+				CountLocker.unlock();
+			}
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	for (const auto& Item : Inserted) if (!Output.contains(Item)) Output.insert(0, Item);
+
+	emit onDataInsert(Output, Output.size() - Data.size());
+}

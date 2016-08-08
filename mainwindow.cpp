@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Delete = new DeleteDialog(this);
 	Unpinn = new UnpinnDialog(this);
 	Split = new SplitDialog(this);
+	Insert = new InsertDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 
@@ -55,6 +56,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onDeleteRequest, AppCore::getInstance(), &AppCore::DeleteData);
 	connect(this, &MainWindow::onUnpinnRequest, AppCore::getInstance(), &AppCore::UnpinnData);
 	connect(this, &MainWindow::onSplitRequest, AppCore::getInstance(), &AppCore::SplitData);
+	connect(this, &MainWindow::onInsertRequest, AppCore::getInstance(), &AppCore::InsertData);
 
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
 	connect(AppCore::getInstance(), &AppCore::onDataConvert, this, &MainWindow::FinishConvert);
@@ -64,6 +66,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataDelete, this, &MainWindow::FinishDeleting);
 	connect(AppCore::getInstance(), &AppCore::onDataUnpinn, this, &MainWindow::FinishUnpinning);
 	connect(AppCore::getInstance(), &AppCore::onDataSplit, this, &MainWindow::FinishSplitting);
+	connect(AppCore::getInstance(), &AppCore::onDataInsert, this, &MainWindow::FinishInserting);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -95,6 +98,12 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onSplittingFinish, Split, &SplitDialog::ShowProgress);
 	connect(Split, &SplitDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Split, &SplitDialog::UpdateList);
+
+	connect(ui->actionInsert, &QAction::triggered, Insert, &InsertDialog::open);
+	connect(Insert, &InsertDialog::onInsertRequest, this, &MainWindow::InitInserting);
+	connect(this, &MainWindow::onInsertingFinish, Insert, &InsertDialog::ShowProgress);
+	connect(Insert, &InsertDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Insert, &InsertDialog::UpdateList);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -128,6 +137,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionDelete->setEnabled(false);
 		ui->actionUnpinn->setEnabled(false);
 		ui->actionSplit->setEnabled(false);
+		ui->actionInsert->setEnabled(false);
 		ui->actionSetvalue->setEnabled(false);
 		ui->actionClear->setEnabled(false);
 	}
@@ -139,6 +149,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionDelete->setEnabled(loadedData);
 		ui->actionUnpinn->setEnabled(loadedData);
 		ui->actionSplit->setEnabled(loadedData);
+		ui->actionInsert->setEnabled(loadedData);
 		ui->actionSetvalue->setEnabled(loadedData);
 		ui->actionClear->setEnabled(loadedData);
 	}
@@ -424,4 +435,14 @@ void MainWindow::InitSplitting(const QStringList& Classes, bool Keep, bool Hide)
 void MainWindow::FinishSplitting(const QList<QStringList>& Data, int Count)
 {
 	SaveDAT(Data); emit onSplittingFinish(Count);
+}
+
+void MainWindow::InitInserting(const QStringList &Classes, const QString &Insert)
+{
+	emit onInsertRequest(*loadedData, Classes, Insert);
+}
+
+void MainWindow::FinishInserting(const QList<QStringList> &Data, int Count)
+{
+	SaveDAT(Data); emit onInsertingFinish(Count);
 }
