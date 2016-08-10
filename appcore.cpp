@@ -396,7 +396,7 @@ void AppCore::UpdateData(const QList<QStringList>& Data, const QString& Field, c
 	{
 		QMap<QString, QString> ListCopy = List;
 		QRegExp classExpr(QString("^A,(%1),").arg(Expr));
-		QRegExp objectExpr("(C,.*)=(.*)");
+		QRegExp objectExpr("(C,[^=]*)=(.*)");
 		QMap<QString, QString> Values;
 		bool Checked = true;
 		int Index = -1;
@@ -436,33 +436,34 @@ void AppCore::UpdateData(const QList<QStringList>& Data, const QString& Field, c
 			}
 			else break;
 
-			if (Index != -1)
+			for (const auto& Key : ListCopy.keys()) if (Checked)
 			{
-
-				for (const auto& Key : ListCopy.keys()) if (Checked)
-				{
-					if (!(Values.contains(Key) && Values[Key] == ListCopy[Key])) Checked = false;
-				}
-				else break;
-
-				if (Checked)
-				{
-					Item[Index] = Field + "=" + Setto;
-
-					for (const auto& Value : Values.keys())
-					{
-						Item[Index].replace(QString("$%1").arg(Value), Values[Value]);
-					}
-
-					Item[Index] = Item[Index].trimmed();
-
-					CountLocker.lock();
-					++Count;
-					CountLocker.unlock();
-				}
-
+				if (!(Values.contains(Key) && Values[Key] == ListCopy[Key])) Checked = false;
 			}
+			else break;
 
+			if (Checked)
+			{
+				if (Index == -1)
+				{
+					Item.append(QString());
+					Index = Item.count() - 1;
+				}
+
+				Item[Index] = Setto;
+
+				for (const auto& Value : Values.keys())
+				{
+					Item[Index].replace(QString("$%1").arg(Value), Values[Value]);
+				}
+
+				Item[Index].remove(QRegExp("\\$\\S+"));
+				Item[Index] = Field + "=" + Item[Index].simplified();
+
+				CountLocker.lock();
+				++Count;
+				CountLocker.unlock();
+			}
 		}
 	}));
 
@@ -495,7 +496,7 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 	{
 		QMap<QString, QString> ListCopy = List;
 		QRegExp classExpr(QString("^A,(%1),").arg(Expr));
-		QRegExp objectExpr("(C,.*)=(.*)");
+		QRegExp objectExpr("(C,[^=]*)=(.*)");
 		QMap<QString, QString> Values;
 		bool Delete = true;
 

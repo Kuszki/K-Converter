@@ -312,6 +312,8 @@ void MainWindow::TreeMenuRequest(const QPoint& Pos)
 void MainWindow::LoadTree(void)
 {
 	QList<QTreeWidgetItem*> Items;
+	QRegExp objectExpr("^C,([^=]*)=(.*)");
+
 	int Step = 0;
 	int ID = 0;
 
@@ -328,14 +330,8 @@ void MainWindow::LoadTree(void)
 
 		for (const auto& Data : Item)
 		{
-			if (Data[0] == 'A' || Data[0] == 'B')
+			if (Data[0] == 'C')
 			{
-				Values.append(new QTreeWidgetItem(QStringList() << Data[0] << Data.mid(2)));
-			}
-			else if (Data[0] == 'C')
-			{
-				QRegExp objectExpr("C,(.*)=(.*)");
-
 				objectExpr.indexIn(Data);
 
 				QStringList Atributes = objectExpr.capturedTexts();
@@ -343,6 +339,10 @@ void MainWindow::LoadTree(void)
 				Atributes.removeFirst();
 
 				Values.append(new QTreeWidgetItem(Atributes));
+			}
+			else
+			{
+				Values.append(new QTreeWidgetItem(QStringList() << Data[0] << Data.mid(2)));
 			}
 		}
 
