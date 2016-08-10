@@ -160,16 +160,21 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 	if (Message.size()) ui->statusBar->showMessage(Message);
 }
 
-void MainWindow::SaveDAT(const QList<QStringList>& Data)
+void MainWindow::SaveDAT(const QList<QStringList>& Data, const QString& Action)
 {
 	if (loadedData)
 	{
+		SavedActions = SavedActions.mid(0, Undo.size()) << Action;
+
 		for (auto I : Redo) delete I;
 
 		Undo.append(loadedData);
 		Redo.clear();
 
 		loadedData = nullptr;
+
+		ui->actionUndo->setToolTip(tr("Undo action \"%1\".").arg(Action));
+		ui->actionRedo->setToolTip(tr("Redo last commit."));
 	}
 
 	loadedData = new QList<QStringList>(Data);
@@ -185,6 +190,7 @@ void MainWindow::ClearDAT(void)
 	loadedData = nullptr;
 	Redo.clear();
 	Undo.clear();
+	SavedActions.clear();
 
 	ui->Tree->clear();
 
@@ -252,6 +258,17 @@ void MainWindow::UndoActionClicked(void)
 	}
 
 	ui->actionUndo->setEnabled(!Undo.isEmpty());
+
+	if (!Undo.isEmpty())
+	{
+		ui->actionUndo->setToolTip(tr("Undo action \"%1\".").arg(SavedActions[Undo.size() - 1]));
+	}
+	else
+	{
+		ui->actionUndo->setToolTip(tr("Undo last commit."));
+	}
+
+	ui->actionRedo->setToolTip(tr("Redo action \"%1\".").arg(SavedActions[Redo.size() - 1]));
 }
 
 void MainWindow::RedoActionClicked(void)
@@ -266,6 +283,17 @@ void MainWindow::RedoActionClicked(void)
 	}
 
 	ui->actionRedo->setEnabled(!Redo.isEmpty());
+
+	if (!Redo.isEmpty())
+	{
+		ui->actionRedo->setToolTip(tr("Redo action \"%1\".").arg(SavedActions[Redo.size() - 1]));
+	}
+	else
+	{
+		ui->actionRedo->setToolTip(tr("Redo last commit."));
+	}
+
+	ui->actionUndo->setToolTip(tr("Undo action \"%1\".").arg(SavedActions[Undo.size() - 1]));
 }
 
 void MainWindow::ClearActionClicked(void)
@@ -365,7 +393,7 @@ void MainWindow::FinishLoad(const QStringList Head, const QList<QStringList>& Da
 
 	loadedHeader = Head;
 
-	SaveDAT(Data);
+	SaveDAT(Data, tr("Open data file"));
 	LoadTree();
 }
 
@@ -384,7 +412,7 @@ void MainWindow::FinishSave(unsigned Crc32)
 
 void MainWindow::FinishConvert(const QList<QStringList>& Data)
 {
-	SaveDAT(Data); LoadTree();
+	SaveDAT(Data, tr("Convert data")); LoadTree();
 }
 
 void MainWindow::InitReplace(const QString& From, const QString& To, bool Case, bool RegExp)
@@ -394,7 +422,7 @@ void MainWindow::InitReplace(const QString& From, const QString& To, bool Case, 
 
 void MainWindow::FinishReplace(const QList<QStringList>& Data, int Count)
 {
-	SaveDAT(Data); emit onReplaceFinish(Count);
+	SaveDAT(Data, tr("Replace data")); emit onReplaceFinish(Count);
 }
 
 void MainWindow::InitSetting(const QString &Field, const QString& Value, const QStringList& Classes, const QMap<QString, QString>& Values)
@@ -404,7 +432,7 @@ void MainWindow::InitSetting(const QString &Field, const QString& Value, const Q
 
 void MainWindow::FinishSetting(const QList<QStringList>& Data, int Count)
 {
-	SaveDAT(Data); emit onSettingFinish(Count);
+	SaveDAT(Data, tr("Set value")); emit onSettingFinish(Count);
 }
 
 void MainWindow::InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values)
@@ -414,7 +442,7 @@ void MainWindow::InitDeleting(const QStringList& Classes, const QMap<QString, QS
 
 void MainWindow::FinishDeleting(const QList<QStringList>& Data, int Count)
 {
-	SaveDAT(Data); emit onDeletingFinish(Count);
+	SaveDAT(Data, tr("Delete data")); emit onDeletingFinish(Count);
 }
 
 void MainWindow::InitUnpinning(const QStringList& Classes, bool Delete)
@@ -424,7 +452,7 @@ void MainWindow::InitUnpinning(const QStringList& Classes, bool Delete)
 
 void MainWindow::FinishUnpinning(const QList<QStringList>& Data, int Count)
 {
-	SaveDAT(Data); emit onUnpinningFinish(Count);
+	SaveDAT(Data, tr("Unpinn data")); emit onUnpinningFinish(Count);
 }
 
 void MainWindow::InitSplitting(const QStringList& Classes, bool Keep, bool Hide)
@@ -434,7 +462,7 @@ void MainWindow::InitSplitting(const QStringList& Classes, bool Keep, bool Hide)
 
 void MainWindow::FinishSplitting(const QList<QStringList>& Data, int Count)
 {
-	SaveDAT(Data); emit onSplittingFinish(Count);
+	SaveDAT(Data, tr("Split data")); emit onSplittingFinish(Count);
 }
 
 void MainWindow::InitInserting(const QStringList &Classes, const QString &Insert)
@@ -444,5 +472,5 @@ void MainWindow::InitInserting(const QStringList &Classes, const QString &Insert
 
 void MainWindow::FinishInserting(const QList<QStringList> &Data, int Count)
 {
-	SaveDAT(Data); emit onInsertingFinish(Count);
+	SaveDAT(Data, tr("Insert data")); emit onInsertingFinish(Count);
 }

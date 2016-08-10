@@ -74,11 +74,12 @@ class MainWindow : public QMainWindow
 
 		QList<QList<QStringList>*> Undo;
 		QList<QList<QStringList>*> Redo;
+		QStringList SavedActions;
 
 	private:
 
 		void LockUI(bool Lock = true, const QString& Message = QString());
-		void SaveDAT(const QList<QStringList>& Data);
+		void SaveDAT(const QList<QStringList>& Data, const QString& Action);
 		void ClearDAT(void);
 
 	public:
