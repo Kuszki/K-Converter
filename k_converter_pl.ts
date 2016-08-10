@@ -517,6 +517,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="mainwindow.ui" line="238"/>
+        <location filename="mainwindow.cpp" line="435"/>
         <source>Set value</source>
         <translation>Ustal pole</translation>
     </message>
@@ -572,6 +573,7 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="mainwindow.ui" line="301"/>
+        <location filename="mainwindow.cpp" line="268"/>
         <source>Undo last commit.</source>
         <translation>Cofa ostatnią zmianę.</translation>
     </message>
@@ -587,6 +589,8 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
     </message>
     <message>
         <location filename="mainwindow.ui" line="316"/>
+        <location filename="mainwindow.cpp" line="177"/>
+        <location filename="mainwindow.cpp" line="293"/>
         <source>Redo last commit.</source>
         <translation>Przywraca cofniętą zmianę.</translation>
     </message>
@@ -655,55 +659,104 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="198"/>
+        <location filename="mainwindow.cpp" line="176"/>
+        <location filename="mainwindow.cpp" line="264"/>
+        <location filename="mainwindow.cpp" line="296"/>
+        <source>Undo action &quot;%1&quot;.</source>
+        <translation>Cofnij akcję &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="204"/>
         <source>Converting data...</source>
         <translation>Konwertowanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="202"/>
-        <location filename="mainwindow.cpp" line="380"/>
+        <location filename="mainwindow.cpp" line="208"/>
+        <location filename="mainwindow.cpp" line="408"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="203"/>
+        <location filename="mainwindow.cpp" line="209"/>
         <source>No data in buffer</source>
         <translation>Brak danych w buforze</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="225"/>
+        <location filename="mainwindow.cpp" line="231"/>
         <source>Loading data...</source>
         <translation>Wczytywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="236"/>
+        <location filename="mainwindow.cpp" line="242"/>
         <source>Saving data...</source>
         <translation>Zapisywanie danych...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="273"/>
+        <location filename="mainwindow.cpp" line="271"/>
+        <location filename="mainwindow.cpp" line="289"/>
+        <source>Redo action &quot;%1&quot;.</source>
+        <oldsource>Redo action &quot;%1&quot;</oldsource>
+        <translation>Ponów akcję &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="301"/>
         <source>Data cleared</source>
         <translation>Wyczyszczono dane</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="284"/>
+        <location filename="mainwindow.cpp" line="312"/>
         <source>Copy all</source>
         <translation>Kopiuj wszystko</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="286"/>
+        <location filename="mainwindow.cpp" line="314"/>
         <source>Copy key</source>
         <translation>Kopiuj klucz</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="287"/>
+        <location filename="mainwindow.cpp" line="315"/>
         <source>Copy value</source>
         <translation>Kopiuj wartość</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="376"/>
+        <location filename="mainwindow.cpp" line="396"/>
+        <source>Open data file</source>
+        <translation>Otwórz plik</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="404"/>
         <source>File saved, checksum is %1</source>
         <translation>Plik zapisany, suma kontrolna wynosi %1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="415"/>
+        <source>Convert data</source>
+        <translation>Konwertuj dane</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="425"/>
+        <source>Replace data</source>
+        <translation>Zamień dane</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="445"/>
+        <source>Delete data</source>
+        <translation>Usuń wpisy</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="455"/>
+        <source>Unpinn data</source>
+        <translation>Odepnij punkty</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="465"/>
+        <source>Split data</source>
+        <translation>Podziel obiekty</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="475"/>
+        <source>Insert data</source>
+        <translation>Wstaw obiekty</translation>
     </message>
     <message>
         <source>Clearing tree...</source>
@@ -711,13 +764,13 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Czyszczenie drzewa...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="320"/>
+        <location filename="mainwindow.cpp" line="348"/>
         <source>Populating tree...</source>
         <oldsource>Populating tree..</oldsource>
         <translation>Zapełnianie drzewa...</translation>
     </message>
     <message numerus="yes">
-        <location filename="mainwindow.cpp" line="359"/>
+        <location filename="mainwindow.cpp" line="387"/>
         <source>Action complete, loaded %n item(s)</source>
         <oldsource>Action complete. Loaded %n item(s)</oldsource>
         <translation>
@@ -731,8 +784,8 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
         <translation type="vanished">Plik zapisany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="380"/>
-        <location filename="mainwindow.cpp" line="381"/>
+        <location filename="mainwindow.cpp" line="408"/>
+        <location filename="mainwindow.cpp" line="409"/>
         <source>Error while saving file</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
