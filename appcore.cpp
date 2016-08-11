@@ -542,44 +542,113 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 	emit onDataDelete(Output, Count);
 }
 
-void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes, bool Delete)
+QStringList L1(const QStringList& Item)
+{
+	QRegExp pinExpr("^B,(\\d+),.*");
+	QStringList Return;
+
+	for (const auto& String : Item) if (pinExpr.indexIn(String) != -1)
+	{
+		Return.append(pinExpr.capturedTexts().last());
+	}
+
+	return Return;
+}
+
+void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes, bool Delete, bool Keep)
 {
 	QList<QStringList> Output = Data;
 	QFutureWatcher<void> Watcher;
 	QThread WatcherThread;
+	QMutex CountLocker;
 
 	Watcher.moveToThread(&WatcherThread);
 	WatcherThread.start();
+
+	volatile int Count = 0;
 
 	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
 	QRegExp classExpr(QString("^A,(%1),\\d*,(\\d+)").arg(Classes.join('|')));
-	QStringList List;
-	int Count = 0;
+	QMap<int, QString> List;
+	int ID = 0;
 
-	for (auto& Item : Output) if (classExpr.indexIn(Item.first()) != -1)
+	for (auto& Item : Output)
 	{
-		List.append(classExpr.capturedTexts().last());
-		if (Delete) Item = QStringList();
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+			List.insert(ID, classExpr.capturedTexts().last());
 
-		++Count;
+			if (Delete && !Keep) Item = QStringList();
+		}
+
+		++ID;
 	}
 
-	Output.removeAll(QStringList());
-
-	Watcher.setFuture(QtConcurrent::map(Output, [&List] (auto& Item) -> void
+	Watcher.setFuture(QtConcurrent::map(Output, [&List, &CountLocker, &Count, Keep] (auto& Item) -> void
 	{
-		for (auto& String : Item) if (String[0] == 'B') for (const auto& Pinn : List)
+		int Stop = Item.lastIndexOf(QRegExp("^B,.*"));
+		int Start = 1;
+
+		if (Keep)
 		{
-			String.replace(QString("B,%1,").arg(Pinn), "B,,");
+			++Start;
+			--Stop;
+		}
+
+		for (int i = Start; i <= Stop; ++i) for (const auto& Pinn : List)
+		{
+			const QString Source = Item[i];
+
+			Item[i].replace(QString("B,%1,").arg(Pinn), "B,,");
+
+			if (Source != Item[i])
+			{
+				CountLocker.lock();
+				++Count;
+				CountLocker.unlock();
+			}
 		}
 	}));
+
+	if (Delete && Keep)
+	{
+		static QStringList (*Task)(const QStringList&) = [] (const QStringList& Item) -> QStringList
+		{
+			QRegExp pinExpr("^B,(\\d+),.*");
+			QStringList Return;
+
+			for (const auto& String : Item) if (pinExpr.indexIn(String) != -1)
+			{
+				Return.append(pinExpr.capturedTexts().last());
+			}
+
+			return Return;
+		};
+
+		static void (*Reduce)(QStringList&, const QStringList&) = [] (QStringList& Resoult, const QStringList& Part) -> void
+		{
+			for (const auto& String : Part) if (!Resoult.contains(String)) Resoult.append(String);
+		};
+
+		QStringList Save = QtConcurrent::blockingMappedReduced(Output, Task, Reduce);
+
+		for (const auto& Index : List.keys())
+		{
+			if (!Save.contains(List[Index]))
+			{
+				Output[Index] = QStringList();
+			}
+		}
+	}
 
 	Watcher.waitForFinished();
 	WatcherThread.exit();
 	WatcherThread.wait();
+
+	Output.removeAll(QStringList());
 
 	emit onDataUnpinn(Output, Count);
 }

@@ -103,7 +103,7 @@ class AppCore : public QObject
 					 const QMap<QString, QString>& List);
 		void UnpinnData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
-					 bool Delete);
+					 bool Delete, bool Keep);
 		void SplitData(const QList<QStringList>& Data,
 					const QStringList& Classes,
 					bool Keep, bool Hide);

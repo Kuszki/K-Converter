@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>160</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,31 @@
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="0" colspan="2">
-    <widget class="QProgressBar" name="progressBar"/>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="Delete">
+     <property name="toolTip">
+      <string>If enabled items unpinned from object geometry will be deleted from current item list.</string>
+     </property>
+     <property name="text">
+      <string>Delete unpinned objects</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="Class">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</string>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="classLabel">
@@ -28,7 +51,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -62,17 +85,7 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QCheckBox" name="Delete">
-     <property name="toolTip">
-      <string>If enabled items unpinned from object geometry will be deleted from current item list.</string>
-     </property>
-     <property name="text">
-      <string>Delete unpinned objects</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -85,19 +98,16 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="Class">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="6" column="0" colspan="2">
+    <widget class="QProgressBar" name="progressBar"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QCheckBox" name="Keep">
      <property name="toolTip">
-      <string>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</string>
+      <string>If elabled keeps first and last relations.</string>
      </property>
-     <property name="editable">
-      <bool>true</bool>
+     <property name="text">
+      <string>Keep boundary relations</string>
      </property>
     </widget>
    </item>

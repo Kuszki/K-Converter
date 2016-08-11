@@ -1113,60 +1113,70 @@ Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny �
 <context>
     <name>UnpinnDialog</name>
     <message>
-        <location filename="unpinndialog.ui" line="49"/>
+        <location filename="unpinndialog.ui" line="72"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="unpinndialog.ui" line="14"/>
-        <location filename="unpinndialog.ui" line="56"/>
+        <location filename="unpinndialog.ui" line="79"/>
         <source>Unpinn</source>
         <translation>Odczep</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="27"/>
+        <location filename="unpinndialog.ui" line="50"/>
         <source>Class</source>
         <translation>Kod obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="97"/>
+        <location filename="unpinndialog.ui" line="40"/>
         <source>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;Classes of items to umpin from object geometry. Next values can be separated by comma sign. Regular expressions are allowed here.&lt;/p&gt;</oldsource>
         <translation>&lt;p&gt;Klasy obiektów które mają być usunięte z geometrii innych obiektów. Kolejne wartości mogą być oddzielone przecinkiem.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="68"/>
+        <location filename="unpinndialog.ui" line="24"/>
         <source>If enabled items unpinned from object geometry will be deleted from current item list.</source>
         <translation>Jeśli załączone obiekty usunięte z geometrii innych obiektów zostaną trwale wykasowane z listy obiektów.</translation>
     </message>
     <message>
-        <location filename="unpinndialog.ui" line="71"/>
+        <location filename="unpinndialog.ui" line="27"/>
         <source>Delete unpinned objects</source>
         <translation>Usuń odczepione obiekty</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="59"/>
-        <location filename="unpinndialog.cpp" line="73"/>
+        <location filename="unpinndialog.ui" line="107"/>
+        <source>If elabled keeps first and last relations.</source>
+        <translation>Jeśli załączone zachowuje relacje dla pierwszego i ostatniego punktu geometrii.</translation>
+    </message>
+    <message>
+        <location filename="unpinndialog.ui" line="110"/>
+        <source>Keep boundary relations</source>
+        <translation>Zachowaj końcowe relacje</translation>
+    </message>
+    <message>
+        <location filename="unpinndialog.cpp" line="60"/>
+        <location filename="unpinndialog.cpp" line="74"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="59"/>
+        <location filename="unpinndialog.cpp" line="60"/>
         <source>Classes list is empty</source>
         <translation>Nie podano kodu obiektu</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="73"/>
+        <location filename="unpinndialog.cpp" line="74"/>
         <source>Work in progress</source>
         <translation>Trwa odpinanie obiektów</translation>
     </message>
     <message>
-        <location filename="unpinndialog.cpp" line="85"/>
+        <location filename="unpinndialog.cpp" line="86"/>
         <source>Unpinn progress</source>
         <translation>Postęp odpinania</translation>
     </message>
     <message numerus="yes">
-        <location filename="unpinndialog.cpp" line="86"/>
+        <location filename="unpinndialog.cpp" line="87"/>
         <source>Unpinned %n item(s)</source>
         <translation>
             <numerusform>Usunięto %n powiązanie</numerusform>

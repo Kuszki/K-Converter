@@ -111,7 +111,7 @@ class MainWindow : public QMainWindow
 		void FinishSetting(const QList<QStringList>& Data, int Count);
 		void InitDeleting(const QStringList& Classes, const QMap<QString, QString>& Values);
 		void FinishDeleting(const QList<QStringList>& Data, int Count);
-		void InitUnpinning(const QStringList& Classes, bool Delete);
+		void InitUnpinning(const QStringList& Classes, bool Delete, bool Keep);
 		void FinishUnpinning(const QList<QStringList>& Data, int Count);
 		void InitSplitting(const QStringList& Classes, bool Keep, bool Hide);
 		void FinishSplitting(const QList<QStringList>& Data, int Count);
@@ -140,7 +140,8 @@ class MainWindow : public QMainWindow
 						 const QStringList&,
 						 const QMap<QString, QString>&);
 		void onUnpinnRequest(const QList<QStringList>&,
-						 const QStringList&, bool);
+						 const QStringList&,
+						 bool, bool);
 		void onSplitRequest(const QList<QStringList>&,
 						const QStringList&,
 						bool, bool);

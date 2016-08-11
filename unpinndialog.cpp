@@ -54,7 +54,8 @@ void UnpinnDialog::accept(void)
 		ui->progressBar->setVisible(true);
 
 		emit onUnpinnRequest(ui->Class->currentText().split(',', QString::SkipEmptyParts),
-						 ui->Delete->isChecked());
+						 ui->Delete->isChecked(),
+						 ui->Keep->isChecked());
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Classes list is empty"));
 }
