@@ -633,6 +633,8 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 			for (const auto& String : Part) if (!Resoult.contains(String)) Resoult.append(String);
 		};
 
+		emit onProgressInit(0, 0);
+
 		QStringList Save = QtConcurrent::blockingMappedReduced(Output, Task, Reduce);
 
 		for (const auto& Index : List.keys())
@@ -642,6 +644,10 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 				Output[Index] = QStringList();
 			}
 		}
+
+		emit onProgressInit(0, 1);
+		emit onProgressUpdate(1);
+
 	}
 
 	Watcher.waitForFinished();
