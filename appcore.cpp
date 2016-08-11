@@ -573,7 +573,7 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 	{
 		for (auto& String : Item) if (String[0] == 'B') for (const auto& Pinn : List)
 		{
-			String.replace(QString("^B,%1,").arg(Pinn), "B,,");
+			String.replace(QString("B,%1,").arg(Pinn), "B,,");
 		}
 	}));
 
