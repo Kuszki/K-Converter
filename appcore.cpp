@@ -542,19 +542,6 @@ void AppCore::DeleteData(const QList<QStringList>& Data, const QStringList& Clas
 	emit onDataDelete(Output, Count);
 }
 
-QStringList L1(const QStringList& Item)
-{
-	QRegExp pinExpr("^B,(\\d+),.*");
-	QStringList Return;
-
-	for (const auto& String : Item) if (pinExpr.indexIn(String) != -1)
-	{
-		Return.append(pinExpr.capturedTexts().last());
-	}
-
-	return Return;
-}
-
 void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Classes, bool Delete, bool Keep)
 {
 	QList<QStringList> Output = Data;
@@ -613,6 +600,10 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 		}
 	}));
 
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
 	if (Delete && Keep)
 	{
 		static QStringList (*Task)(const QStringList&) = [] (const QStringList& Item) -> QStringList
@@ -649,10 +640,6 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 		emit onProgressUpdate(1);
 
 	}
-
-	Watcher.waitForFinished();
-	WatcherThread.exit();
-	WatcherThread.wait();
 
 	Output.removeAll(QStringList());
 
