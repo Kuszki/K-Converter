@@ -110,6 +110,10 @@ class AppCore : public QObject
 		void InsertData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
 					 const QString& Insert);
+		void RevertData(const QList<QStringList>& Data,
+					 const QStringList& Classes,
+					 const QStringList& Begins,
+					 const QStringList& Ends);
 
 		void Terminate(void);
 
@@ -128,6 +132,7 @@ class AppCore : public QObject
 		void onDataUnpinn(const QList<QStringList>, int);
 		void onDataSplit(const QList<QStringList>, int);
 		void onDataInsert(const QList<QStringList>, int);
+		void onDataRevert(const QList<QStringList>, int);
 
 		void onOutputSave(unsigned);
 

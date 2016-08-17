@@ -41,6 +41,7 @@
 #include "unpinndialog.hpp"
 #include "splitdialog.hpp"
 #include "insertdialog.hpp"
+#include "revertdialog.hpp"
 #include "aboutdialog.hpp"
 #include "appcore.hpp"
 
@@ -65,6 +66,7 @@ class MainWindow : public QMainWindow
 		UnpinnDialog* Unpinn = nullptr;
 		SplitDialog* Split = nullptr;
 		InsertDialog* Insert = nullptr;
+		RevertDialog* Revert = nullptr;
 
 		QProgressBar* Progress = nullptr;
 		QComboBox* Codecs = nullptr;
@@ -117,6 +119,8 @@ class MainWindow : public QMainWindow
 		void FinishSplitting(const QList<QStringList>& Data, int Count);
 		void InitInserting(const QStringList& Classes, const QString& Insert);
 		void FinishInserting(const QList<QStringList>& Data, int Count);
+		void InitReverting(const QStringList& Classes, const QStringList& Begins, const QStringList& Ends);
+		void FinishReverting(const QList<QStringList>& Data, int Count);
 
 	signals:
 
@@ -148,6 +152,10 @@ class MainWindow : public QMainWindow
 		void onInsertRequest(const QList<QStringList>&,
 						 const QStringList&,
 						 const QString&);
+		void onRevertRequest(const QList<QStringList>&,
+						 const QStringList&,
+						 const QStringList&,
+						 const QStringList&);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
@@ -155,6 +163,7 @@ class MainWindow : public QMainWindow
 		void onUnpinningFinish(int);
 		void onSplittingFinish(int);
 		void onInsertingFinish(int);
+		void onRevertingFinish(int);
 
 };
 

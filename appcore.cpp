@@ -783,7 +783,7 @@ void AppCore::InsertData(const QList<QStringList> &Data, const QStringList &Clas
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
-	const QString Class = QString("^A,%1,.*").arg(Classes.join('|'));
+	const QString Class = QString("^A,(%1),.*").arg(Classes.join('|'));
 
 	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Inserted, &Class, &Insert] (auto& Item) -> void
 	{
@@ -818,4 +818,96 @@ void AppCore::InsertData(const QList<QStringList> &Data, const QStringList &Clas
 	for (const auto& Item : Inserted) if (!Output.contains(Item)) Output.insert(0, Item);
 
 	emit onDataInsert(Output, Output.size() - Data.size());
+}
+
+void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Classes, const QStringList& Begins, const QStringList& Ends)
+{
+	QList<QStringList> Output = Data;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+	QMap<QString, int> List;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	const QString Class = QString("^A,(%1),.*").arg(Classes.join('|'));
+	const QString Begin = QString("^A,(%1),\\d*,(\\d+)").arg(Begins.join('|'));
+	const QString End = QString("^A,(%1),\\d*,(\\d+)").arg(Ends.join('|'));
+
+	for (const auto& Item : Output)
+	{
+		QRegExp beginExpr(Begin);
+		QRegExp endExpr(End);
+		QPair<QString, int> Return;
+
+		if (beginExpr.indexIn(Item.first()) != -1)
+		{
+			Return.first = beginExpr.capturedTexts()[1];
+			Return.second |= 0x1;
+		}
+
+		if (endExpr.indexIn(Item.first()) != -1)
+		{
+			Return.first = beginExpr.capturedTexts()[1];
+			Return.second |= 0x2;
+		}
+
+		if (Return.second) List.insert(Return.first, Return.second);
+	}
+
+	List.insert(QString(), (Begins.isEmpty() << 1) | (Ends.isEmpty() << 2));
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &List, &Class] (auto& Item) -> void
+	{
+		QRegExp geometryExpr("^B,(\\d+),.*");
+		QRegExp classExpr(Class);
+
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+			QStringList Geometry = Item.filter(QRegExp("^B,,.*"));
+			QStringList Attributes = Item.filter(QRegExp("^C,.*"));
+
+			if (!Geometry.isEmpty())
+			{
+				QString First, Last;
+
+				if (geometryExpr.indexIn(Geometry.first()) != -1)
+				{
+					First = geometryExpr.capturedTexts().last();
+				}
+
+				if (geometryExpr.indexIn(Geometry.last()) != -1)
+				{
+					Last = geometryExpr.capturedTexts().last();
+				}
+
+				if (List.contains(First) && List.contains(Last))
+				{
+					if (List[First] & 0x1 && List[Last] && 0x2)
+					{
+						std::reverse(Geometry.begin(), Geometry.end());
+
+						Item = QStringList() << Item.first() << Geometry << Attributes;
+
+						CountLocker.lock();
+						++Count;
+						CountLocker.unlock();
+					}
+				}
+			}
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	emit onDataRevert(Output, Count);
 }

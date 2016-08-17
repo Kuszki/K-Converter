@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Unpinn = new UnpinnDialog(this);
 	Split = new SplitDialog(this);
 	Insert = new InsertDialog(this);
+	Revert = new RevertDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 
@@ -57,6 +58,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onUnpinnRequest, AppCore::getInstance(), &AppCore::UnpinnData);
 	connect(this, &MainWindow::onSplitRequest, AppCore::getInstance(), &AppCore::SplitData);
 	connect(this, &MainWindow::onInsertRequest, AppCore::getInstance(), &AppCore::InsertData);
+	connect(this, &MainWindow::onRevertRequest, AppCore::getInstance(), &AppCore::RevertData);
 
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
 	connect(AppCore::getInstance(), &AppCore::onDataConvert, this, &MainWindow::FinishConvert);
@@ -67,6 +69,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataUnpinn, this, &MainWindow::FinishUnpinning);
 	connect(AppCore::getInstance(), &AppCore::onDataSplit, this, &MainWindow::FinishSplitting);
 	connect(AppCore::getInstance(), &AppCore::onDataInsert, this, &MainWindow::FinishInserting);
+	connect(AppCore::getInstance(), &AppCore::onDataRevert, this, &MainWindow::FinishReverting);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -104,6 +107,12 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onInsertingFinish, Insert, &InsertDialog::ShowProgress);
 	connect(Insert, &InsertDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Insert, &InsertDialog::UpdateList);
+
+	connect(ui->actionRevert, &QAction::triggered, Revert, &RevertDialog::open);
+	connect(Revert, &RevertDialog::onRevertRequest, this, &MainWindow::InitReverting);
+	connect(this, &MainWindow::onRevertingFinish, Revert, &RevertDialog::ShowProgress);
+	connect(Revert, &RevertDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Revert, &RevertDialog::UpdateList);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -473,4 +482,14 @@ void MainWindow::InitInserting(const QStringList &Classes, const QString &Insert
 void MainWindow::FinishInserting(const QList<QStringList> &Data, int Count)
 {
 	SaveDAT(Data, tr("Insert data")); emit onInsertingFinish(Count);
+}
+
+void MainWindow::InitReverting(const QStringList& Classes, const QStringList& Begins, const QStringList& Ends)
+{
+	emit onRevertRequest(*loadedData, Classes, Begins, Ends);
+}
+
+void MainWindow::FinishReverting(const QList<QStringList> &Data, int Count)
+{
+	SaveDAT(Data, tr("Revert data")); emit onRevertingFinish(Count);
 }

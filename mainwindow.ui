@@ -60,6 +60,7 @@
    <addaction name="actionSetvalue"/>
    <addaction name="actionDelete"/>
    <addaction name="actionUnpinn"/>
+   <addaction name="actionRevert"/>
    <addaction name="actionSplit"/>
    <addaction name="actionInsert"/>
    <addaction name="separator"/>
@@ -120,6 +121,7 @@
     <addaction name="actionSetvalue"/>
     <addaction name="actionDelete"/>
     <addaction name="actionUnpinn"/>
+    <addaction name="actionRevert"/>
     <addaction name="actionSplit"/>
     <addaction name="actionInsert"/>
     <addaction name="separator"/>
@@ -351,7 +353,8 @@
   </action>
   <action name="actionInsert">
    <property name="icon">
-    <iconset theme="insert-object"/>
+    <iconset theme="insert-object">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Insert</string>
@@ -361,6 +364,20 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionRevert">
+   <property name="icon">
+    <iconset theme="view-refresh"/>
+   </property>
+   <property name="text">
+    <string>Revert</string>
+   </property>
+   <property name="toolTip">
+    <string>Reverse item geometry.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>

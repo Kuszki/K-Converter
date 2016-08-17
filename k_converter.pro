@@ -35,7 +35,8 @@ SOURCES	+=	main.cpp \
 			unpinndialog.cpp \
 			setvaluedialog.cpp \
 			splitdialog.cpp \
-			insertdialog.cpp
+			insertdialog.cpp \
+			revertdialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
@@ -46,7 +47,8 @@ HEADERS	+=	mainwindow.hpp \
 			unpinndialog.hpp \
 			setvaluedialog.hpp \
 			splitdialog.hpp \
-			insertdialog.hpp
+			insertdialog.hpp \
+			revertdialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
@@ -56,7 +58,8 @@ FORMS	+=	mainwindow.ui \
 			unpinndialog.ui \
 			setvaluedialog.ui \
 			splitdialog.ui \
-			insertdialog.ui
+			insertdialog.ui \
+			revertdialog.ui
 
 RESOURCES	+=	resources.qrc
 
