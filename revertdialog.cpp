@@ -55,9 +55,15 @@ void RevertDialog::accept(void)
 		ui->cancelButton->setEnabled(false);
 		ui->progressBar->setVisible(true);
 
-		emit onRevertRequest(ui->Class->currentText().split(',', QString::SkipEmptyParts),
-						 ui->Class->currentText().split(',', QString::SkipEmptyParts),
-						 ui->Class->currentText().split(',', QString::SkipEmptyParts));
+		const QStringList Begins = !ui->Begin->currentText().isEmpty() ?
+								  ui->Begin->currentText().split(',', QString::SkipEmptyParts) :
+								  QStringList() << ".*";
+
+		const QStringList Ends = !ui->End->currentText().isEmpty() ?
+								   ui->End->currentText().split(',', QString::SkipEmptyParts) :
+								   QStringList() << ".*";
+
+		emit onRevertRequest(ui->Class->currentText().split(',', QString::SkipEmptyParts), Begins, Ends);
 	}
 	else QMessageBox::warning(this, tr("Error"), tr("Classes list is empty"));
 }

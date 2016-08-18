@@ -147,6 +147,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionUnpinn->setEnabled(false);
 		ui->actionSplit->setEnabled(false);
 		ui->actionInsert->setEnabled(false);
+		ui->actionRevert->setEnabled(false);
 		ui->actionSetvalue->setEnabled(false);
 		ui->actionClear->setEnabled(false);
 	}
@@ -159,6 +160,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionUnpinn->setEnabled(loadedData);
 		ui->actionSplit->setEnabled(loadedData);
 		ui->actionInsert->setEnabled(loadedData);
+		ui->actionRevert->setEnabled(loadedData);
 		ui->actionSetvalue->setEnabled(loadedData);
 		ui->actionClear->setEnabled(loadedData);
 	}

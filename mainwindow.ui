@@ -21,6 +21,12 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTreeWidget" name="Tree">
+      <attribute name="headerDefaultSectionSize">
+       <number>250</number>
+      </attribute>
+      <attribute name="headerMinimumSectionSize">
+       <number>250</number>
+      </attribute>
       <column>
        <property name="text">
         <string>Type</string>
@@ -368,7 +374,8 @@
   </action>
   <action name="actionRevert">
    <property name="icon">
-    <iconset theme="view-refresh"/>
+    <iconset theme="view-refresh">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Revert</string>

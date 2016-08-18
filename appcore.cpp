@@ -849,20 +849,20 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 
 		if (beginExpr.indexIn(Item.first()) != -1)
 		{
-			Return.first = beginExpr.capturedTexts()[1];
-			Return.second |= 0x1;
+			Return.first = beginExpr.capturedTexts()[2];
+			Return.second |= 0x2;
 		}
 
 		if (endExpr.indexIn(Item.first()) != -1)
 		{
-			Return.first = beginExpr.capturedTexts()[1];
-			Return.second |= 0x2;
+			Return.first = endExpr.capturedTexts()[2];
+			Return.second |= 0x4;
 		}
 
 		if (Return.second) List.insert(Return.first, Return.second);
 	}
 
-	List.insert(QString(), (Begins.isEmpty() << 1) | (Ends.isEmpty() << 2));
+	List.insert(QString(), (Begins.contains(".*") << 1) | (Ends.contains(".*") << 2));
 
 	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &List, &Class] (auto& Item) -> void
 	{
@@ -871,10 +871,10 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 
 		if (classExpr.indexIn(Item.first()) != -1)
 		{
-			QStringList Geometry = Item.filter(QRegExp("^B,,.*"));
+			QStringList Geometry = Item.filter(QRegExp("^B,.*"));
 			QStringList Attributes = Item.filter(QRegExp("^C,.*"));
 
-			if (!Geometry.isEmpty())
+			if (Geometry.size() > 1)
 			{
 				QString First, Last;
 
@@ -890,8 +890,30 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 
 				if (List.contains(First) && List.contains(Last))
 				{
-					if (List[First] & 0x1 && List[Last] && 0x2)
+					if (List[First] & 0x2 && List[Last] && 0x4)
 					{
+						QRegExp attribExpr("^B,.*,(\\d+)$");
+						QString Saved, Current;
+
+						if (attribExpr.indexIn(Geometry.last()) != -1)
+						{
+							Saved = attribExpr.capturedTexts().last();
+						}
+
+						for (int i = 0; i < Geometry.size(); ++i)
+						{
+							if (attribExpr.indexIn(Geometry[i]) != -1)
+							{
+								Current = attribExpr.capturedTexts().last();
+
+								Geometry[i].replace(QRegExp("^B,(.*),\\d+$"),
+												QString("B,\\1,%1").arg(Saved));
+
+								Saved = Current;
+							}
+							else Saved = QString();
+						}
+
 						std::reverse(Geometry.begin(), Geometry.end());
 
 						Item = QStringList() << Item.first() << Geometry << Attributes;
