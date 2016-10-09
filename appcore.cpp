@@ -986,16 +986,16 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		++ID;
 	}
 
-	Watcher.setFuture(QtConcurrent::map(Indexes, [&Indexes, &Output, &Values, &Joins, &CountLocker] (const auto ID) -> void
+	Watcher.setFuture(QtConcurrent::map(Indexes, [&Indexes, &Output, &Values, &Joins, &CountLocker] (const auto Current) -> void
 	{
-		const QString First = Output[ID].filter(QRegExp("^B,.*")).first();
-		const QString Last = Output[ID].filter(QRegExp("^B,.*")).last();
+		const QString First = Output[Current].filter(QRegExp("^B,.*")).first();
+		const QString Last = Output[Current].filter(QRegExp("^B,.*")).last();
 
-		const QStringList Attr = Output[ID].filter(QRegExp("^C,.*"));
+		const QStringList Attr = Output[Current].filter(QRegExp("^C,.*"));
 
 		bool OK = true;
 
-		for (const auto Item : Indexes) if (Item != ID)
+		for (const auto Item : Indexes) if (Item != Current)
 		{
 			QStringList Geometry = Output[Item].filter(QRegExp("^B,.*"));
 			QStringList Attributes = Output[Item].filter(QRegExp("^C,.*"));
@@ -1004,7 +1004,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 			    First == Geometry.last() || Last == Geometry.last())
 			{
 
-				if (Attr.size() != Attributes.size() || Attr.size() < Values.last())
+				if (Attr.size() != Attributes.size() || (Values.size() && Attr.size() < Values.last()))
 				{
 					OK = false;
 				}
@@ -1016,7 +1016,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 				if (OK)
 				{
 					CountLocker.lock();
-					Joins.append(QPair<int, int>(qMin(ID, Item), qMax(ID, Item)));
+					Joins.append(QPair<int, int>(qMin(Current, Item), qMax(Current, Item)));
 					CountLocker.unlock();
 				}
 
@@ -1030,6 +1030,8 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 	auto Set = Joins.toSet().toList(); qSort(Set);
 	const int Count = Set.size();
+
+	qDebug() << Set;
 
 	while (Set.size())
 	{
@@ -1045,9 +1047,11 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		{
 			if (Parts.last() == Set[Iter].first)
 			{
-				Parts.append(Set.takeAt(Iter).second);
-
-				Iter = 0;
+				Parts.append(Set.takeAt(Iter).second); Iter = 0;
+			}
+			else if (Parts.last() == Set[Iter].second)
+			{
+				Parts.append(Set.takeAt(Iter).first); Iter = 0;
 			}
 			else ++Iter;
 		}
@@ -1062,9 +1066,11 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		Header = Output[Parts.first()].first();
 		Header.replace(QRegExp("^A,(\\w+),(\\d+),.*"), "A,\\1,\\2,,,");
 
-		for (const auto ID : Parts)
+		qDebug() << Parts;
+
+		for (const auto Item : Parts)
 		{
-			QStringList Current = Output[ID].filter(QRegExp("^B,.*"));
+			QStringList Current = Output[Item].filter(QRegExp("^B,.*"));
 
 			if (Geometry.isEmpty()) Geometry = Current;
 			else
@@ -1088,8 +1094,8 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 				Geometry.append(Current);
 			}
 
-			if (Keep) Output[ID].replaceInStrings(QRegExp("^C,_status=.*"), "C,_status=0");
-			else Output[ID] = QStringList();
+			if (Keep) Output[Item].replaceInStrings(QRegExp("^C,_status=.*"), "C,_status=0");
+			else Output[Item] = QStringList();
 		}
 
 		QStringList Joined = QStringList() << Header << Geometry << Attributes;
