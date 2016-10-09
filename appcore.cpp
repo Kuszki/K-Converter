@@ -1004,13 +1004,16 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 			    First == Geometry.last() || Last == Geometry.last())
 			{
 
-				if (Attr.size() != Attributes.size() || (Values.size() && Attr.size() < Values.last()))
+				if (Values.size())
 				{
-					OK = false;
-				}
-				else for (const auto Check : Values) if (OK)
-				{
-					if (Attr[Check] != Attributes[Check]) OK = false;
+					if (Attr.size() != Attributes.size() || Attr.size() < Values.last())
+					{
+						OK = false;
+					}
+					else for (const auto Check : Values) if (OK)
+					{
+						if (Attr[Check] != Attributes[Check]) OK = false;
+					}
 				}
 
 				if (OK)
@@ -1028,8 +1031,8 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	WatcherThread.exit();
 	WatcherThread.wait();
 
-	auto Set = Joins.toSet().toList(); qSort(Set);
-	const int Count = Set.size();
+	auto Set = Joins.toSet().toList();
+	int Count = 0; qSort(Set);
 
 	while (Set.size())
 	{
@@ -1053,6 +1056,9 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 			}
 			else ++Iter;
 		}
+
+		if (Parts.size() != Parts.toSet().size()) continue;
+		else Count += Parts.size();
 
 		QStringList Attributes;
 		QStringList Geometry;
@@ -1101,5 +1107,5 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 	Output.removeAll(QStringList());
 
-	emit onDataJoin(Output, Count ? Count + 1 : 0);
+	emit onDataJoin(Output, Count);
 }
