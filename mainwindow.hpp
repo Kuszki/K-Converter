@@ -43,6 +43,8 @@
 #include "insertdialog.hpp"
 #include "revertdialog.hpp"
 #include "aboutdialog.hpp"
+#include "joindialog.hpp"
+
 #include "appcore.hpp"
 
 namespace Ui
@@ -67,6 +69,7 @@ class MainWindow : public QMainWindow
 		SplitDialog* Split = nullptr;
 		InsertDialog* Insert = nullptr;
 		RevertDialog* Revert = nullptr;
+		JoinDialog* Join = nullptr;
 
 		QProgressBar* Progress = nullptr;
 		QComboBox* Codecs = nullptr;
@@ -101,6 +104,8 @@ class MainWindow : public QMainWindow
 
 		void TreeMenuRequest(const QPoint& Pos);
 
+		void FieldListRequest(const QString& Class);
+
 		void LoadTree(void);
 
 		void FinishLoad(const QStringList Head, const QList<QStringList>& Data);
@@ -121,6 +126,8 @@ class MainWindow : public QMainWindow
 		void FinishInserting(const QList<QStringList>& Data, int Count);
 		void InitReverting(const QStringList& Classes, const QStringList& Begins, const QStringList& Ends);
 		void FinishReverting(const QList<QStringList>& Data, int Count);
+		void InitJoining(const QString& Class, const QList<int>& Values, bool Keep);
+		void FinishJoining(const QList<QStringList>& Data, int Count);
 
 	signals:
 
@@ -156,6 +163,10 @@ class MainWindow : public QMainWindow
 						 const QStringList&,
 						 const QStringList&,
 						 const QStringList&);
+		void onJoinRequest(const QList<QStringList>&,
+					    const QString&,
+					    const QList<int>&,
+					    bool);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
@@ -164,6 +175,9 @@ class MainWindow : public QMainWindow
 		void onSplittingFinish(int);
 		void onInsertingFinish(int);
 		void onRevertingFinish(int);
+		void onJoiningFinish(int);
+
+		void onListCreate(const QStringList&);
 
 };
 

@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Split = new SplitDialog(this);
 	Insert = new InsertDialog(this);
 	Revert = new RevertDialog(this);
+	Join = new JoinDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 
@@ -59,6 +60,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onSplitRequest, AppCore::getInstance(), &AppCore::SplitData);
 	connect(this, &MainWindow::onInsertRequest, AppCore::getInstance(), &AppCore::InsertData);
 	connect(this, &MainWindow::onRevertRequest, AppCore::getInstance(), &AppCore::RevertData);
+	connect(this, &MainWindow::onJoinRequest, AppCore::getInstance(), &AppCore::JoinData);
 
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
 	connect(AppCore::getInstance(), &AppCore::onDataConvert, this, &MainWindow::FinishConvert);
@@ -70,6 +72,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataSplit, this, &MainWindow::FinishSplitting);
 	connect(AppCore::getInstance(), &AppCore::onDataInsert, this, &MainWindow::FinishInserting);
 	connect(AppCore::getInstance(), &AppCore::onDataRevert, this, &MainWindow::FinishReverting);
+	connect(AppCore::getInstance(), &AppCore::onDataJoin, this, &MainWindow::FinishJoining);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -113,6 +116,14 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onRevertingFinish, Revert, &RevertDialog::ShowProgress);
 	connect(Revert, &RevertDialog::onRefreshRequest, this, &MainWindow::LoadTree);
 	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Revert, &RevertDialog::UpdateList);
+
+	connect(ui->actionJoin, &QAction::triggered, Join, &JoinDialog::open);
+	connect(Join, &JoinDialog::onJoinRequest, this, &MainWindow::InitJoining);
+	connect(this, &MainWindow::onJoiningFinish, Join, &JoinDialog::ShowProgress);
+	connect(Join, &JoinDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(this, &MainWindow::onListCreate, Join, &JoinDialog::UpdateFields);
+	connect(Join, &JoinDialog::onListRequest, this, &MainWindow::FieldListRequest);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Join, &JoinDialog::UpdateList);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -235,7 +246,7 @@ void MainWindow::EditActionClicked(void)
 
 void MainWindow::OpenActionClicked(void)
 {
-	const QString Path = QFileDialog::getOpenFileName(this);
+	const QString Path = QFileDialog::getOpenFileName(this, tr("Open data from file"), nullptr, tr("GIV (*.giv);;Tango (*.tng);;Text (*.txt)"));
 
 	if (Path.size())
 	{
@@ -246,7 +257,7 @@ void MainWindow::OpenActionClicked(void)
 
 void MainWindow::SaveActionClicked(void)
 {
-	const QString Path = QFileDialog::getSaveFileName(this);
+	const QString Path = QFileDialog::getSaveFileName(this, tr("Save data to file"), nullptr, tr("GIV (*.giv);;Tango (*.tng);;Text (*.txt)"));
 
 	if (!Path.isEmpty())
 	{
@@ -345,6 +356,16 @@ void MainWindow::TreeMenuRequest(const QPoint& Pos)
 		{
 			QApplication::clipboard()->setText(I->text(1));
 		}
+	}
+}
+
+void MainWindow::FieldListRequest(const QString& Class)
+{
+	if (loadedData && Class.size())
+	{
+		const QStringList List = AppCore::getInstance()->getFields(*loadedData, Class);
+
+		if (!List.empty()) emit onListCreate(List);
 	}
 }
 
@@ -494,4 +515,14 @@ void MainWindow::InitReverting(const QStringList& Classes, const QStringList& Be
 void MainWindow::FinishReverting(const QList<QStringList> &Data, int Count)
 {
 	SaveDAT(Data, tr("Revert data")); emit onRevertingFinish(Count);
+}
+
+void MainWindow::InitJoining(const QString &Class, const QList<int>& Values, bool Keep)
+{
+	emit onJoinRequest(*loadedData, Class, Values, Keep);
+}
+
+void MainWindow::FinishJoining(const QList<QStringList> &Data, int Count)
+{
+	SaveDAT(Data, tr("Join data")); emit onJoiningFinish(Count);
 }
