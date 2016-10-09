@@ -1031,8 +1031,6 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	auto Set = Joins.toSet().toList(); qSort(Set);
 	const int Count = Set.size();
 
-	qDebug() << Set;
-
 	while (Set.size())
 	{
 		const auto Task = Set.takeFirst();
@@ -1065,8 +1063,6 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 		Header = Output[Parts.first()].first();
 		Header.replace(QRegExp("^A,(\\w+),(\\d+),.*"), "A,\\1,\\2,,,");
-
-		qDebug() << Parts;
 
 		for (const auto Item : Parts)
 		{
