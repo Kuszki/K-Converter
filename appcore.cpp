@@ -169,6 +169,30 @@ QStringList AppCore::getClasses(const QList<QStringList>& Data)
 	return Items;
 }
 
+QStringList AppCore::getFields(const QList<QStringList>& Data, const QString& Class)
+{
+	QRegExp classExpr(QString("^A,%1,").arg(Class));
+	QRegExp fieldExpr("^C,(.+)=");
+	QStringList Items;
+
+	fieldExpr.setMinimal(true);
+
+	for (const auto& Item : Data)
+	{
+		if (classExpr.indexIn(Item.first()) != -1)
+		{
+			for (const auto& Field : Item)
+			{
+				if (fieldExpr.indexIn(Field) != -1) Items.append(fieldExpr.capturedTexts().last());
+			}
+
+			return Items;
+		}
+	}
+
+	return Items;
+}
+
 void AppCore::Terminate(void)
 {
 	Locker.lock();
@@ -204,9 +228,7 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 	objectExpr.setMinimal(true);
 	headerExpr.setMinimal(true);
 
-	dataFile.open(QFile::ReadOnly);
-
-	if (dataFile.isOpen() && !isTerminated)
+	if (dataFile.open(QFile::ReadOnly | QFile::Text) && !isTerminated)
 	{
 		QTextDecoder* Coder = QTextCodec::codecForName(CoderName.toUtf8())->makeDecoder();
 		QString fileText = Coder->toUnicode(dataFile.readAll()).append("\n\n");
@@ -763,7 +785,8 @@ void AppCore::SplitData(const QList<QStringList> &Data, const QStringList &Class
 	WatcherThread.wait();
 
 	Output.removeAll(QStringList());
-	Output.append(Divided);
+
+	for (const auto& Item : Divided) if (!Output.contains(Item)) Output.append(Item);
 
 	emit onDataSplit(Output, Count);
 }
@@ -932,4 +955,149 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 	WatcherThread.wait();
 
 	emit onDataRevert(Output, Count);
+}
+
+void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, const QList<int>& Values, bool Keep)
+{
+	QList<QStringList> Output = Data;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	QVector<int> Indexes(Output.size() / 4);
+	QList<QPair<int, int>> Joins;
+
+	const QString Header = QString("A,%1,").arg(Class);
+
+	int ID = 0; for (const auto& Item : Output)
+	{
+		if (Item.first().startsWith(Header))
+		{
+			Indexes.append(ID);
+		}
+
+		++ID;
+	}
+
+	Watcher.setFuture(QtConcurrent::map(Indexes, [&Indexes, &Output, &Values, &Joins, &CountLocker] (const auto ID) -> void
+	{
+		const QString First = Output[ID].filter(QRegExp("^B,.*")).first();
+		const QString Last = Output[ID].filter(QRegExp("^B,.*")).last();
+
+		const QStringList Attr = Output[ID].filter(QRegExp("^C,.*"));
+
+		bool OK = true;
+
+		for (const auto Item : Indexes) if (Item != ID)
+		{
+			QStringList Geometry = Output[Item].filter(QRegExp("^B,.*"));
+			QStringList Attributes = Output[Item].filter(QRegExp("^C,.*"));
+
+			if (First == Geometry.first() || Last == Geometry.first() ||
+			    First == Geometry.last() || Last == Geometry.last())
+			{
+
+				if (Attr.size() != Attributes.size() || Attr.size() < Values.last())
+				{
+					OK = false;
+				}
+				else for (const auto Check : Values) if (OK)
+				{
+					if (Attr[Check] != Attributes[Check]) OK = false;
+				}
+
+				if (OK)
+				{
+					CountLocker.lock();
+					Joins.append(QPair<int, int>(qMin(ID, Item), qMax(ID, Item)));
+					CountLocker.unlock();
+				}
+
+			}
+		}
+	}));
+
+	Watcher.waitForFinished();
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	auto Set = Joins.toSet().toList(); qSort(Set);
+	const int Count = Set.size();
+
+	while (Set.size())
+	{
+		const auto Task = Set.takeFirst();
+
+		QList<int> Parts;
+		int Iter = 0;
+
+		Parts.append(Task.first);
+		Parts.append(Task.second);
+
+		while (Iter < Set.size())
+		{
+			if (Parts.last() == Set[Iter].first)
+			{
+				Parts.append(Set.takeAt(Iter).second);
+
+				Iter = 0;
+			}
+			else ++Iter;
+		}
+
+		QStringList Attributes;
+		QStringList Geometry;
+		QString Header;
+
+		Attributes = Output[Parts.first()].filter(QRegExp("^C,.*"));
+		Attributes.replaceInStrings(QRegExp("^C,_identifier=.*"), "C,_identifier=");
+
+		Header = Output[Parts.first()].first();
+		Header.replace(QRegExp("^A,(\\w+),(\\d+),.*"), "A,\\1,\\2,,,");
+
+		for (const auto ID : Parts)
+		{
+			QStringList Current = Output[ID].filter(QRegExp("^B,.*"));
+
+			if (Geometry.isEmpty()) Geometry = Current;
+			else
+			{
+				if (Geometry.last() == Current.last())
+				{
+					std::reverse(Current.begin(), Current.end());
+
+				}
+				else if (Geometry.first() == Current.first())
+				{
+					std::reverse(Geometry.begin(), Geometry.end());
+				}
+				else if (Geometry.first() == Current.last())
+				{
+					std::reverse(Current.begin(), Current.end());
+					std::reverse(Geometry.begin(), Geometry.end());
+				}
+
+				Current.removeFirst();
+				Geometry.append(Current);
+			}
+
+			if (Keep) Output[ID].replaceInStrings(QRegExp("^C,_status=.*"), "C,_status=0");
+			else Output[ID] = QStringList();
+		}
+
+		QStringList Joined = QStringList() << Header << Geometry << Attributes;
+
+		if (!Output.contains(Joined)) Output.append(Joined);
+	}
+
+	Output.removeAll(QStringList());
+
+	emit onDataJoin(Output, Count ? Count + 1 : 0);
 }

@@ -75,6 +75,8 @@ class AppCore : public QObject
 		QMap<int, Entry> getItems(void);
 
 		QStringList getClasses(const QList<QStringList>& Data);
+		QStringList getFields(const QList<QStringList>& Data,
+						  const QString& Class);
 
 		static AppCore* getInstance(void);
 
@@ -114,6 +116,10 @@ class AppCore : public QObject
 					 const QStringList& Classes,
 					 const QStringList& Begins,
 					 const QStringList& Ends);
+		void JoinData(const QList<QStringList>& Data,
+				    const QString& Class,
+				    const QList<int>& Values,
+				    bool Keep);
 
 		void Terminate(void);
 
@@ -133,6 +139,7 @@ class AppCore : public QObject
 		void onDataSplit(const QList<QStringList>, int);
 		void onDataInsert(const QList<QStringList>, int);
 		void onDataRevert(const QList<QStringList>, int);
+		void onDataJoin(const QList<QStringList>, int);
 
 		void onOutputSave(unsigned);
 
