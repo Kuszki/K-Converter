@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
+	qRegisterMetaType<QList<int>>("QList<int>");
 	qRegisterMetaType<QList<QStringList>>("QList<QStringList>");
 	qRegisterMetaType<QMap<QString, QString>>("QMap<QString, QString>");
 
