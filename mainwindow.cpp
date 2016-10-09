@@ -160,6 +160,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionInsert->setEnabled(false);
 		ui->actionRevert->setEnabled(false);
 		ui->actionSetvalue->setEnabled(false);
+		ui->actionJoin->setEnabled(false);
 		ui->actionClear->setEnabled(false);
 	}
 	else
@@ -173,6 +174,7 @@ void MainWindow::LockUI(bool Lock, const QString& Message)
 		ui->actionInsert->setEnabled(loadedData);
 		ui->actionRevert->setEnabled(loadedData);
 		ui->actionSetvalue->setEnabled(loadedData);
+		ui->actionJoin->setEnabled(loadedData);
 		ui->actionClear->setEnabled(loadedData);
 	}
 

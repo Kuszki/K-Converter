@@ -131,6 +131,7 @@
     <addaction name="actionRevert"/>
     <addaction name="actionSplit"/>
     <addaction name="actionInsert"/>
+    <addaction name="actionJoin"/>
     <addaction name="separator"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
