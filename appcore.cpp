@@ -1018,8 +1018,10 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 				if (OK)
 				{
+					auto&& Pair = QPair<int, int>(qMin(Current, Item), qMax(Current, Item));
+
 					CountLocker.lock();
-					Joins.append(QPair<int, int>(qMin(Current, Item), qMax(Current, Item)));
+					if (!Joins.contains(Pair)) Joins.append(Pair);
 					CountLocker.unlock();
 				}
 
@@ -1031,12 +1033,13 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	WatcherThread.exit();
 	WatcherThread.wait();
 
-	auto Set = Joins.toSet().toList();
-	int Count = 0; qSort(Set);
+	std::sort(Joins.begin(), Joins.end());
 
-	while (Set.size())
+	int Count = 0;
+
+	while (Joins.size())
 	{
-		const auto Task = Set.takeFirst();
+		const auto Task = Joins.takeFirst();
 
 		QList<int> Parts;
 		int Iter = 0;
@@ -1044,15 +1047,15 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		Parts.append(Task.first);
 		Parts.append(Task.second);
 
-		while (Iter < Set.size())
+		while (Iter < Joins.size())
 		{
-			if (Parts.last() == Set[Iter].first)
+			if (Parts.contains(Joins[Iter].first))
 			{
-				Parts.append(Set.takeAt(Iter).second); Iter = 0;
+				Parts.append(Joins.takeAt(Iter).second); Iter = 0;
 			}
-			else if (Parts.last() == Set[Iter].second)
+			else if (Parts.contains(Joins[Iter].second))
 			{
-				Parts.append(Set.takeAt(Iter).first); Iter = 0;
+				Parts.append(Joins.takeAt(Iter).first); Iter = 0;
 			}
 			else ++Iter;
 		}
