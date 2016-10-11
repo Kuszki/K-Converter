@@ -959,6 +959,23 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 
 void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, const QList<int>& Values, bool Keep)
 {
+	struct JOIN
+	{
+		QString On = QString();
+
+		int One = 0;
+		int Two = 0;
+
+		bool operator== (const JOIN& J)
+		{
+			if (this == &J) return true;
+			else return
+					One == J.One &&
+					Two == J.Two &&
+					On == J.On;
+		}
+	};
+
 	QList<QStringList> Output = Data;
 	QFutureWatcher<void> Watcher;
 	QThread WatcherThread;
@@ -971,14 +988,17 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
-	QVector<int> Indexes(Output.size() / 4);
-	QList<QPair<int, int>> Joins;
+	QVector<int> Indexes;
+	QList<JOIN> Joins;
+	QMap<QString, int> Counts;
 
-	const QString Header = QString("A,%1,").arg(Class);
+	int Count = 0;
+
+	const QString ReqHeader = QString("A,%1,").arg(Class);
 
 	int ID = 0; for (const auto& Item : Output)
 	{
-		if (Item.first().startsWith(Header))
+		if (Item.first().startsWith(ReqHeader))
 		{
 			Indexes.append(ID);
 		}
@@ -986,7 +1006,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		++ID;
 	}
 
-	Watcher.setFuture(QtConcurrent::map(Indexes, [&Indexes, &Output, &Values, &Joins, &CountLocker] (const auto Current) -> void
+	Watcher.setFuture(QtConcurrent::map(Indexes, [&Indexes, &Output, &Values, &Joins, &Counts, &CountLocker] (const auto Current) -> void
 	{
 		const QString First = Output[Current].filter(QRegExp("^B,.*")).first();
 		const QString Last = Output[Current].filter(QRegExp("^B,.*")).last();
@@ -1000,8 +1020,18 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 			QStringList Geometry = Output[Item].filter(QRegExp("^B,.*"));
 			QStringList Attributes = Output[Item].filter(QRegExp("^C,.*"));
 
-			if (First == Geometry.first() || Last == Geometry.first() ||
-			    First == Geometry.last() || Last == Geometry.last())
+			QString Point = QString();
+
+			if (First == Geometry.first() || First == Geometry.last())
+			{
+				Point = First;
+			}
+			else if (Last == Geometry.first() || Last == Geometry.last())
+			{
+				Point = Last;
+			}
+
+			if (!Point.isEmpty())
 			{
 
 				if (Values.size())
@@ -1018,10 +1048,17 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 				if (OK)
 				{
-					auto&& Pair = QPair<int, int>(qMin(Current, Item), qMax(Current, Item));
+					JOIN Pair = { Point, qMin(Current, Item), qMax(Current, Item) };
 
 					CountLocker.lock();
-					if (!Joins.contains(Pair)) Joins.append(Pair);
+
+					if (!Joins.contains(Pair))
+					{
+						Counts[Point] += 1;
+
+						Joins.append(Pair);
+					}
+
 					CountLocker.unlock();
 				}
 
@@ -1030,12 +1067,15 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	}));
 
 	Watcher.waitForFinished();
-	WatcherThread.exit();
-	WatcherThread.wait();
 
-	std::sort(Joins.begin(), Joins.end());
+	Watcher.setFuture(QtConcurrent::map(Joins, [&Counts] (auto& Current) -> void
+	{
+		if (Counts[Current.On] >= 3) Current = JOIN();
+	}));
 
-	int Count = 0;
+	Watcher.waitForFinished();
+
+	Joins.removeAll(JOIN());
 
 	while (Joins.size())
 	{
@@ -1043,22 +1083,34 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 		QList<int> Parts;
 		int Iter = 0;
+		int Added = 0;
 
-		Parts.append(Task.first);
-		Parts.append(Task.second);
+		Parts.append(Task.One);
+		Parts.append(Task.Two);
 
-		while (Iter < Joins.size())
+		do
 		{
-			if (Parts.contains(Joins[Iter].first))
+			Added = Iter = 0;
+
+			while (Iter < Joins.size())
 			{
-				Parts.append(Joins.takeAt(Iter).second); Iter = 0;
+				if (Parts.contains(Joins[Iter].One))
+				{
+					Parts.append(Joins.takeAt(Iter).Two);
+
+					Iter = 0; ++Added;
+				}
+				else if (Parts.contains(Joins[Iter].Two))
+				{
+					Parts.append(Joins.takeAt(Iter).One);
+
+					Iter = 0; ++Added;
+				}
+				else ++Iter;
 			}
-			else if (Parts.contains(Joins[Iter].second))
-			{
-				Parts.append(Joins.takeAt(Iter).first); Iter = 0;
-			}
-			else ++Iter;
+
 		}
+		while (Added);
 
 		if (Parts.size() != Parts.toSet().size()) continue;
 		else Count += Parts.size();
@@ -1094,6 +1146,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 					std::reverse(Current.begin(), Current.end());
 					std::reverse(Geometry.begin(), Geometry.end());
 				}
+				else if (Geometry.last() != Current.first()) qFatal("Join error");
 
 				Current.removeFirst();
 				Geometry.append(Current);
@@ -1109,6 +1162,9 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	}
 
 	Output.removeAll(QStringList());
+
+	WatcherThread.exit();
+	WatcherThread.wait();
 
 	emit onDataJoin(Output, Count);
 }
