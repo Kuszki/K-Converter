@@ -257,8 +257,8 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 		}
 	}
 
-	emit onClassesLoad(getClasses(Items));
 	emit onObjectsLoad(Header, Items);
+	emit onClassesLoad(getClasses(Items));
 }
 
 void AppCore::SaveData(const QString& Path, const QStringList& Header, const QList<QStringList>& Data, const QString& CoderName)
@@ -988,9 +988,10 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
 	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
 
+	QMap<QString, int> Counts;
+	QList<QList<int>> Tasks;
 	QVector<int> Indexes;
 	QList<JOIN> Joins;
-	QMap<QString, int> Counts;
 
 	int Count = 0;
 
@@ -1112,9 +1113,12 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		}
 		while (Added);
 
-		if (Parts.size() != Parts.toSet().size()) continue;
-		else Count += Parts.size();
+		Tasks.append(Parts);
+		Count += Parts.size();
+	}
 
+	Watcher.setFuture(QtConcurrent::map(Tasks, [&Output, &CountLocker, &Keep] (auto& Parts) -> void
+	{
 		QStringList Attributes;
 		QStringList Geometry;
 		QString Header;
@@ -1127,6 +1131,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 		for (const auto Item : Parts)
 		{
+
 			QStringList Current = Output[Item].filter(QRegExp("^B,.*"));
 
 			if (Geometry.isEmpty()) Geometry = Current;
@@ -1146,7 +1151,6 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 					std::reverse(Current.begin(), Current.end());
 					std::reverse(Geometry.begin(), Geometry.end());
 				}
-				else if (Geometry.last() != Current.first()) qFatal("Join error");
 
 				Current.removeFirst();
 				Geometry.append(Current);
@@ -1158,13 +1162,18 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 		QStringList Joined = QStringList() << Header << Geometry << Attributes;
 
+		CountLocker.lock();
 		if (!Output.contains(Joined)) Output.append(Joined);
-	}
+		CountLocker.unlock();
 
-	Output.removeAll(QStringList());
+	}));
+
+	Watcher.waitForFinished();
 
 	WatcherThread.exit();
 	WatcherThread.wait();
+
+	Output.removeAll(QStringList());
 
 	emit onDataJoin(Output, Count);
 }
