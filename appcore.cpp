@@ -1114,8 +1114,8 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		}
 		while (Added);
 
-		Tasks.append(Parts);
-		Count += Parts.size();
+		Tasks.append(Parts.toSet().toList());
+		Count += Tasks.last().size();
 	}
 
 	Watcher.setFuture(QtConcurrent::map(Tasks, [&Output, &CountLocker, &Keep] (auto& Parts) -> void
