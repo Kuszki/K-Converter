@@ -623,8 +623,6 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 	}));
 
 	Watcher.waitForFinished();
-	WatcherThread.exit();
-	WatcherThread.wait();
 
 	if (Delete && Keep)
 	{
@@ -662,6 +660,9 @@ void AppCore::UnpinnData(const QList<QStringList>& Data, const QStringList& Clas
 		emit onProgressUpdate(1);
 
 	}
+
+	WatcherThread.exit();
+	WatcherThread.wait();
 
 	Output.removeAll(QStringList());
 
