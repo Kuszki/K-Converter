@@ -967,6 +967,11 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		int One = 0;
 		int Two = 0;
 
+		JOIN(const QString& O, int A, int B)
+		: On(O), One(A), Two(B) {}
+
+		JOIN(void) = default;
+
 		bool operator== (const JOIN& J)
 		{
 			if (this == &J) return true;
@@ -1050,7 +1055,7 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 				if (OK)
 				{
-					JOIN Pair = { Point, qMin(Current, Item), qMax(Current, Item) };
+					JOIN Pair = JOIN(Point, qMin(Current, Item), qMax(Current, Item));
 
 					CountLocker.lock();
 
