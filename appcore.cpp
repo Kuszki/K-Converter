@@ -1101,13 +1101,13 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 
 			while (Iter < Joins.size())
 			{
-				if (Parts.contains(Joins[Iter].One))
+				if (Parts.contains(Joins[Iter].One) && !Parts.contains(Joins[Iter].Two))
 				{
 					Parts.append(Joins.takeAt(Iter).Two);
 
 					Iter = 0; ++Added;
 				}
-				else if (Parts.contains(Joins[Iter].Two))
+				else if (Parts.contains(Joins[Iter].Two)  && !Parts.contains(Joins[Iter].One))
 				{
 					Parts.append(Joins.takeAt(Iter).One);
 
@@ -1119,8 +1119,8 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 		}
 		while (Added);
 
-		Tasks.append(Parts.toSet().toList());
-		Count += Tasks.last().size();
+		Tasks.append(Parts);
+		Count += Parts.size();
 	}
 
 	Watcher.setFuture(QtConcurrent::map(Tasks, [&Output, &CountLocker, &Keep] (auto& Parts) -> void
