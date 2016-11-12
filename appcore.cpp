@@ -914,7 +914,7 @@ void AppCore::RevertData(const QList<QStringList>& Data, const QStringList& Clas
 
 				if (List.contains(First) && List.contains(Last))
 				{
-					if (List[First] & 0x2 && List[Last] && 0x4)
+					if (List[First] & 0x2 && List[Last] & 0x4)
 					{
 						QRegExp attribExpr("^B,.*,(\\d+)$");
 						QString Saved, Current;

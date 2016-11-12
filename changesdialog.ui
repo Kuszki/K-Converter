@@ -103,7 +103,7 @@
     </spacer>
    </item>
    <item row="1" column="3">
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="searchEdit">
      <property name="toolTip">
       <string>Find selected text in all rules.</string>
      </property>
@@ -190,7 +190,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEdit</sender>
+   <sender>searchEdit</sender>
    <signal>textChanged(QString)</signal>
    <receiver>ChangesDialog</receiver>
    <slot>FindEditChanged(QString)</slot>
