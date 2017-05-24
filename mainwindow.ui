@@ -66,11 +66,11 @@
    <addaction name="actionSetvalue"/>
    <addaction name="actionDelete"/>
    <addaction name="actionUnpinn"/>
-   <addaction name="actionRevert"/>
+   <addaction name="actionUpdate"/>
    <addaction name="actionSplit"/>
    <addaction name="actionInsert"/>
    <addaction name="actionJoin"/>
-   <addaction name="actionUpdate"/>
+   <addaction name="actionRevert"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
@@ -108,7 +108,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -129,11 +129,11 @@
     <addaction name="actionSetvalue"/>
     <addaction name="actionDelete"/>
     <addaction name="actionUnpinn"/>
-    <addaction name="actionRevert"/>
+    <addaction name="actionUpdate"/>
     <addaction name="actionSplit"/>
     <addaction name="actionInsert"/>
     <addaction name="actionJoin"/>
-    <addaction name="actionUpdate"/>
+    <addaction name="actionRevert"/>
     <addaction name="separator"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -408,7 +408,8 @@
   </action>
   <action name="actionUpdate">
    <property name="icon">
-    <iconset theme="view-refresh"/>
+    <iconset theme="view-refresh">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Update</string>
