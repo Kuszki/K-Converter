@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	Insert = new InsertDialog(this);
 	Revert = new RevertDialog(this);
 	Join = new JoinDialog(this);
+	Update = new UpdateDialog(this);
 	Progress = new QProgressBar(this);
 	Codecs = new QComboBox(this);
 
@@ -61,6 +62,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onInsertRequest, AppCore::getInstance(), &AppCore::InsertData);
 	connect(this, &MainWindow::onRevertRequest, AppCore::getInstance(), &AppCore::RevertData);
 	connect(this, &MainWindow::onJoinRequest, AppCore::getInstance(), &AppCore::JoinData);
+	connect(this, &MainWindow::onUpdateRequest, AppCore::getInstance(), &AppCore::RefreshData);
 
 	connect(AppCore::getInstance(), &AppCore::onObjectsLoad, this, &MainWindow::FinishLoad);
 	connect(AppCore::getInstance(), &AppCore::onDataConvert, this, &MainWindow::FinishConvert);
@@ -73,6 +75,7 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(AppCore::getInstance(), &AppCore::onDataInsert, this, &MainWindow::FinishInserting);
 	connect(AppCore::getInstance(), &AppCore::onDataRevert, this, &MainWindow::FinishReverting);
 	connect(AppCore::getInstance(), &AppCore::onDataJoin, this, &MainWindow::FinishJoining);
+	connect(AppCore::getInstance(), &AppCore::onDataRefresh, this, &MainWindow::FinishUpdating);
 
 	connect(ui->actionAbout, &QAction::triggered, About, &AboutDialog::show);
 
@@ -124,6 +127,14 @@ MainWindow::MainWindow(QWidget* Parent)
 	connect(this, &MainWindow::onListCreate, Join, &JoinDialog::UpdateFields);
 	connect(Join, &JoinDialog::onListRequest, this, &MainWindow::FieldListRequest);
 	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Join, &JoinDialog::UpdateList);
+
+	connect(ui->actionUpdate, &QAction::triggered, Update, &UpdateDialog::open);
+	connect(Update, &UpdateDialog::onUpdateRequest, this, &MainWindow::InitUpdating);
+	connect(this, &MainWindow::onUpdatingFinish, Update, &UpdateDialog::ShowProgress);
+	connect(Update, &UpdateDialog::onRefreshRequest, this, &MainWindow::LoadTree);
+	connect(this, &MainWindow::onListCreate, Update, &UpdateDialog::UpdateFields);
+	connect(Update, &UpdateDialog::onListRequest, this, &MainWindow::FieldListRequest);
+	connect(AppCore::getInstance(), &AppCore::onClassesLoad, Update, &UpdateDialog::UpdateList);
 
 	connect(ui->Tree, &QTreeWidget::customContextMenuRequested, this, &MainWindow::TreeMenuRequest);
 
@@ -527,4 +538,14 @@ void MainWindow::InitJoining(const QString &Class, const QList<int>& Values, boo
 void MainWindow::FinishJoining(const QList<QStringList> &Data, int Count)
 {
 	SaveDAT(Data, tr("Join data")); emit onJoiningFinish(Count);
+}
+
+void MainWindow::InitUpdating(const QString& Class, const QString& Path, const QList<int>& Values, bool Geometry, int Field)
+{
+	emit onUpdateRequest(*loadedData, Class, Path, Values, Geometry, Field);
+}
+
+void MainWindow::FinishUpdating(const QList<QStringList>& Data, int Count)
+{
+	SaveDAT(Data, tr("Update data")); emit onUpdatingFinish(Count);
 }

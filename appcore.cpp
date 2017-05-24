@@ -218,6 +218,8 @@ void AppCore::LoadData(const QString& Path, const QString& CoderName)
 	isTerminated = false;
 	Locker.unlock();
 
+	LastCoder = CoderName;
+
 	QRegExp headerExpr("(.*)\\[OBIEKTY\\]");
 	QRegExp objectExpr("(A,.*)(\\n|\\r|\\r\\n)\\2");
 
@@ -1182,4 +1184,98 @@ void AppCore::JoinData(const QList<QStringList> &Data, const QString &Class, con
 	Output.removeAll(QStringList());
 
 	emit onDataJoin(Output, Count);
+}
+
+void AppCore::RefreshData(const QList<QStringList>& Data, const QString& Class, const QString& Path, const QList<int>& Values, bool Geometry, int Field)
+{
+	Locker.lock();
+	isTerminated = false;
+	Locker.unlock();
+
+	QRegExp headerExpr("(.*)\\[OBIEKTY\\]");
+	QRegExp objectExpr("(A,.*)(\\n|\\r|\\r\\n)\\2");
+
+	QList<QStringList> Items;
+	QFile dataFile(Path);
+
+	objectExpr.setMinimal(true);
+	headerExpr.setMinimal(true);
+
+	if (dataFile.open(QFile::ReadOnly | QFile::Text) && !isTerminated)
+	{
+		QTextDecoder* Coder = QTextCodec::codecForName(LastCoder.toUtf8())->makeDecoder();
+		QString fileText = Coder->toUnicode(dataFile.readAll()).append("\n\n");
+		int lastPos = 0;
+
+		headerExpr.indexIn(fileText);
+
+		while (((lastPos = objectExpr.indexIn(fileText, lastPos)) != -1) && !isTerminated)
+		{
+			Items.append(objectExpr.capturedTexts()[1].remove('\r').split('\n', QString::SkipEmptyParts));
+			lastPos += objectExpr.matchedLength();
+
+			for (auto& Line : Items.last()) if (Line[0] == ';') Line.clear();
+
+			Items.last().removeAll(QString());
+
+			emit onProgressUpdate(lastPos);
+		}
+	}
+
+	QList<QStringList> Output = Data;
+	QFutureWatcher<void> Watcher;
+	QThread WatcherThread;
+	QMutex CountLocker;
+
+	Watcher.moveToThread(&WatcherThread);
+	WatcherThread.start();
+
+	volatile int Count = 0;
+
+	connect(this, &AppCore::onTerminateRequest, &Watcher, &QFutureWatcher<void>::cancel, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressRangeChanged, this, &AppCore::onProgressInit, Qt::DirectConnection);
+	connect(&Watcher, &QFutureWatcher<void>::progressValueChanged, this, &AppCore::onProgressUpdate, Qt::DirectConnection);
+
+	Watcher.setFuture(QtConcurrent::map(Output, [&CountLocker, &Count, &Class, &Values, &Items, Geometry, Field] (auto& Item) -> void
+	{
+		if (!Item.first().startsWith(QString("A,%1,").arg(Class))) return;
+
+		const QString Header = Item.first();
+		QStringList Geom = Item.filter(QRegExp("^B,"));
+		QStringList Data = Item.filter(QRegExp("^C,.*"));
+
+		const QString Find = Data[Field];
+		bool Continue = true;
+
+		QStringList Fields; for (const auto& Index : Values)
+		{
+			Fields.append(Data[Index]);
+			Fields.last().remove(QRegExp("=.*$"));
+		}
+
+		for (const auto& Other : Items) if (Continue && Other.contains(Find))
+		{
+			if (Geometry) Geom = Other.filter(QRegExp("^B,"));
+
+			for (int i = 0; i < Values.size(); ++i) for (const auto& Value : Other)
+			{
+				if (Value.startsWith(Fields[i])) Data[Values[i]] = Value;
+			}
+
+			Continue = false;
+		}
+
+		Item = QStringList() << Header << Geom << Data;
+
+		CountLocker.lock();
+		Count += 1;
+		CountLocker.unlock();
+	}));
+
+	Watcher.waitForFinished();
+
+	WatcherThread.exit();
+	WatcherThread.wait();
+
+	emit onDataRefresh(Output, Count);
 }

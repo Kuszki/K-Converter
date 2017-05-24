@@ -59,6 +59,7 @@ class AppCore : public QObject
 		static AppCore* THIS;
 
 		QSqlDatabase Database;
+		QString LastCoder;
 		QMutex Locker;
 
 		volatile bool isTerminated = false;
@@ -96,10 +97,10 @@ class AppCore : public QObject
 					  const QString& Replace,
 					  bool Case, bool RegExp);
 		void UpdateData(const QList<QStringList>& Data,
-					   const QString& Field,
-					   const QString& Setto,
-					   const QStringList& Classes,
-					   const QMap<QString, QString>& List);
+					 const QString& Field,
+					 const QString& Setto,
+					 const QStringList& Classes,
+					 const QMap<QString, QString>& List);
 		void DeleteData(const QList<QStringList>& Data,
 					 const QStringList& Classes,
 					 const QMap<QString, QString>& List);
@@ -120,6 +121,12 @@ class AppCore : public QObject
 				    const QString& Class,
 				    const QList<int>& Values,
 				    bool Keep);
+		void RefreshData(const QList<QStringList>& Data,
+					  const QString& Class,
+					  const QString& Path,
+					  const QList<int>& Values,
+					  bool Geometry,
+					  int Field);
 
 		void Terminate(void);
 
@@ -140,6 +147,7 @@ class AppCore : public QObject
 		void onDataInsert(const QList<QStringList>, int);
 		void onDataRevert(const QList<QStringList>, int);
 		void onDataJoin(const QList<QStringList>, int);
+		void onDataRefresh(const QList<QStringList>, int);
 
 		void onOutputSave(unsigned);
 

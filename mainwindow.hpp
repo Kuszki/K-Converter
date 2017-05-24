@@ -39,9 +39,10 @@
 #include "replacedialog.hpp"
 #include "deletedialog.hpp"
 #include "unpinndialog.hpp"
-#include "splitdialog.hpp"
 #include "insertdialog.hpp"
 #include "revertdialog.hpp"
+#include "updatedialog.hpp"
+#include "splitdialog.hpp"
 #include "aboutdialog.hpp"
 #include "joindialog.hpp"
 
@@ -70,6 +71,7 @@ class MainWindow : public QMainWindow
 		InsertDialog* Insert = nullptr;
 		RevertDialog* Revert = nullptr;
 		JoinDialog* Join = nullptr;
+		UpdateDialog* Update = nullptr;
 
 		QProgressBar* Progress = nullptr;
 		QComboBox* Codecs = nullptr;
@@ -128,6 +130,8 @@ class MainWindow : public QMainWindow
 		void FinishReverting(const QList<QStringList>& Data, int Count);
 		void InitJoining(const QString& Class, const QList<int>& Values, bool Keep);
 		void FinishJoining(const QList<QStringList>& Data, int Count);
+		void InitUpdating(const QString& Class, const QString& Path, const QList<int>& Values, bool Geometry, int Field);
+		void FinishUpdating(const QList<QStringList>& Data, int Count);
 
 	signals:
 
@@ -167,6 +171,12 @@ class MainWindow : public QMainWindow
 					    const QString&,
 					    const QList<int>&,
 					    bool);
+		void onUpdateRequest(const QList<QStringList>&,
+						 const QString&,
+						 const QString&,
+						 const QList<int>&,
+						 bool,
+						 int);
 
 		void onReplaceFinish(int);
 		void onSettingFinish(int);
@@ -176,6 +186,7 @@ class MainWindow : public QMainWindow
 		void onInsertingFinish(int);
 		void onRevertingFinish(int);
 		void onJoiningFinish(int);
+		void onUpdatingFinish(int);
 
 		void onListCreate(const QStringList&);
 

@@ -37,7 +37,8 @@ SOURCES	+=	main.cpp \
 			splitdialog.cpp \
 			insertdialog.cpp \
 			revertdialog.cpp \
-			joindialog.cpp
+			joindialog.cpp \
+			updatedialog.cpp
 
 HEADERS	+=	mainwindow.hpp \
 			changesdialog.hpp \
@@ -50,7 +51,8 @@ HEADERS	+=	mainwindow.hpp \
 			splitdialog.hpp \
 			insertdialog.hpp \
 			revertdialog.hpp \
-			joindialog.hpp
+			joindialog.hpp \
+			updatedialog.hpp
 
 FORMS	+=	mainwindow.ui \
 			changesdialog.ui \
@@ -62,7 +64,8 @@ FORMS	+=	mainwindow.ui \
 			splitdialog.ui \
 			insertdialog.ui \
 			revertdialog.ui \
-			joindialog.ui
+			joindialog.ui \
+			updatedialog.ui
 
 RESOURCES	+=	resources.qrc
 
