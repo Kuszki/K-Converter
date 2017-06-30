@@ -1241,8 +1241,9 @@ void AppCore::RefreshData(const QList<QStringList>& Data, const QString& Class, 
 		if (!Item.first().startsWith(QString("A,%1,").arg(Class))) return;
 
 		const QString Header = Item.first();
-		QStringList Geom = Item.filter(QRegExp("^B,"));
+		QStringList Geom = Item.filter(QRegExp("^B,.*"));
 		QStringList Data = Item.filter(QRegExp("^C,.*"));
+		QStringList Rest = Item.filter(QRegExp("^[^ABC],.*"));
 
 		const QString Find = Data[Field];
 		bool Continue = true;
@@ -1265,7 +1266,7 @@ void AppCore::RefreshData(const QList<QStringList>& Data, const QString& Class, 
 			Continue = false;
 		}
 
-		Item = QStringList() << Header << Geom << Data;
+		Item = QStringList() << Header << Geom << Data << Rest;
 
 		CountLocker.lock();
 		Count += 1;
